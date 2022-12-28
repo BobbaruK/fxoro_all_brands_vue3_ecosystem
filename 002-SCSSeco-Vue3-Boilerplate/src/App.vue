@@ -8,7 +8,7 @@ export default {
 };
 </script>
 
-<template>asd
+<template>
   <router-view />
 </template>
 

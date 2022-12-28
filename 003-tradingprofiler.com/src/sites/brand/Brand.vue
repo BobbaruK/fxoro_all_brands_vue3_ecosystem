@@ -1,0 +1,64 @@
+<script>
+import { useRoute, useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+
+import languages from "./composables/languages";
+
+import Header from "@/sites/brand/components/Header.vue";
+import Footer from "@/sites/brand/components/Footer.vue";
+import BackToTop from "../../../../001-super_global_files/components/BackToTop/BackToTop.vue";
+
+import "../../../../001-super_global_files/assets/scss/scsseco_global.scss";
+import "./assets/scss/scsseco_brand.scss";
+export default {
+  name: "Brand",
+  components: { Header, Footer, BackToTop },
+  props: {
+    lang: String,
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+
+    /**
+     * Redirect
+     */
+    const { lpLangs } = languages();
+    onMounted(() => {
+      if (lpLangs.indexOf(route.params.lang) == -1) {
+        router.replace({ name: "HomeRedirect" });
+      }
+    });
+
+    return {};
+  },
+};
+</script>
+
+<template>
+  <div class="topBg">
+    <Header :lang="lang" />
+    <div id="teleportS1"></div>
+  </div>
+  <main>
+    <router-view />
+  </main>
+  <Footer :lang="lang" />
+  <BackToTop :bttDetails="{ bttID: 'backToTopBrand' }" />
+</template>
+
+<style lang="scss">
+// @use "../brand/assets/scss/abstracts/variables" as vars;
+@use "../brand/assets/scss/abstracts/mixins" as mxns;
+
+.topBg {
+  @include mxns.mediamax(xl) {
+    background-image: url(./assets/imgs/topBG.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 6px solid var(--clr-brandPrimaryColor);
+    color: var(--clr-white);
+  }
+}
+</style>

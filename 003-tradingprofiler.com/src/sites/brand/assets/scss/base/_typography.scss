@@ -1,0 +1,138 @@
+@use "../abstracts/variables" as vars;
+@use "../abstracts/mixins" as mxns;
+
+// -----------------------------------------------------------------------------
+/* Basic typography style for copy text */
+// -----------------------------------------------------------------------------
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  position: relative;
+}
+
+h1,
+.h1 {
+  color: var(--clr-brandSecondaryColor);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 27px;
+  margin-bottom: 30px;
+  max-width: 25ch;
+  text-align: center;
+  @include mxns.mediamin(sm) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+  @include mxns.mediamin(md) {
+    font-size: 26px;
+    line-height: 36px;
+  }
+  @include mxns.mediamin(lg) {
+    font-size: 36px;
+    line-height: 40px;
+  }
+  @include mxns.mediamin(xl) {
+    font-size: 40px;
+    line-height: 48px;
+    text-align: start;
+    margin-bottom: 45px;
+  }
+  span {
+    color: var(--clr-white);
+  }
+}
+h2,
+.h2 {
+  color: var(--clr-black);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 24px;
+  text-align: center;
+  @include mxns.mediamin(md) {
+    font-size: 17px;
+    line-height: 40px;
+  }
+  @include mxns.mediamin(xl) {
+    font-size: 25px;
+    line-height: 48px;
+    margin-bottom: 48px;
+  }
+}
+h3,
+.h3 {
+  font-size: vars.$fontSize-h3;
+}
+h4,
+.h4 {
+  font-size: vars.$fontSize-h4;
+}
+h5,
+.h5 {
+  font-size: vars.$fontSize-h5;
+}
+h6,
+.h6 {
+  font-size: vars.$fontSize-h6;
+}
+
+// Paragraph
+p {
+  margin: 0 0 2rem 0;
+  font-size: 13px;
+  line-height: 20px;
+  @include mxns.mediamin(xl) {
+    font-size: 18px;
+    line-height: 31px;
+  }
+}
+
+// Lists
+ol,
+ul {
+  margin: 0 0 vars.$typoSpacer 0;
+  padding-left: 30px;
+  li {
+  }
+}
+
+ol {
+  li {
+  }
+}
+ul {
+  li {
+  }
+}
+
+// Links
+a {
+  color: var(--clr-brand_secondary_color--complement);
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    color: var(--clr-brandPrimaryColor-900);
+    // text-decoration: underline;
+  }
+}
+
+// Imgs
+img {
+  max-width: 100%;
+}

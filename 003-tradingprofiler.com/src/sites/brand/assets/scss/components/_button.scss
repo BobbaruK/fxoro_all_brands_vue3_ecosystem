@@ -1,0 +1,51 @@
+@use "../abstracts/variables" as vars;
+@use "../abstracts/mixins" as mxns;
+
+// -----------------------------------------------------------------------------
+/* This file contains all styles related to the button component. */
+// -----------------------------------------------------------------------------
+
+.scssecoBtn {
+  background: var(--clr-white);
+  border-radius: vars.$borderRadius * 2;
+  border: none;
+  box-shadow: 1px 3px 7px -2px rgba(0, 0, 0, 0.5), 0px 0px 0px 3px var(--clr-brandSecondaryColor);
+  color: var(--clr-brandPrimaryColor);
+  cursor: pointer;
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 38px;
+  margin: 0;
+  padding: 0 40px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background vars.$animDur ease-in-out, color vars.$animDur ease-in-out;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  @include mxns.mediamin(sm) {
+    font-size: 20px;
+    line-height: 40px;
+  }
+  @include mxns.mediamin(md) {
+    font-size: 22px;
+    line-height: 42px;
+  }
+  @include mxns.mediamin(lh) {
+    font-size: 24px;
+    line-height: 44px;
+  }
+  @include mxns.mediamin(xl) {
+    box-shadow: 1px 3px 7px 3px rgba(0, 0, 0, 0.5), 0px 0px 0px 5px var(--clr-brandSecondaryColor);
+    font-size: 25px;
+    line-height: 48px;
+  }
+  &:hover,
+  &:focus {
+    background: var(--clr-brandPrimaryColor);
+    color: var(--clr-brandSecondaryColor);
+    text-decoration: none;
+  }
+}

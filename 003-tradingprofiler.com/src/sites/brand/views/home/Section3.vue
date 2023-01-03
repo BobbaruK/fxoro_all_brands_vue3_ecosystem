@@ -86,9 +86,9 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col-12 content">
-          <transition appear @before-enter="onBeforeEnterH2" @enter="onEnterH2">
+          <!-- <transition appear @before-enter="onBeforeEnterH2" @enter="onEnterH2">
             <h2>{{ title[lang] }}</h2>
-          </transition>
+          </transition> -->
           <transition appear @before-enter="onBeforeEnterPara" @enter="onEnterPara">
             <div v-html="content[lang]"></div>
           </transition>

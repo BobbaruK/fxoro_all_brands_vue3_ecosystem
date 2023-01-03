@@ -15,7 +15,7 @@ const homeSection1Transl = () => {
     // th: "",
     // ms: ""
 
-    en: `With <span>${process.env.VUE_APP_BRAND_TITLE}</span> you can trade <span>CFDs</span> on some of the top commodities in the world`,
+    en: `Trade <span>CFDs</span> on some of the top commodities in the world`,
     it: "",
     tr: "",
     ro: "",
@@ -35,7 +35,6 @@ const homeSection1Transl = () => {
     en: `
       <p>You have access to all the information for a real-time market trading</p>
       <p>Your safety is our priority – our services are built on highest security standards</p>
-      <p>${process.env.VUE_APP_BRAND_TITLE} teaches you how to trade oil and gold – the assets that keep the world moving</p>
     `,
     it: ``,
     tr: ``,

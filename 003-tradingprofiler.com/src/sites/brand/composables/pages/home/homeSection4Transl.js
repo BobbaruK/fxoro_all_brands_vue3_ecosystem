@@ -32,7 +32,7 @@ const homeSection4Transl = () => {
   };
 
   const content = {
-    en: "<p><strong>Fill in the form below to get in touch</strong> with one of our representatives and set up your trading goals.</p>",
+    en: "<p><strong>Fill in the form below to get in touch</strong> with one of our representatives.</p>",
     it: "",
     tr: "",
     ro: "",

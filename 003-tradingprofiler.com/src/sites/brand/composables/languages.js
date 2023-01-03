@@ -18,7 +18,7 @@ const languages = () => {
     // "ms",
     // ""
   ];
-  const defaultLang = "ar";
+  const defaultLang = "en";
   const { flagPath } = flags();
 
   return { lpLangs, defaultLang, flagPath };

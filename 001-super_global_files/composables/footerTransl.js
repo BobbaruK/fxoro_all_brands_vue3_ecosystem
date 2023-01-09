@@ -1,3 +1,5 @@
+import translationsGlossary from "./translationsGlossary";
+
 const footerTransl = () => {
   const content = {
     // en: "",
@@ -46,9 +48,7 @@ const footerTransl = () => {
     <p>&#169; Copyright ${new Date().getFullYear()} - Minden jog fenntartva</p>
     `,
     ar: `
-    <p>ينطوي التداول على مستوى عال من المخاطر على رأس المال الخاص بك بسبب تقلبات السوق الأساسية. التداول غير مناسب للجميع وقد يؤدي إلى خسارتك لكل استثماراتك. قد لا تكون منتجات ${
-      process.env.VUE_APP_BRAND_TITLE
-    } مناسبة لجميع المستثمرين. لذلك ، يجب عليك التأكد من فهمك للمخاطر وطلب المشورة من مستشار مالي مستقل ومرخص بشكل مناسب.</p>
+    <p>ينطوي التداول على مستوى عال من المخاطر على رأس المال الخاص بك بسبب تقلبات السوق الأساسية. التداول غير مناسب للجميع وقد يؤدي إلى خسارتك لكل استثماراتك. قد لا تكون منتجات ${process.env.VUE_APP_BRAND_TITLE} مناسبة لجميع المستثمرين. لذلك ، يجب عليك التأكد من فهمك للمخاطر وطلب المشورة من مستشار مالي مستقل ومرخص بشكل مناسب.</p>
     <p>&#169; حقوق الطبع والنشر ${new Date().getFullYear()} - جميع الحقوق محفوظة</p>
     `,
     de: ``,
@@ -86,7 +86,9 @@ const footerTransl = () => {
     `,
   };
 
-  return { content };
+  const privacyLinkLabel = translationsGlossary.p.privacyPolicy;
+
+  return { content, privacyLinkLabel };
 };
 
 export default footerTransl;

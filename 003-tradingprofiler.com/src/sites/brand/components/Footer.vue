@@ -1,4 +1,6 @@
 <script>
+import { useRoute } from "vue-router";
+
 import footerTransl from "../../../../../001-super_global_files/composables/footerTransl";
 
 export default {
@@ -7,9 +9,13 @@ export default {
     lang: String,
   },
   setup() {
-    const { content } = footerTransl();
+    const route = useRoute();
 
-    return { content };
+    console.log(route.params.lang);
+
+    const { content, privacyLinkLabel } = footerTransl();
+
+    return { route, content, privacyLinkLabel };
   },
 };
 </script>
@@ -19,6 +25,9 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col-12 content" v-html="content[lang]"></div>
+        <div class="col-12">
+          <a class="privacyLink" :href="`${route.params.lang}/privacy-policy`">{{ privacyLinkLabel[lang] }}</a>
+        </div>
         <img src="@/sites/brand/assets/imgs/logos/TradingProfilerLogoSquare-color-white.svg" alt="Logo" class="logo" width="200" height="120" />
       </div>
     </div>
@@ -29,6 +38,7 @@ export default {
 footer#footer.siteFooter {
   background-color: var(--clr-gray-700);
   color: var(--clr-white);
+  font-size: 12px;
   padding: 30px 0;
   text-align: center;
   .content {
@@ -40,11 +50,19 @@ footer#footer.siteFooter {
     justify-content: center;
   }
   p {
-    font-size: 12px;
     line-height: 30px;
+    font-size: inherit;
     margin-bottom: 1rem;
     margin: 0;
     max-width: 114ch;
+  }
+  .privacyLink {
+    color: var(--clr-brandSecondaryColor-400);
+    display: inline-block;
+    margin-top: 0.5rem;
+    &:hover {
+      color: var(--clr-brandSecondaryColor-600);
+    }
   }
   svg.logo,
   img.logo {

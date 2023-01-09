@@ -1,11 +1,13 @@
 <script>
 import { onMounted, onUpdated } from "@vue/runtime-core";
+import { useRoute, useRouter } from "vue-router";
 import { gsap } from "gsap";
 
 import checkLangAndMeta from "../../../../001-super_global_files/composables/checkLangAndMeta";
-import languages from "../brand/composables/languages";
+import languages from "./composables/languages";
+import thankYouSection1Transl from "./composables/translations/thankYouSection1Transl";
 
-import "../../../../001-super_global_files/assets/scss/scsseco_global.scss";
+// import "../../../../001-super_global_files/assets/scss/scsseco_global.scss";
 import "./assets/scss/scsseco_thankyou.scss";
 
 export default {
@@ -22,36 +24,28 @@ export default {
       });
     });
 
-    // Meta
-    const title = {
-      en: "Thank you!",
-      it: "Grazie",
-      tr: "Teşekkürler!",
-      ro: "Mulțumesc!",
-      hu: "Köszönjük!",
-      ar: "شكرًا لك!",
-      de: "",
-      es: "Gracias!",
-      sv: "Tack!",
-      pt: "",
-      fi: "Kiitos!",
-      pl: "Dziękujemy!",
-      th: "",
-      ms: "Terima kasih!",
-    };
+    const { tyTitleTransl } = thankYouSection1Transl();
 
-    const { lang } = languages();
-    checkLangAndMeta(props.lang, lang, title);
+    // Meta
+    const title = tyTitleTransl;
+
+    const { lpLangs, defaultLang } = languages();
+    checkLangAndMeta(props.lang, lpLangs, title);
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lang, title);
+      checkLangAndMeta(props.lang, lpLangs, title);
     });
 
-    // Redirect
-    // onMounted(() => {
-    //   setTimeout(() => {
-    //     window.location.href = "/";
-    //   }, 10000);
-    // });
+    /**
+     * Redirect
+     */
+    const route = useRoute();
+    const router = useRouter();
+
+    onMounted(() => {
+      if (lpLangs.indexOf(route.params.lang) == -1) {
+        router.replace({ name: "ThankYou", params: { lang: defaultLang } });
+      }
+    });
 
     return { title };
   },

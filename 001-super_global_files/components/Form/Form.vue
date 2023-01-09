@@ -214,7 +214,9 @@ export default {
               <div class="col-12">
                 <div class="form-control">
                   <input v-model="agreementValue" type="checkbox" :id="`${formDetails.formID}-agreement`" />
-                  <label class="agreement" :for="`${formDetails.formID}-agreement`">{{ agreement[lang] }}</label>
+                  <label class="agreement" :for="`${formDetails.formID}-agreement`">
+                    {{ formDetails.agreemenType == undefined || formDetails.agreemenType == "" || formDetails.agreemenType != "woBrandName" ? agreement.wBrandName[lang] : agreement.woBrandName[lang] }}
+                  </label>
                 </div>
               </div>
               <div v-if="agreementError[lang]" class="col-12 error">

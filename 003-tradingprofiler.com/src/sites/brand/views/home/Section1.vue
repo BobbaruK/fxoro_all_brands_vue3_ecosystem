@@ -105,6 +105,7 @@ export default {
     const formDetails = {
       formID: "brand-home-modal-section1",
       layout: 1,
+      agreemenType: "woBrandName",
       button: {
         en: "Register Now",
         it: "",

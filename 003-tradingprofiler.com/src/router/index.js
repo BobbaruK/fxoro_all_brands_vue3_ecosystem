@@ -38,6 +38,13 @@ const routes = [
     component: () => import("../sites/thankyou/ThankYou.vue"),
     props: true,
   },
+  // Privacy Policy
+  {
+    path: "/:lang/privacy-policy",
+    name: "PrivacyPolicy",
+    component: () => import("../sites/privacypolicy/PrivacyPolicy.vue"),
+    props: true,
+  },
   //
   // 404
   {
@@ -238,8 +245,7 @@ const routes = [
               {
                 path: "language-chooser",
                 name: "DemoComponentsComponentsLanguageChooser",
-                component: () =>
-                  import("../sites/lps/LP-demo-components/views/components/languageChooser/LanguageChooser.vue"),
+                component: () => import("../sites/lps/LP-demo-components/views/components/languageChooser/LanguageChooser.vue"),
                 props: true,
                 meta: {
                   breadCrumbs: breadCrumbs.LP.DemoComponents.Components.LanguageChooser,

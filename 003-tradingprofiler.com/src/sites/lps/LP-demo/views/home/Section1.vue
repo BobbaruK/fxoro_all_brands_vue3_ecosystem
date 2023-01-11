@@ -28,7 +28,7 @@ export default {
       formID: "demo1-section1",
       layout: 1,
       button: translationsGlossary.j.join,
-      test: true,
+      // test: true,
     };
 
     return {

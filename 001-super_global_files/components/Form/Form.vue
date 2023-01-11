@@ -1,5 +1,5 @@
 <script>
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 
 import formValidation from "../../composables/form/formValidation/formValidation";
 import formTranslations from "../../composables/form/translations/formTranslations";
@@ -48,21 +48,19 @@ export default {
 
     const { firstNameValue, firstNameError, lastNameValue, lastNameError, emailValue, emailError, prefixValue, phoneValue, phoneError, countries, countryValue, countryError, agreementValue, agreementError, captchaError, validate, validateForm } = formValidation(props.lang, props.formDetails.test);
 
-    const route = useRoute();
+    // const route = useRoute();
 
     onMounted(() => {
       let captchaScript;
 
-      // console.log(!document.getElementById("captchaScript"));
-      if (!document.getElementById("captchaScript") && route.name == "Demo1Home") {
+      // if (!document.getElementById("captchaScript") && route.name == "Demo1Home") {
+      if (!document.getElementById("captchaScript")) {
         captchaScript = document.createElement("script");
         captchaScript.type = "text/javascript";
         captchaScript.src = `https://www.google.com/recaptcha/api.js?render=${process.env.VUE_APP_GCAPTCHA_KEY}`;
         captchaScript.id = "captchaScript";
         document.head.appendChild(captchaScript);
       }
-
-      // console.log(captchaScript);
     });
 
     return {

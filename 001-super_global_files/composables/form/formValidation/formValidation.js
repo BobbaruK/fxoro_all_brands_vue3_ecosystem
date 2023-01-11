@@ -187,7 +187,29 @@ const formValidation = (lang, test) => {
 
     if (test == undefined || test == false) {
       if (process.env.VUE_APP_SEND_TO_CRM == "true") {
-        sendToCRM();
+        grecaptcha.ready(() => {
+          grecaptcha.execute(process.env.VUE_APP_GCAPTCHA_KEY, { action: "submit" }).then(function (token) {
+            let captchaData = new FormData();
+            captchaData.append("token", token);
+            captchaData.append("domain", window.location.hostname);
+            fetch("https://piutrading.com/recaptcha-verify/", {
+              method: "POST",
+              body: captchaData, // Send the form data
+            })
+              .then((response) => response.json())
+              .then((resp) => {
+                if (resp.success === true && resp.score > 0.5) {
+                  // console.log("merge peste .5");
+                  sendToCRM();
+                } else {
+                  // console.log("merge sub .5");
+                  validate.value = false;
+                  captchaError.value = captchaErr;
+                }
+                return;
+              });
+          });
+        });
       } else if (process.env.VUE_APP_SEND_TO_CRM == "false") {
         console.log(`FirstName: ${firstNameValue.value}`);
         console.log(`LastName: ${lastNameValue.value}`);
@@ -214,6 +236,8 @@ const formValidation = (lang, test) => {
         }, 3000);
       }
     } else {
+      // if test == true
+
       grecaptcha.ready(() => {
         grecaptcha.execute(process.env.VUE_APP_GCAPTCHA_KEY, { action: "submit" }).then(function (token) {
           let captchaData = new FormData();

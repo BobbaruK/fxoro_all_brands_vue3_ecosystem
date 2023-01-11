@@ -395,6 +395,15 @@ const routes = [
                 },
               },
               {
+                path: "carousel",
+                name: "DemoComponentsComponentsCarousel",
+                component: () => import("../sites/lps/LP-demo-components/views/components/carousel/Carousel.vue"),
+                props: true,
+                meta: {
+                  breadCrumbs: breadCrumbs.LP.DemoComponents.Components.Carousel,
+                },
+              },
+              {
                 path: "countdown",
                 name: "DemoComponentsComponentsCountdown",
                 component: () => import("../sites/lps/LP-demo-components/views/components/countdown/Countdown.vue"),

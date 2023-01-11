@@ -320,6 +320,33 @@ const breadCrumbs = {
             label: translationsGlossary.b.breadcrumb,
           },
         ],
+        Carousel: [
+          {
+            label: translationsGlossary.h.home,
+            href: "DemoComponentsHome",
+          },
+          {
+            label: translationsGlossary.c.components,
+          },
+          {
+            label: {
+              en: "Carousel",
+              it: "Carousel",
+              tr: "Carousel",
+              ro: "Carousel",
+              hu: "Carousel",
+              ar: "Carousel",
+              de: "Carousel",
+              es: "Carousel",
+              sv: "Carousel",
+              pt: "Carousel",
+              fi: "Carousel",
+              pl: "Carousel",
+              th: "Carousel",
+              ms: "Carousel",
+            },
+          },
+        ],
         Countdown: [
           {
             label: translationsGlossary.h.home,

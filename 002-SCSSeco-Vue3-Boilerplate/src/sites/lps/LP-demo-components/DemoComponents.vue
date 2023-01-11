@@ -46,6 +46,6 @@ export default {
 
 <style lang="scss">
 #backToTopDemoComponents {
-  position: absolute;
+  // position: absolute;
 }
 </style>

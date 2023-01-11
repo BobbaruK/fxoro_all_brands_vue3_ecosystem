@@ -127,7 +127,8 @@ const privacyPolicySection1Transl = () => {
   const section7 = {
     en: `
       <h2>Your Consent</h2>
-      <p>By using our site, you consent to our privacy policy.</p>`,
+      <p>By using our site, you consent to our privacy policy.</p>
+      <p>This website can be used by ZZ5 Trading and Consulting, for informative purposes only. Operation of this website shall not be made by ZZ5, for any other purpose other than the referred above and in no circumstances, it is not intended to be used for marketing – advertising purposes.</p>`,
     it: "",
     tr: "",
     ro: "",

@@ -98,7 +98,9 @@ export default {
     const allowedSlideTranitions = ["rifle", "jump", "fade"];
     const defaultSlideTranition = "rifle";
     const carouselTransition = ref(
-      props.carouselDetails.carouselTransition
+      !isNaN(props.carouselDetails.carouselTransition)
+        ? Number(props.carouselDetails.carouselTransition)
+        : props.carouselDetails.carouselTransition
         ? allowedSlideTranitions.indexOf(props.carouselDetails.carouselTransition) == -1
           ? !isNaN(props.carouselDetails.carouselTransition)
             ? Number(props.carouselDetails.carouselTransition)
@@ -495,14 +497,6 @@ export default {
       });
 
       let slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
-      let slidesAndClones2 = [1, 2, 3, 4, 5];
-      // console.log(slidesAndClones2);
-
-      if (carouselDirection.value === "rtl") {
-        // console.log("shuahsjak");
-        // slidesAndClones2.reverse();
-      }
-      // console.log(slidesAndClones2);
       const activeSlideNumber = Number(slideActive.dataset.slide);
 
       const slidesAndClonesArrange = (index, direction) => {
@@ -527,12 +521,6 @@ export default {
     };
 
     const slidesAnimRifle = (htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, anim = "next") => {
-      // console.log(htmlActiveSlide);
-      // console.log(htmlActiveDot);
-      // console.log(htmlNextSlide);
-      // console.log(htmlNextDot);
-      // console.log(anim);
-
       const slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
       const htmlActiveSlideNumber = Number(htmlActiveSlide.dataset.slide);
       const htmlNextSlideNumber = Number(htmlNextSlide.dataset.slide);
@@ -548,25 +536,21 @@ export default {
           slidesAndClones.forEach((slide, index) => {
             if (carouselDirection.value === "ltr") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 xPercent: `+=${scssecoCarousel__slides.value.length}00`,
               });
             }
             if (carouselDirection.value === "rtl") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 xPercent: `-=${scssecoCarousel__slides.value.length}00`,
               });
             }
             if (carouselDirection.value === "btt") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 yPercent: `+=${scssecoCarousel__slides.value.length}00`,
               });
             }
             if (carouselDirection.value === "ttb") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 yPercent: `-=${scssecoCarousel__slides.value.length}00`,
               });
             }
@@ -606,25 +590,21 @@ export default {
           slidesAndClones.forEach((slide, index) => {
             if (carouselDirection.value === "ltr") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 xPercent: `-=${scssecoCarousel__slides.value.length}00`,
               });
             }
             if (carouselDirection.value === "rtl") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 xPercent: `+=${scssecoCarousel__slides.value.length}00`,
               });
             }
             if (carouselDirection.value === "btt") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 yPercent: `-=${scssecoCarousel__slides.value.length}00`,
               });
             }
             if (carouselDirection.value === "ttb") {
               gsap.set(slide, {
-                // xPercent: index * 100,
                 yPercent: `+=${scssecoCarousel__slides.value.length}00`,
               });
             }
@@ -656,8 +636,94 @@ export default {
       }
 
       slideAnim.to(slidesAndClones, slidesAndClonesPos[carouselDirection.value]);
+    };
 
-      // console.log(slidesAndClones);
+    const slidesArrangeNumber = (slides) => {
+      if (isNaN(carouselTransition.value)) return;
+
+      if (slides.length <= carouselTransition.value) {
+        console.log(
+          `${scssecoCarousel.value.id} has less slides than expected: expected ${carouselTransition.value + 1} have ${
+            slides.length
+          }`
+        );
+        scssecoCarousel.value.innerHTML = `<div><strong>${
+          scssecoCarousel.value.id
+        }</strong> has less slides than expected: expected <strong>${
+          carouselTransition.value + 1
+        }</strong> have <strong>${slides.length}</strong></div>`;
+      }
+
+      const activeSlideNumber = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      const cloneOffset = Math.round(scssecoCarousel__slides.value.length / 2); // set the middle of the viewport
+      const halfOfSlidesInViewPort = Math.round(carouselTransition.value / 2);
+      const offsetNumber =
+        scssecoCarousel__slides.value.length % 2 === 0
+          ? Number((cloneOffset + (activeSlideNumber - halfOfSlidesInViewPort)) * 100)
+          : Number((cloneOffset + (activeSlideNumber - halfOfSlidesInViewPort) - 1) * 100);
+      const resetFormula =
+        carouselTransition.value % 2 === 0
+          ? carouselDirection.value === "rtl" || carouselDirection.value === "ttb"
+            ? offsetNumber - 150
+            : offsetNumber - 50
+          : carouselDirection.value === "rtl" || carouselDirection.value === "ttb"
+          ? offsetNumber - 100
+          : offsetNumber;
+
+      let beforeSlidesClones = [];
+      slides.forEach((slide, index) => {
+        const slideNumber = Number(slide.dataset.slide);
+
+        if (slideNumber <= Math.round(slides.length / 2)) {
+          const slideClone = slide.cloneNode(true);
+          slideClone.classList.add("clone");
+          slideClone.classList.remove("active");
+          slideClone.removeAttribute("data-text");
+          scssecoCarousel__stage.value.appendChild(slideClone);
+        }
+
+        if (slideNumber > Math.round(slides.length / 2)) {
+          const slideClone = slide.cloneNode(true);
+          slideClone.classList.add("clone");
+          slideClone.classList.remove("active");
+          slideClone.removeAttribute("data-text");
+          beforeSlidesClones.push(slideClone);
+        }
+      });
+      beforeSlidesClones.reverse();
+      beforeSlidesClones.forEach((slide) => {
+        scssecoCarousel__stage.value.insertBefore(slide, scssecoCarousel__stage.value.childNodes[0]);
+      });
+
+      const slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
+
+      if (carouselDirection.value === "rtl" || carouselDirection.value === "ttb") {
+        slidesAndClones.reverse();
+      }
+
+      const slideClonePos = (index) => {
+        if (carouselDirection.value === "ltr" || carouselDirection.value === "rtl")
+          return { xPercent: index * 100, width: `${100 / carouselTransition.value}%` };
+
+        if (carouselDirection.value === "ttb")
+          return { yPercent: index * 100, height: `${100 / carouselTransition.value}%` };
+
+        if (carouselDirection.value === "btt")
+          return { yPercent: index * 100, height: `${100 / carouselTransition.value}%` };
+      };
+
+      slidesAndClones.forEach((slide, index) => {
+        gsap.set(slide, slideClonePos(index));
+      });
+
+      const slidesAndClonesShowActive = {
+        ltr: { xPercent: "-=" + resetFormula },
+        rtl: { xPercent: "-=" + resetFormula },
+        btt: { yPercent: "-=" + resetFormula },
+        ttb: { yPercent: "-=" + resetFormula },
+      };
+
+      gsap.set(slidesAndClones, slidesAndClonesShowActive[carouselDirection.value]);
     };
 
     const initVarsSlidesAnim = (anim = "next", targetDot = Number()) => {
@@ -719,7 +785,7 @@ export default {
       if (carouselTransition.value === "jump") {
         slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
       }
-      if (carouselTransition.value === "rifle") {
+      if (carouselTransition.value === "rifle" || !isNaN(carouselTransition.value)) {
         slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
       }
 
@@ -741,7 +807,7 @@ export default {
       if (carouselTransition.value === "jump") {
         slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
       }
-      if (carouselTransition.value === "rifle") {
+      if (carouselTransition.value === "rifle" || !isNaN(carouselTransition.value)) {
         slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
       }
 
@@ -773,7 +839,7 @@ export default {
         }
       }
 
-      if (carouselTransition.value === "rifle") {
+      if (carouselTransition.value === "rifle" || !isNaN(carouselTransition.value)) {
         const activeDataSlide = Number(htmlActiveSlide.dataset.slide);
         const nextDot = Number(htmlNextDot.dataset.slide);
 
@@ -891,6 +957,7 @@ export default {
       slidesArrangeFade();
       slidesArrangeJump(scssecoCarousel__slides.value);
       slidesArrangeRifle(scssecoCarousel__slides.value);
+      slidesArrangeNumber(scssecoCarousel__slides.value);
       addDevSlideNumber();
     });
 

@@ -30,10 +30,24 @@ export default {
     const carouselControls = ref("all");
     const carouselArrows = ref("text");
     const carouselReset = ref(true);
-    const carouselTransition = ref("rifle");
+    const carouselTransition = ref(6);
     const carouselResponsive = ref(true);
     const carouselDirection = ref("ltr");
     const carouselDev = ref(true);
+
+    const slideNumber = ref(null);
+    const interv = ref(null);
+    const animDur = ref(null);
+
+    const intervFunct = () => {
+      carouselInterval.value = interv.value.value;
+      componentKey.value++;
+    };
+
+    const animDurFunct = () => {
+      carouselAnimDuration.value = animDur.value.value;
+      componentKey.value++;
+    };
 
     const carouselAutoplayTrue = () => {
       carouselAutoplay.value = true;
@@ -102,6 +116,12 @@ export default {
       carouselTransition.value = "rifle";
       componentKey.value++;
     };
+    const carouselTransitionNumber = () => {
+      if (carouselTransition.value === null || carouselTransition.value === undefined) return;
+      const sldNr = Number(slideNumber.value.value);
+      carouselTransition.value = sldNr;
+      componentKey.value++;
+    };
 
     const carouselResponsiveTrue = () => {
       carouselResponsive.value = true;
@@ -158,6 +178,8 @@ export default {
       carouselDirection,
       carouselDev,
       //
+      intervFunct,
+      animDurFunct,
       carouselAutoplayTrue,
       carouselAutoplayFalse,
       carouselHoverPauseTrue,
@@ -173,6 +195,7 @@ export default {
       carouselTransitionFade,
       carouselTransitionJump,
       carouselTransitionRifle,
+      carouselTransitionNumber,
       carouselResponsiveTrue,
       carouselResponsiveFalse,
       carouselDirectionLTR,
@@ -182,6 +205,9 @@ export default {
       carouselDevTrue,
       carouselDevFalse,
       translationsGlossary,
+      interv,
+      animDur,
+      slideNumber,
     };
   },
 };
@@ -200,6 +226,26 @@ export default {
           <div class="col-12">
             <h2>settings</h2>
             <div class="settings">
+              <p>
+                carouselInterval
+                <input
+                  ref="interv"
+                  :value="carouselInterval"
+                  type="number"
+                  style="display: inline-block; width: 10ch; border-color: yellowgreen; background-color: yellowgreen"
+                />&nbsp;
+                <button @click="intervFunct">go</button>
+              </p>
+              <p>
+                carouselAnimDuration
+                <input
+                  ref="animDur"
+                  :value="carouselAnimDuration"
+                  type="number"
+                  style="display: inline-block; width: 10ch; border-color: yellowgreen; background-color: yellowgreen"
+                />&nbsp;
+                <button @click="animDurFunct">go</button>
+              </p>
               <p>
                 carouselAutoplay:
                 <button :class="{ active: carouselAutoplay }" @click="carouselAutoplayTrue">true</button>&nbsp;
@@ -237,8 +283,19 @@ export default {
                 <button :class="{ active: carouselTransition === 'jump' }" @click="carouselTransitionJump">jump</button
                 >&nbsp;
                 <button :class="{ active: carouselTransition === 'rifle' }" @click="carouselTransitionRifle">
-                  rifle
-                </button>
+                  rifle</button
+                >&nbsp;
+                <input
+                  ref="slideNumber"
+                  :value="!isNaN(Number(carouselTransition)) ? Number(carouselTransition) : 1"
+                  type="number"
+                  style="display: inline-block; width: 5ch"
+                  :style="{
+                    borderColor: !isNaN(Number(carouselTransition)) ? 'yellowgreen' : 'black',
+                    backgroundColor: !isNaN(Number(carouselTransition)) ? 'yellowgreen' : 'white',
+                  }"
+                />&nbsp;
+                <button @click="carouselTransitionNumber">go</button>
               </p>
               <p>
                 carouselResponsive:
@@ -1541,7 +1598,7 @@ export default {
   // column-gap: 4rem;
   // row-gap: 1rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   .active {
     background: yellowgreen;

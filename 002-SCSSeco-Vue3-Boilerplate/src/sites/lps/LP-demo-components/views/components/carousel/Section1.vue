@@ -25,12 +25,12 @@ export default {
 
     const carouselInterval = ref(2500);
     const carouselAnimDuration = ref(2500);
-    const carouselAutoplay = ref(true);
+    const carouselAutoplay = ref(false);
     const carouselHoverPause = ref(true);
     const carouselControls = ref("all");
     const carouselArrows = ref("text");
-    const carouselReset = ref(false);
-    const carouselTransition = ref("jump");
+    const carouselReset = ref(true);
+    const carouselTransition = ref("rifle");
     const carouselResponsive = ref(true);
     const carouselDirection = ref("ltr");
     const carouselDev = ref(true);
@@ -96,6 +96,10 @@ export default {
     };
     const carouselTransitionJump = () => {
       carouselTransition.value = "jump";
+      componentKey.value++;
+    };
+    const carouselTransitionRifle = () => {
+      carouselTransition.value = "rifle";
       componentKey.value++;
     };
 
@@ -168,6 +172,7 @@ export default {
       carouselResetFalse,
       carouselTransitionFade,
       carouselTransitionJump,
+      carouselTransitionRifle,
       carouselResponsiveTrue,
       carouselResponsiveFalse,
       carouselDirectionLTR,
@@ -229,7 +234,11 @@ export default {
                 carouselTransition:
                 <button :class="{ active: carouselTransition === 'fade' }" @click="carouselTransitionFade">fade</button
                 >&nbsp;
-                <button :class="{ active: carouselTransition === 'jump' }" @click="carouselTransitionJump">jump</button>
+                <button :class="{ active: carouselTransition === 'jump' }" @click="carouselTransitionJump">jump</button
+                >&nbsp;
+                <button :class="{ active: carouselTransition === 'rifle' }" @click="carouselTransitionRifle">
+                  rifle
+                </button>
               </p>
               <p>
                 carouselResponsive:

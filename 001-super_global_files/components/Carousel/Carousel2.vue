@@ -294,7 +294,7 @@ export default {
       // TODO de facut clona la primu si ultimu slide
       const htmlNextSlideNumber = Number(htmlNextSlide.dataset.slide);
       // const htmlActiveSlideNumber = Number(htmlActiveSlide.dataset.slide);
-      
+
       // let nextSlide;
 
       const nextNextSlideNumber =
@@ -457,6 +457,209 @@ export default {
         .fromTo(htmlNextNextSlide, slideAnimHtmlNextNextSlideFrom, slideAnimHtmlNextNextSlideTo, "<");
     };
 
+    const slidesArrangeRifle = (slides) => {
+      if (carouselTransition.value != "rifle") return;
+
+      let slideActive;
+
+      const cloneSlide = (slide, slidePos) => {
+        const clone = slide.cloneNode(true);
+        clone.classList.add("clone");
+        clone.classList.remove("active");
+        // console.log(clone);
+        if (slidePos === "first") {
+          scssecoCarousel__stage.value.appendChild(clone);
+          // gsap.set(clone, firstSlidePos[carouselDirection.value]);
+        }
+        if (slidePos === "last") {
+          scssecoCarousel__stage.value.insertBefore(clone, scssecoCarousel__stage.value.childNodes[0]);
+          // gsap.set(clone, lastSlidePos[carouselDirection.value]);
+        }
+      };
+
+      slides.forEach((slide, index) => {
+        const datasetSlide = Number(slide.dataset.slide);
+        const datasetActiveSlide = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+
+        if (slide.classList.contains("active")) {
+          slideActive = slide;
+        }
+
+        if (datasetSlide === 1) {
+          cloneSlide(slide, "first");
+        }
+
+        if (datasetSlide === slides.length) {
+          cloneSlide(slide, "last");
+        }
+      });
+
+      let slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
+      let slidesAndClones2 = [1, 2, 3, 4, 5];
+      // console.log(slidesAndClones2);
+
+      if (carouselDirection.value === "rtl") {
+        // console.log("shuahsjak");
+        // slidesAndClones2.reverse();
+      }
+      // console.log(slidesAndClones2);
+      const activeSlideNumber = Number(slideActive.dataset.slide);
+
+      const slidesAndClonesArrange = (index, direction) => {
+        if (direction === "ltr") return { xPercent: index * 100 };
+        if (direction === "rtl") return { xPercent: index * 100 * -1 };
+        if (direction === "btt") return { yPercent: index * 100 };
+        if (direction === "ttb") return { yPercent: index * 100 * -1 };
+      };
+
+      const slidesAndClonesActivePos = {
+        ltr: { xPercent: `-=${activeSlideNumber * 100}` },
+        rtl: { xPercent: `+=${activeSlideNumber * 100}` },
+        btt: { yPercent: `-=${activeSlideNumber * 100}` },
+        ttb: { yPercent: `+=${activeSlideNumber * 100}` },
+      };
+
+      slidesAndClones.forEach((slide, index) => {
+        gsap.set(slide, slidesAndClonesArrange(index, carouselDirection.value));
+      });
+
+      gsap.set(slidesAndClones, slidesAndClonesActivePos[carouselDirection.value]);
+    };
+
+    const slidesAnimRifle = (htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, anim = "next") => {
+      // console.log(htmlActiveSlide);
+      // console.log(htmlActiveDot);
+      // console.log(htmlNextSlide);
+      // console.log(htmlNextDot);
+      // console.log(anim);
+
+      const slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
+      const htmlActiveSlideNumber = Number(htmlActiveSlide.dataset.slide);
+      const htmlNextSlideNumber = Number(htmlNextSlide.dataset.slide);
+
+      let slidesAndClonesPos, nextSlidePos;
+
+      if (anim === "next") {
+        if (htmlNextSlideNumber > htmlActiveSlideNumber) {
+          nextSlidePos = htmlNextSlideNumber - htmlActiveSlideNumber;
+        }
+        if (htmlNextSlideNumber === 1) {
+          nextSlidePos = 1;
+          slidesAndClones.forEach((slide, index) => {
+            if (carouselDirection.value === "ltr") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                xPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "rtl") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                xPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "btt") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                yPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "ttb") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                yPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+          });
+        }
+
+        slidesAndClonesPos = {
+          ltr: {
+            xPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          rtl: {
+            xPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          btt: {
+            yPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          ttb: {
+            yPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+        };
+      }
+
+      if (anim === "prev") {
+        if (htmlNextSlideNumber < htmlActiveSlideNumber) {
+          nextSlidePos = htmlActiveSlideNumber - htmlNextSlideNumber;
+        }
+        if (htmlNextSlideNumber === scssecoCarousel__slides.value.length) {
+          nextSlidePos = 1;
+          slidesAndClones.forEach((slide, index) => {
+            if (carouselDirection.value === "ltr") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                xPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "rtl") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                xPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "btt") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                yPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "ttb") {
+              gsap.set(slide, {
+                // xPercent: index * 100,
+                yPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+          });
+        }
+
+        slidesAndClonesPos = {
+          ltr: {
+            xPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          rtl: {
+            xPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          btt: {
+            yPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          ttb: {
+            yPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+        };
+      }
+
+      slideAnim.to(slidesAndClones, slidesAndClonesPos[carouselDirection.value]);
+
+      // console.log(slidesAndClones);
+    };
+
     const initVarsSlidesAnim = (anim = "next", targetDot = Number()) => {
       const slidesLength = scssecoCarousel__slides.value.length;
       // active slide and dot
@@ -516,15 +719,18 @@ export default {
       if (carouselTransition.value === "jump") {
         slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
       }
+      if (carouselTransition.value === "rifle") {
+        slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
+      }
 
       disableArrows(htmlNextSlide, "prev");
     };
 
     const nextSlide = () => {
-      const activeSlide = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      const activeSlideNumber = Number(scssecoCarousel__activeSlide.value.dataset.slide);
       if (
         slideAnim.isActive() ||
-        (carouselReset.value === false && activeSlide === scssecoCarousel__slides.value.length)
+        (carouselReset.value === false && activeSlideNumber === scssecoCarousel__slides.value.length)
       )
         return;
 
@@ -534,6 +740,9 @@ export default {
       }
       if (carouselTransition.value === "jump") {
         slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
+      }
+      if (carouselTransition.value === "rifle") {
+        slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
       }
 
       disableArrows(htmlNextSlide, "next");
@@ -561,6 +770,21 @@ export default {
         //next
         if (activeDataSlide < nextDot) {
           slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
+        }
+      }
+
+      if (carouselTransition.value === "rifle") {
+        const activeDataSlide = Number(htmlActiveSlide.dataset.slide);
+        const nextDot = Number(htmlNextDot.dataset.slide);
+
+        // prev
+        if (activeDataSlide > nextDot) {
+          slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
+        }
+
+        //next
+        if (activeDataSlide < nextDot) {
+          slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
         }
       }
 
@@ -666,6 +890,7 @@ export default {
       autoPlay();
       slidesArrangeFade();
       slidesArrangeJump(scssecoCarousel__slides.value);
+      slidesArrangeRifle(scssecoCarousel__slides.value);
       addDevSlideNumber();
     });
 

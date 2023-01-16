@@ -3,6 +3,7 @@ import { onUpdated } from "@vue/runtime-core";
 
 import languages from "../../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../../001-super_global_files/composables/checkLangAndMeta";
+import translationsGlossary from '../../../../../../../../001-super_global_files/composables/translationsGlossary'
 
 import Section1 from "./Section1.vue";
 
@@ -16,22 +17,7 @@ export default {
     /**
      * metatags
      */
-    const documentTitleTransl = {
-      en: "Carousel",
-      it: "Carousel",
-      tr: "Carousel",
-      ro: "Carousel",
-      hu: "Carousel",
-      ar: "Carousel",
-      de: "Carousel",
-      es: "Carousel",
-      sv: "Carousel",
-      pt: "Carousel",
-      fi: "Carousel",
-      pl: "Carousel",
-      th: "Carousel",
-      ms: "Carousel"
-    };
+    const documentTitleTransl = translationsGlossary.c.carousel;
 
     const metaDescription = {
       en: `DemoComponents - Carousel - When writing a meta description, keep it between 140 and 160 characters so Google can display your entire message. Don’t forget to include your keyword!`,

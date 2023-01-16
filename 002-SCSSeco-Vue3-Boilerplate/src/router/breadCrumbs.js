@@ -329,22 +329,7 @@ const breadCrumbs = {
             label: translationsGlossary.c.components,
           },
           {
-            label: {
-              en: "Carousel",
-              it: "Carousel",
-              tr: "Carousel",
-              ro: "Carousel",
-              hu: "Carousel",
-              ar: "Carousel",
-              de: "Carousel",
-              es: "Carousel",
-              sv: "Carousel",
-              pt: "Carousel",
-              fi: "Carousel",
-              pl: "Carousel",
-              th: "Carousel",
-              ms: "Carousel",
-            },
+            label: translationsGlossary.c.carousel,
           },
         ],
         Countdown: [

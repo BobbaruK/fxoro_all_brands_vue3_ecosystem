@@ -30,7 +30,7 @@ export default {
     const carouselControls = ref("all");
     const carouselArrows = ref("text");
     const carouselReset = ref(true);
-    const carouselTransition = ref(6);
+    const carouselTransition = ref(11);
     const carouselResponsive = ref(true);
     const carouselDirection = ref("ltr");
     const carouselDev = ref(true);
@@ -232,7 +232,12 @@ export default {
                   ref="interv"
                   :value="carouselInterval"
                   type="number"
-                  style="display: inline-block; width: 10ch; border-color: yellowgreen; background-color: yellowgreen"
+                  style="
+                    display: inline-block;
+                    width: 10ch;
+                    border-color: var(--clr-brandSecondaryColor);
+                    background-color: var(--clr-brandSecondaryColor);
+                  "
                 />&nbsp;
                 <button @click="intervFunct">go</button>
               </p>
@@ -242,7 +247,12 @@ export default {
                   ref="animDur"
                   :value="carouselAnimDuration"
                   type="number"
-                  style="display: inline-block; width: 10ch; border-color: yellowgreen; background-color: yellowgreen"
+                  style="
+                    display: inline-block;
+                    width: 10ch;
+                    border-color: var(--clr-brandSecondaryColor);
+                    background-color: var(--clr-brandSecondaryColor);
+                  "
                 />&nbsp;
                 <button @click="animDurFunct">go</button>
               </p>
@@ -291,8 +301,8 @@ export default {
                   type="number"
                   style="display: inline-block; width: 5ch"
                   :style="{
-                    borderColor: !isNaN(Number(carouselTransition)) ? 'yellowgreen' : 'black',
-                    backgroundColor: !isNaN(Number(carouselTransition)) ? 'yellowgreen' : 'white',
+                    borderColor: !isNaN(Number(carouselTransition)) ? 'var(--clr-brandSecondaryColor)' : 'black',
+                    backgroundColor: !isNaN(Number(carouselTransition)) ? 'var(--clr-brandSecondaryColor)' : 'white',
                   }"
                 />&nbsp;
                 <button @click="carouselTransitionNumber">go</button>
@@ -386,17 +396,17 @@ export default {
   :lang=&quot;lang&quot;
   :carouselDetails=&quot;{
     sliderID: 'scssecoSlider-1',
-    carouselInterval: carouselInterval,
-    carouselAnimDuration: carouselAnimDuration,
-    carouselAutoplay: carouselAutoplay,
-    carouselHoverPause: carouselHoverPause,
-    carouselControls: carouselControls,
-    carouselArrows: carouselArrows,
-    carouselReset: carouselReset,
-    carouselTransition: carouselTransition,
-    carouselResponsive: carouselResponsive,
-    carouselDirection: carouselDirection,
-    carouselDev: carouselDev,
+    carouselInterval: 2500,
+    carouselAnimDuration: 2500,
+    carouselAutoplay: false,
+    carouselHoverPause: true,
+    carouselControls: 'all',
+    carouselArrows: 'text',
+    carouselReset: true,
+    carouselTransition: 11,
+    carouselResponsive: true,
+    carouselDirection: 'ltr',
+    carouselDev: true,
   }&quot;
 &gt;
   &lt;Slide&gt;
@@ -1601,7 +1611,7 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   .active {
-    background: yellowgreen;
+    background: var(--clr-brandSecondaryColor);
   }
 }
 </style>

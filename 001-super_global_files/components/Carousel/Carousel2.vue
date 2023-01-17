@@ -726,6 +726,54 @@ export default {
       gsap.set(slidesAndClones, slidesAndClonesShowActive[carouselDirection.value]);
     };
 
+    const carouselResponsiveMatchMedia = () => {
+      if (carouselResponsive.value != true) return;
+      console.log(carouselResponsive.value === true);
+      if (!isNaN(carouselTransition.value)) {
+        const gsapmm = gsap.matchMedia();
+
+        const mediaqXS = "(max-width: 575px)";
+        const mediaqXSrecommendedSlides = 1;
+        const mediaqSM = "(min-width: 576px) and (max-width: 767px)";
+        const mediaqSMrecommendedSlides = 2;
+        const mediaqMD = "(min-width: 768px) and (max-width: 991px)";
+        const mediaqMDrecommendedSlides = 3;
+        const mediaqLG = "(min-width: 992px) and (max-width: 1199px)";
+        const mediaqLGrecommendedSlides = 5;
+        const mediaqXL = "(min-width: 1200px) and (max-width: 1399px)";
+        const mediaqXLrecommendedSlides = 7;
+
+        console.log(carouselTransition.value);
+        gsapmm.add(mediaqXS, () => {
+          carouselTransition.value = 1;
+        });
+
+        gsapmm.add(mediaqSM, () => {
+          if (mediaqSMrecommendedSlides > carouselTransition.value) return;
+          carouselTransition.value = 2;
+        });
+
+        gsapmm.add(mediaqMD, () => {
+          if (mediaqMDrecommendedSlides > carouselTransition.value) return;
+          carouselTransition.value = 3;
+        });
+
+        gsapmm.add(mediaqLG, () => {
+          if (mediaqLGrecommendedSlides > carouselTransition.value) return;
+          carouselTransition.value = 5;
+        });
+
+        gsapmm.add(mediaqXL, () => {
+          if (mediaqXLrecommendedSlides > carouselTransition.value) return;
+          carouselTransition.value = 7;
+        });
+
+        console.log(carouselTransition.value);
+
+        // console.log("ceva");
+      }
+    };
+
     const initVarsSlidesAnim = (anim = "next", targetDot = Number()) => {
       const slidesLength = scssecoCarousel__slides.value.length;
       // active slide and dot
@@ -954,10 +1002,13 @@ export default {
       scssecoCarousel__activeSlide.value = scssecoCarousel__stage.value.querySelector(".active");
 
       autoPlay();
+      carouselResponsiveMatchMedia();
+
       slidesArrangeFade();
       slidesArrangeJump(scssecoCarousel__slides.value);
       slidesArrangeRifle(scssecoCarousel__slides.value);
       slidesArrangeNumber(scssecoCarousel__slides.value);
+
       addDevSlideNumber();
     });
 
@@ -1182,7 +1233,7 @@ export default {
       padding: 10px;
       button {
         &.active {
-          background-color: red;
+          background-color: var(--clr-brandSecondaryColor);
         }
         span {
           pointer-events: none;

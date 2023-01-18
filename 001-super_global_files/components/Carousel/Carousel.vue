@@ -5,6 +5,8 @@ import { onMounted, onUnmounted } from "@vue/runtime-core";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import Loader from "../Loader/Loader.vue";
+
 import translationsGlossary from "../../composables/translationsGlossary";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default {
   name: "Carousel",
   emits: ["carouselKey"],
+  components: { Loader },
   props: {
     lang: String,
     carouselDetails: Object,
@@ -20,1354 +23,1149 @@ export default {
     /**
      * TODO
      *
-     * * add svg carrets
-     * * translations ready
-     * * clean code
-     * ! direction
-     * *    left to right(ltr),
-     * *    right to left(rtl),
-     * ?    top to bottom(ttb),
-     * *    bottom to top(btt)
-     * ! scrollTrigger
-     * ! next slide(s) via dots
-     *
-     *
-     *
      */
 
+    const loading = ref(true);
+
     // The amount of time between the end of the animation and the start of the next animation
-    const interval = ref(
-      Number.isInteger(Number(props.carouselDetails.interval))
-        ? Number(props.carouselDetails.interval) < 0
+    const carouselInterval = ref(
+      Number.isInteger(Number(props.carouselDetails.carouselInterval))
+        ? Number(props.carouselDetails.carouselInterval) < 0
           ? 0
-          : Number(props.carouselDetails.interval)
+          : Number(props.carouselDetails.carouselInterval)
         : 5000
     );
 
     // The duration of the animation
-    const animDuration = ref(
-      Number.isInteger(Number(props.carouselDetails.animDuration))
-        ? Number(props.carouselDetails.animDuration) < 100
+    const carouselAnimDuration = ref(
+      Number.isInteger(Number(props.carouselDetails.carouselAnimDuration))
+        ? Number(props.carouselDetails.carouselAnimDuration) < 100
           ? 100
-          : Number(props.carouselDetails.animDuration)
+          : Number(props.carouselDetails.carouselAnimDuration)
         : 320
     );
 
     // true: autoplay slides; false: will not autoplay
-    const autoplay = ref(
-      props.carouselDetails.autoplay != undefined
-        ? props.carouselDetails.autoplay === "false"
+    const carouselAutoplay = ref(
+      props.carouselDetails.carouselAutoplay != undefined
+        ? props.carouselDetails.carouselAutoplay === "false"
           ? false
-          : !!props.carouselDetails.autoplay
+          : !!props.carouselDetails.carouselAutoplay
         : true
     );
 
     // true: will allow the carousel to pause when hover and resumes on mouseleave; false: will not pause the carousel on hover
-    const hoverPause = ref(
-      props.carouselDetails.hoverPause != undefined
-        ? props.carouselDetails.hoverPause === "false"
+    const carouselHoverPause = ref(
+      props.carouselDetails.carouselHoverPause != undefined
+        ? props.carouselDetails.carouselHoverPause === "false"
           ? false
-          : !!props.carouselDetails.hoverPause
+          : !!props.carouselDetails.carouselHoverPause
         : true
     );
 
     // "all": will show previous indicator, next indicator and the dot buttons; "dots": will show only the dot buttons; "arrows": will show only the indicators; "none": will not show any controls
     const allowedControls = ["all", "dots", "arrows", "none"];
     const defaultControl = "all";
-    const controls = ref(
-      props.carouselDetails.controls
-        ? allowedControls.indexOf(props.carouselDetails.controls) == -1
+    const carouselControls = ref(
+      props.carouselDetails.carouselControls
+        ? allowedControls.indexOf(props.carouselDetails.carouselControls) == -1
           ? defaultControl
-          : props.carouselDetails.controls
+          : props.carouselDetails.carouselControls
         : defaultControl
     );
 
     // "arrows": show arrow indicators; "text": show next and prev indicators
     const allowedArrows = ["arrows", "text"];
     const defaultArrow = "arrows";
-    const arrows = ref(
-      props.carouselDetails.arrows
-        ? allowedArrows.indexOf(props.carouselDetails.arrows) == -1
+    const carouselArrows = ref(
+      props.carouselDetails.carouselArrows
+        ? allowedArrows.indexOf(props.carouselDetails.carouselArrows) == -1
           ? defaultArrow
-          : props.carouselDetails.arrows
+          : props.carouselDetails.carouselArrows
         : defaultArrow
     );
 
     // true: will cycle infinitely; false will stop at the last slide
-    const reset = ref(
-      props.carouselDetails.reset != undefined
-        ? props.carouselDetails.reset === "false"
+    const carouselReset = ref(
+      props.carouselDetails.carouselReset != undefined
+        ? props.carouselDetails.carouselReset === "false"
           ? false
-          : !!props.carouselDetails.reset
+          : !!props.carouselDetails.carouselReset
         : true
     );
 
     // "rifle": if you are on slide 1 and click on the dot for slide 4 will cycle trough all the slides in between; "jump": will jump directly to target slide; "fade": same as jump but with fade; "number": how many slides in viewport
     const allowedSlideTranitions = ["rifle", "jump", "fade"];
     const defaultSlideTranition = "rifle";
-    const slideTransition = ref(
-      props.carouselDetails.slideTransition
-        ? allowedSlideTranitions.indexOf(props.carouselDetails.slideTransition) == -1
-          ? !isNaN(props.carouselDetails.slideTransition)
-            ? Number(props.carouselDetails.slideTransition)
+    const carouselTransition = ref(
+      !isNaN(props.carouselDetails.carouselTransition)
+        ? Number(props.carouselDetails.carouselTransition)
+        : props.carouselDetails.carouselTransition
+        ? allowedSlideTranitions.indexOf(props.carouselDetails.carouselTransition) == -1
+          ? !isNaN(props.carouselDetails.carouselTransition)
+            ? Number(props.carouselDetails.carouselTransition)
             : defaultSlideTranition
-          : props.carouselDetails.slideTransition
+          : props.carouselDetails.carouselTransition
         : defaultSlideTranition
     );
 
     // true: will adjust the slide number depending on the viewport
-    const responsive = ref(
-      props.carouselDetails.responsive != undefined
-        ? props.carouselDetails.responsive === "false"
+    const carouselResponsive = ref(
+      props.carouselDetails.carouselResponsive != undefined
+        ? props.carouselDetails.carouselResponsive === "false"
           ? false
-          : !!props.carouselDetails.responsive
-        : true
+          : !!props.carouselDetails.carouselResponsive
+        : false
     );
 
     // direction of the slide animation
     const allowedDirectionTranitions = ["ltr", "rtl", "ttb", "btt"];
     const defaultDirectionTranition = "ltr";
-    const direction = ref(
-      props.carouselDetails.direction
-        ? allowedDirectionTranitions.indexOf(props.carouselDetails.direction) == -1
+    const carouselDirection = ref(
+      props.carouselDetails.carouselDirection
+        ? allowedDirectionTranitions.indexOf(props.carouselDetails.carouselDirection) == -1
           ? defaultDirectionTranition
-          : props.carouselDetails.direction
+          : props.carouselDetails.carouselDirection
         : props.lang === "ar"
         ? "rtl"
         : defaultDirectionTranition
     );
 
     // "true": Show information(maybe usefull)
-    const dev = ref(
-      props.carouselDetails.dev != undefined
-        ? props.carouselDetails.dev === "false"
+    const carouselDev = ref(
+      props.carouselDetails.carouselDev != undefined
+        ? props.carouselDetails.carouselDev === "false"
           ? false
-          : !!props.carouselDetails.dev
+          : !!props.carouselDetails.carouselDev
         : false
     );
 
     const scssecoCarousel = ref(null);
     const scssecoCarousel__stage = ref(null);
-    const time = ref(0);
-    let timeInt;
-    const isPaused = ref(true);
+    const scssecoCarousel__slides = ref(null);
+    const scssecoCarousel__activeSlide = ref(null);
+    const scssecoCarousel__controls = ref(null);
+    const scssecoCarousel__controls_prevBtn = ref(null);
+    const scssecoCarousel__controls_nextBtn = ref(null);
 
-    // Set GSAP slide animation timeline
+    const time = ref(0);
+    const isPaused = ref(true);
+    let timeInt;
+
+    const dataSlide = (number) => `[data-slide='${number}']:not(.clone)`;
+
     const slideAnim = gsap.timeline({
       defaults: {
-        duration: animDuration.value / 1000,
-        ease: "back",
-        // ease: "power4.out",
+        duration: carouselAnimDuration.value / 1000,
+        // ease: "back",
+        ease: "power4.out",
         // ease: "linear",
         // ease: "elastic",
       },
       // paused: true,
     });
 
-    //Controls
-    const controlsWrapper = document.createElement("div"); // create controls wrapper
-    controlsWrapper.classList.add("scssecoCarousel__controls"); // add class on controls wrapper of scssecoCarousel__controls
+    const slideAnimOnStartFunct = (htmlActiveSlide, htmlActiveDot) => {
+      time.value = 0; // Set time to 0
+      htmlActiveSlide.classList.remove("active"); // remove class from active slide
 
-    if (direction.value) {
-      controlsWrapper.style = `direction: ${direction.value}`;
-    }
-
-    const arrowsWrapper = document.createElement("div"); // create arrows wrapper
-    arrowsWrapper.classList.add("scssecoCarousel__controls--arrows"); // add class on arrows wrapper of scssecoCarousel__controls--arrows
-
-    const dotsWrapper = document.createElement("div"); // create dots wrapper
-    dotsWrapper.classList.add("scssecoCarousel__controls--dots"); // add class on dots wrapper of scssecoCarousel__controls--dots
-
-    const prvButton = document.createElement("button"); // create prev button
-    prvButton.classList.add("scssecoCarousel__controls--prev"); // add class on prev button of scssecoCarousel__controls--prev
-
-    const prvButtonSpan = document.createElement("span"); // create span inside prev button
-    prvButtonSpan.innerHTML =
-      arrows.value == "arrows"
-        ? direction.value === "rtl" || props.lang === "ar"
-          ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M96 220a12.2 12.2 0 0 1-8.5-3.5a12 12 0 0 1 0-17L159 128L87.5 56.5a12 12 0 0 1 17-17l80 80a12 12 0 0 1 0 17l-80 80A12.2 12.2 0 0 1 96 220Z"/></svg>'
-          : `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 256 256'><path fill='currentColor' d='M160 220a12.2 12.2 0 0 1-8.5-3.5l-80-80a12 12 0 0 1 0-17l80-80a12 12 0 0 1 17 17L97 128l71.5 71.5a12 12 0 0 1 0 17a12.2 12.2 0 0 1-8.5 3.5Z'/></svg>`
-        : translationsGlossary.p.previous[props.lang]; // add text on prev button of Prev
-    prvButton.appendChild(prvButtonSpan); // append span to prev button
-
-    const nxtButton = document.createElement("button"); // create next button
-    nxtButton.classList.add("scssecoCarousel__controls--next"); // add class on next button of scssecoCarousel__controls--next
-
-    const nxtButtonSpan = document.createElement("span"); // create span inside next button
-    nxtButtonSpan.innerHTML =
-      arrows.value == "arrows"
-        ? direction.value === "rtl" || props.lang === "ar"
-          ? `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 256 256'><path fill='currentColor' d='M160 220a12.2 12.2 0 0 1-8.5-3.5l-80-80a12 12 0 0 1 0-17l80-80a12 12 0 0 1 17 17L97 128l71.5 71.5a12 12 0 0 1 0 17a12.2 12.2 0 0 1-8.5 3.5Z'/></svg>`
-          : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M96 220a12.2 12.2 0 0 1-8.5-3.5a12 12 0 0 1 0-17L159 128L87.5 56.5a12 12 0 0 1 17-17l80 80a12 12 0 0 1 0 17l-80 80A12.2 12.2 0 0 1 96 220Z"/></svg>`
-        : translationsGlossary.n.next[props.lang]; // add text on next button of Next
-    nxtButton.appendChild(nxtButtonSpan); // append span to next button
-
-    if (direction.value === "ltr" && props.lang === "ar") {
-      prvButton.style = "direction: rtl";
-      nxtButton.style = "direction: rtl";
-    }
-
-    const slideTransitionRifleNext = (stage, activeSlide, nextSlide, activeDot, nextDot) => {
-      let stageTo = {};
-
-      const onStartFunct = () => {
-        time.value = 0; // Set time to 0
-        activeSlide.classList.remove("active"); // remove class from active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          activeDot.classList.remove("active"); // remove class from active dot - if controls is 'dots' or 'all'
-        }
-      };
-      const onCompleteFunct = () => {
-        time.value = 0; // Set time to 0
-        nextSlide.classList.add("active"); // add class on active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          nextDot.classList.add("active"); // add class on active dot - if controls is 'dots' or 'all'
-        }
-      };
-
-      if (direction.value === "ltr") {
-        stageTo = {
-          xPercent: "-=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
+      if (carouselControls.value === "dots" || carouselControls.value === "all") {
+        htmlActiveDot.classList.remove("active"); // remove class from active dot - if controls is 'dots' or 'all'
       }
-
-      if (direction.value === "rtl") {
-        stageTo = {
-          xPercent: "+=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      if (direction.value === "ttb") {
-        stageTo = {
-          yPercent: "+=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      if (direction.value === "btt") {
-        stageTo = {
-          yPercent: "-=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      slideAnim.to(stage, stageTo);
     };
 
-    const slideTransitionRiflePrev = (stage, activeSlide, prevSlide, activeDot, prevDot) => {
-      let stageTo = {};
+    const slideAnimOnCompleteFunct = (htmlNextSlide, htmlNextDot) => {
+      time.value = 0; // Set time to 0
+      scssecoCarousel__activeSlide.value = htmlNextSlide;
+      htmlNextSlide.classList.add("active"); // add class on active slide
 
-      const onStartFunct = () => {
-        time.value = 0; // Set time to 0
-        activeSlide.classList.remove("active"); // remove class from active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          activeDot.classList.remove("active"); // remove class from active dot - if controls is 'dots' or 'all'
-        }
+      if (carouselControls.value === "dots" || carouselControls.value === "all") {
+        htmlNextDot.classList.add("active"); // add class on active dot - if controls is 'dots' or 'all'
+      }
+    };
+
+    const slidesArrangeFade = () => {
+      if (carouselTransition.value != "fade") return;
+      // Arange slides
+      gsap.set(scssecoCarousel__slides.value, {
+        autoAlpha: 0,
+        xPercent: 0,
+        yPercent: 0,
+      });
+      gsap.set(scssecoCarousel__activeSlide.value, {
+        autoAlpha: 1,
+        xPercent: 0,
+        yPercent: 0,
+      });
+    };
+
+    const slideAnimFade = (htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot) => {
+      let htmlActiveSlideAnim, htmlNextSlideAnim;
+      htmlActiveSlideAnim = {
+        xPercent: 0,
+        autoAlpha: 0,
+        ease: "linear", // force linear
       };
-      const onCompleteFunct = () => {
-        time.value = 0; // Set time to 0
-        prevSlide.classList.add("active"); // add class on active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          prevDot.classList.add("active"); // add class on active dot - if controls is 'dots' or 'all'
+      htmlNextSlideAnim = {
+        xPercent: 0,
+        autoAlpha: 1,
+        ease: "linear",
+        onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+        onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+      };
+
+      slideAnim.to(htmlActiveSlide, htmlActiveSlideAnim).to(htmlNextSlide, htmlNextSlideAnim, "<");
+    };
+
+    const slidesArrangeJump = (slides) => {
+      if (carouselTransition.value != "jump") return;
+
+      const firstSlidePos = {
+        ltr: { xPercent: -100 },
+        rtl: { xPercent: 100 },
+        btt: { yPercent: -100 },
+        ttb: { yPercent: 100 },
+      };
+      const lastSlidePos = {
+        ltr: { xPercent: 100 },
+        rtl: { xPercent: -100 },
+        btt: { yPercent: 100 },
+        ttb: { yPercent: -100 },
+      };
+      const slidesBeforePos = {
+        ltr: { xPercent: -100 },
+        rtl: { xPercent: 100 },
+        btt: { yPercent: -100 },
+        ttb: { yPercent: 100 },
+      };
+      const slidesAfterPos = {
+        ltr: { xPercent: 100 },
+        rtl: { xPercent: -100 },
+        btt: { yPercent: 100 },
+        ttb: { yPercent: -100 },
+      };
+
+      let slidesBefore = []; // create empty array for slides before the active slide
+      let slidesAfter = []; // create empty array for slides after the active slide
+
+      const cloneSlide = (slide, slidePos) => {
+        const clone = slide.cloneNode(true);
+        clone.classList.add("clone");
+        clone.classList.remove("active");
+        
+        if (slidePos === "first") {
+          scssecoCarousel__stage.value.appendChild(clone);
+          gsap.set(clone, firstSlidePos[carouselDirection.value]);
+        }
+        if (slidePos === "last") {
+          scssecoCarousel__stage.value.insertBefore(clone, scssecoCarousel__stage.value.childNodes[0]);
+          gsap.set(clone, lastSlidePos[carouselDirection.value]);
         }
       };
 
-      if (direction.value === "ltr") {
-        stageTo = {
-          xPercent: "+=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      if (direction.value === "rtl") {
-        stageTo = {
-          xPercent: "-=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      if (direction.value === "ttb") {
-        stageTo = {
-          yPercent: "-=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      if (direction.value === "btt") {
-        stageTo = {
-          yPercent: "+=100",
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      slideAnim.to(stage, stageTo);
-    };
-
-    const slideTransitionRifleResetEnd = (currentSlide, slides, slidesPlusClones) => {
-      let slidesPlusClonesSet;
-
-      if (direction.value === "ltr") {
-        slidesPlusClonesSet = {
-          xPercent: `+=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (direction.value === "rtl") {
-        slidesPlusClonesSet = {
-          xPercent: `-=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (direction.value === "ttb") {
-        slidesPlusClonesSet = {
-          yPercent: `-=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (direction.value === "btt") {
-        slidesPlusClonesSet = {
-          yPercent: `+=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (Number(currentSlide.dataset.slidenr) === slides.length) {
-        gsap.set(slidesPlusClones, slidesPlusClonesSet);
-      }
-    };
-
-    const slideTransitionRifleResetStart = (currentSlide, slides, slidesPlusClones) => {
-      let slidesPlusClonesSet;
-
-      if (direction.value === "ltr") {
-        slidesPlusClonesSet = {
-          xPercent: `-=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (direction.value === "rtl") {
-        slidesPlusClonesSet = {
-          xPercent: `+=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (direction.value === "ttb") {
-        slidesPlusClonesSet = {
-          yPercent: `+=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (direction.value === "btt") {
-        slidesPlusClonesSet = {
-          yPercent: `-=${slides.length}00`, // if is last slide reset to first
-        };
-      }
-
-      if (Number(currentSlide.dataset.slidenr) === 1) {
-        gsap.set(slidesPlusClones, slidesPlusClonesSet);
-      }
-    };
-
-    const slideTransitionFade = (activeSlide, nextSlide, activeDot, nextDot) => {
-      slideAnim
-        .to(activeSlide, {
-          xPercent: 0,
-          autoAlpha: 0,
-          ease: "linear",
-        })
-        .to(
-          nextSlide,
-          {
-            xPercent: 0,
-            autoAlpha: 1,
-            ease: "linear",
-            onStart: () => {
-              time.value = 0; // Set time to 0
-              activeSlide.classList.remove("active"); // remove class from active slide
-              if (controls.value === "dots" || controls.value === "all") {
-                activeDot.classList.remove("active"); // remove class from active dot - if controls is 'dots' or 'all'
-              }
-            },
-            onComplete: () => {
-              time.value = 0; // Set time to 0
-              nextSlide.classList.add("active"); // add class on active slide
-              if (controls.value === "dots" || controls.value === "all") {
-                nextDot.classList.add("active"); // add class on active dot - if controls is 'dots' or 'all'
-              }
-            },
-          },
-          "<"
-        );
-    };
-
-    const slideTransitionJumpNext = (activeSlide, nextSlide, nextNextSlide, activeDot, nextDot) => {
-      let slideAnimActiveSlide,
-        slideAnimNextSlideFrom,
-        slideAnimNextSlideTo,
-        slideAnimNextNextSlideFrom,
-        slideAnimNextNextSlideTo = {};
-
-      const onStartFunct = () => {
-        time.value = 0; // Set time to 0
-        activeSlide.classList.remove("active"); // remove class from active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          activeDot.classList.remove("active"); // remove class from active dot - if controls is 'dots' or 'all'
-        }
-      };
-
-      const onCompleteFunct = () => {
-        time.value = 0; // Set time to 0
-        nextSlide.classList.add("active"); // add class on active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          nextDot.classList.add("active"); // add class on active dot - if controls is 'dots' or 'all'
-        }
-      };
-
-      if (direction.value === "ltr") {
-        slideAnimActiveSlide = { xPercent: -100 };
-        slideAnimNextSlideFrom = { xPercent: 100 };
-        slideAnimNextSlideTo = { xPercent: 0 };
-        slideAnimNextNextSlideFrom = { xPercent: 200 };
-        slideAnimNextNextSlideTo = {
-          xPercent: 100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-      if (direction.value === "rtl") {
-        slideAnimActiveSlide = { xPercent: 100 };
-        slideAnimNextSlideFrom = { xPercent: -100 };
-        slideAnimNextSlideTo = { xPercent: 0 };
-        slideAnimNextNextSlideFrom = { xPercent: -200 };
-        slideAnimNextNextSlideTo = {
-          xPercent: -100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-      if (direction.value === "ttb") {
-        slideAnimActiveSlide = { yPercent: 100 };
-        slideAnimNextSlideFrom = { yPercent: -100, xPercent: 0 };
-        slideAnimNextSlideTo = { yPercent: 0 };
-        slideAnimNextNextSlideFrom = { yPercent: -200 };
-        slideAnimNextNextSlideTo = {
-          yPercent: -100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-      if (direction.value === "btt") {
-        slideAnimActiveSlide = { yPercent: -100 };
-        slideAnimNextSlideFrom = { yPercent: 100, xPercent: 0 };
-        slideAnimNextSlideTo = { yPercent: 0 };
-        slideAnimNextNextSlideFrom = { yPercent: 200 };
-        slideAnimNextNextSlideTo = {
-          yPercent: 100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      slideAnim
-        .to(activeSlide, slideAnimActiveSlide)
-        .fromTo(nextSlide, slideAnimNextSlideFrom, slideAnimNextSlideTo, "<")
-        .fromTo(nextNextSlide, slideAnimNextNextSlideFrom, slideAnimNextNextSlideTo, "<");
-    };
-
-    const slideTransitionJumpPrev = (activeSlide, prevSlide, prevPrevSlide, activeDot, prevDot) => {
-      let slideAnimActiveSlide,
-        slideAnimPrevSlideFrom,
-        slideAnimPrevSlideTo,
-        slideAnimPrevPrevSlideFrom,
-        slideAnimPrevPrevSlideTo = {};
-
-      const onStartFunct = () => {
-        time.value = 0; // Set time to 0
-        activeSlide.classList.remove("active"); // remove class from active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          activeDot.classList.remove("active"); // remove class from active dot - if controls is 'dots' or 'all'
-        }
-      };
-
-      const onCompleteFunct = () => {
-        time.value = 0; // Set time to 0
-        prevSlide.classList.add("active"); // add class on active slide
-        if (controls.value === "dots" || controls.value === "all") {
-          prevDot.classList.add("active"); // add class on active dot - if controls is 'dots' or 'all'
-        }
-      };
-
-      if (direction.value === "ltr") {
-        slideAnimActiveSlide = { xPercent: 100 };
-        slideAnimPrevSlideFrom = { xPercent: -100 };
-        slideAnimPrevSlideTo = { xPercent: 0 };
-        slideAnimPrevPrevSlideFrom = { xPercent: -200 };
-        slideAnimPrevPrevSlideTo = {
-          xPercent: -100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-      if (direction.value === "rtl") {
-        slideAnimActiveSlide = { xPercent: -100 };
-        slideAnimPrevSlideFrom = { xPercent: 100 };
-        slideAnimPrevSlideTo = { xPercent: 0 };
-        slideAnimPrevPrevSlideFrom = { xPercent: 200 };
-        slideAnimPrevPrevSlideTo = {
-          xPercent: 100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-      if (direction.value === "ttb") {
-        slideAnimActiveSlide = { yPercent: -100 };
-        slideAnimPrevSlideFrom = { yPercent: 100, xPercent: 0 };
-        slideAnimPrevSlideTo = { yPercent: 0 };
-        slideAnimPrevPrevSlideFrom = { yPercent: 200 };
-        slideAnimPrevPrevSlideTo = {
-          yPercent: 100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-      if (direction.value === "btt") {
-        slideAnimActiveSlide = { yPercent: 100 };
-        slideAnimPrevSlideFrom = { yPercent: -100, xPercent: 0 };
-        slideAnimPrevSlideTo = { yPercent: 0 };
-        slideAnimPrevPrevSlideFrom = { yPercent: -200 };
-        slideAnimPrevPrevSlideTo = {
-          yPercent: -100,
-          onStart: () => onStartFunct(),
-          onComplete: () => onCompleteFunct(),
-        };
-      }
-
-      slideAnim
-        .to(activeSlide, slideAnimActiveSlide)
-        .fromTo(prevSlide, slideAnimPrevSlideFrom, slideAnimPrevSlideTo, "<")
-        .fromTo(prevPrevSlide, slideAnimPrevPrevSlideFrom, slideAnimPrevPrevSlideTo, "<");
-    };
-
-    const nextSlide = (stage, activeSlide, nextSlide, nextnextSlide, activeDot, nextDot) => {
-      switch (slideTransition.value) {
-        case "rifle":
-          slideTransitionRifleNext(stage, activeSlide, nextSlide, activeDot, nextDot);
-          break;
-        case "fade":
-          slideTransitionFade(activeSlide, nextSlide, activeDot, nextDot);
-          break;
-        case "jump":
-          slideTransitionJumpNext(activeSlide, nextSlide, nextnextSlide, activeDot, nextDot);
-          break;
-        default:
-          slideTransitionRifleNext(stage, activeSlide, nextSlide, activeDot, nextDot);
-      }
-    };
-
-    const prevSlide = (stage, activeSlide, prevSlide, prevPrevSlide, activeDot, prevDot) => {
-      switch (slideTransition.value) {
-        case "rifle":
-          slideTransitionRiflePrev(stage, activeSlide, prevSlide, activeDot, prevDot);
-          break;
-        case "fade":
-          slideTransitionFade(activeSlide, prevSlide, activeDot, prevDot);
-          break;
-        case "jump":
-          slideTransitionJumpPrev(activeSlide, prevSlide, prevPrevSlide, activeDot, prevDot);
-          break;
-        default:
-          slideTransitionRiflePrev(stage, activeSlide, prevSlide, activeDot, prevDot);
-      }
-    };
-
-    const disablearrows = (prev, next, currentSlide, currentSlideNr) => {
-      if (controls.value != "dots" && controls.value != "none") {
-        if (Number(currentSlide.dataset.slidenr) === currentSlideNr) {
-          prev.disabled = true; // disable prev button - if target slide is first slide
-        } else if (Number(currentSlide.dataset.slidenr) === currentSlideNr) {
-          next.disabled = true; // disable next button - if target slide is last slide
-        }
-        next.removeAttribute("disabled"); // remove disabled attr if jump from last slide or first slide
-      }
-    };
-
-    onMounted(() => {
-      // get the active slide
-      const activeSlide = scssecoCarousel__stage.value.querySelector(".active");
-
-      // TODO
-      // Run slider only if in viewport
-      // ScrollTrigger.create({
-      //   animation: slideInVP,
-      //   trigger: `#${props.carouselDetails.sliderID}`,
-      //   start: "top 60%",
-      //   end: "bottom 30%",
-      //   markers: true,
-      //   toggleActions: "play reverse play reverse",
-      //   onEnter: () => {
-      //     isPaused.value = false;
-      //     slideAnim.resume();
-      //   },
-      //   onLeave: () => {
-      //     isPaused.value = true;
-      //     slideAnim.pause();
-      //   },
-      //   onEnterBack: () => {
-      //     isPaused.value = false;
-      //     slideAnim.resume();
-      //   },
-      //   onLeaveBack: () => {
-      //     isPaused.value = true;
-      //     slideAnim.pause();
-      //   },
-      // });
-
-      const slides = Array.from(scssecoCarousel__stage.value.children);
-
-      // create dot for each slide
       slides.forEach((slide, index) => {
-        const slideNr = index + 1; // slide number
-        const dotButton = document.createElement("button"); // create dot button
-        const dotButtonSpan = document.createElement("span"); // create span inside dot button
-        slide.setAttribute("data-slidenr", slideNr); // add data-slide on each slide of nr of slide
-        dotButton.setAttribute("data-slidenr", slideNr); // add data-slide on each dot button of nr of slide
-        const dotNr = document.createTextNode(slideNr); // create numbers for each dot
+        const datasetSlide = Number(slide.dataset.slide);
+        const datasetActiveSlide = Number(scssecoCarousel__activeSlide.value.dataset.slide);
 
-        dotButtonSpan.appendChild(dotNr); // append text to span
-        dotButton.appendChild(dotButtonSpan); // append span on each button dot
-        dotsWrapper.appendChild(dotButton); // add buttons from dots array
-      });
+        if (datasetSlide < datasetActiveSlide) {
+          slidesBefore.push(slide); // add before active slides to array
+        }
 
-      const dots = Array.from(dotsWrapper.children); // get all the dots
+        if (datasetSlide > datasetActiveSlide) {
+          slidesAfter.push(slide); // add after active slides to array
+        }
 
-      dots.forEach((dot) => {
-        if (dot.dataset.slidenr === activeSlide.dataset.slidenr) {
-          dot.classList.add("active"); // add class of active on active dot
+        if (datasetSlide === 1) {
+          cloneSlide(slide, "first");
+        }
+
+        if (datasetSlide === slides.length) {
+          cloneSlide(slide, "last");
         }
       });
 
-      arrowsWrapper.appendChild(prvButton); // append prev button to arrows wrapper
-      arrowsWrapper.appendChild(nxtButton); // append next button to arrows wrapper
+      if (slidesBefore.length) {
+        gsap.set(slidesBefore, slidesBeforePos[carouselDirection.value]);
+      }
+      if (slidesAfter.length) {
+        gsap.set(slidesAfter, slidesAfterPos[carouselDirection.value]);
+      }
+    };
 
-      // Controls
-      switch (controls.value) {
-        case "dots":
-          controlsWrapper.appendChild(dotsWrapper); // append dots wrapper to controls wrapper
-          break;
-        case "all":
-          controlsWrapper.appendChild(arrowsWrapper); // append arrows wrapper to controls wrapper
-          controlsWrapper.appendChild(dotsWrapper); // append dots wrapper to controls wrapper
-          break;
-        case "arrows":
-          controlsWrapper.appendChild(arrowsWrapper); // append arrows wrapper to controls wrapper
-          break;
-        case "none":
-          console.log(`${scssecoCarousel.value.id} is outta control`); // log a message that show which slider has no controls
-          break;
-        default: // append arrows wrapper to controls wrapper
-          controlsWrapper.appendChild(arrowsWrapper);
-          controlsWrapper.appendChild(dotsWrapper); // append dots wrapper to controls wrapper
+    const slidesAnimJump = (htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, anim = "next") => {
+      // TODO de facut clona la primu si ultimu slide
+      const htmlNextSlideNumber = Number(htmlNextSlide.dataset.slide);
+      // const htmlActiveSlideNumber = Number(htmlActiveSlide.dataset.slide);
+
+      // let nextSlide;
+
+      const nextNextSlideNumber =
+        anim === "next"
+          ? htmlNextSlideNumber + 1 > scssecoCarousel__slides.value.length
+            ? 1
+            : htmlNextSlideNumber + 1
+          : htmlNextSlideNumber;
+
+      const prevPrevSlideNumber =
+        anim === "prev"
+          ? htmlNextSlideNumber - 1 < 1
+            ? scssecoCarousel__slides.value.length
+            : htmlNextSlideNumber - 1
+          : htmlNextSlideNumber;
+
+      const htmlNextNextSlide =
+        anim === "next"
+          ? htmlNextSlideNumber === scssecoCarousel__slides.value.length
+            ? htmlNextSlide.nextElementSibling
+            : scssecoCarousel__stage.value.querySelector(dataSlide(nextNextSlideNumber))
+          : htmlNextSlideNumber === 1
+          ? htmlNextSlide.previousElementSibling
+          : scssecoCarousel__stage.value.querySelector(dataSlide(prevPrevSlideNumber));
+
+      let slideAnimHtmlActiveSlideFrom,
+        slideAnimHtmlActiveSlideTo,
+        slideAnimHtmlNextSlideFrom,
+        slideAnimHtmlNextSlideTo,
+        slideAnimHtmlNextNextSlideFrom,
+        slideAnimHtmlNextNextSlideTo = {};
+
+      if (anim === "prev") {
+        const slideAnimHtmlActiveSlideFromPos = {
+          ltr: { xPercent: 0 },
+          rtl: { xPercent: 0 },
+          btt: { yPercent: 0 },
+          ttb: { yPercent: 0 },
+        };
+        const slideAnimHtmlActiveSlideToPos = {
+          ltr: { xPercent: 100 },
+          rtl: { xPercent: -100 },
+          btt: { yPercent: 100 },
+          ttb: { yPercent: -100 },
+        };
+        const slideAnimHtmlNextSlideFromPos = {
+          ltr: { xPercent: -100 },
+          rtl: { xPercent: 100 },
+          btt: { yPercent: -100 },
+          ttb: { yPercent: 100 },
+        };
+        const slideAnimHtmlNextSlideToPos = {
+          ltr: { xPercent: 0 },
+          rtl: { xPercent: 0 },
+          btt: { yPercent: 0 },
+          ttb: { yPercent: 0 },
+        };
+        const slideAnimHtmlNextNextSlideFromPos = {
+          ltr: { xPercent: -200 },
+          rtl: { xPercent: 200 },
+          btt: { yPercent: -200 },
+          ttb: { yPercent: 200 },
+        };
+        const slideAnimHtmlNextNextSlideToPos = {
+          ltr: {
+            xPercent: -100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          rtl: {
+            xPercent: 100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          btt: {
+            yPercent: -100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          ttb: {
+            yPercent: 100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+        };
+
+        slideAnimHtmlActiveSlideFrom = slideAnimHtmlActiveSlideFromPos[carouselDirection.value];
+        slideAnimHtmlActiveSlideTo = slideAnimHtmlActiveSlideToPos[carouselDirection.value];
+        slideAnimHtmlNextSlideFrom = slideAnimHtmlNextSlideFromPos[carouselDirection.value];
+        slideAnimHtmlNextSlideTo = slideAnimHtmlNextSlideToPos[carouselDirection.value];
+        slideAnimHtmlNextNextSlideFrom = slideAnimHtmlNextNextSlideFromPos[carouselDirection.value];
+        slideAnimHtmlNextNextSlideTo = slideAnimHtmlNextNextSlideToPos[carouselDirection.value];
       }
 
-      scssecoCarousel.value.appendChild(controlsWrapper);
+      if (anim === "next") {
+        const slideAnimHtmlActiveSlideFromPos = {
+          ltr: { xPercent: 0 },
+          rtl: { xPercent: 0 },
+          btt: { yPercent: 0 },
+          ttb: { yPercent: 0 },
+        };
+        const slideAnimHtmlActiveSlideToPos = {
+          ltr: { xPercent: -100 },
+          rtl: { xPercent: 100 },
+          btt: { yPercent: -100 },
+          ttb: { yPercent: 100 },
+        };
+        const slideAnimHtmlNextSlideFromPos = {
+          ltr: { xPercent: 100 },
+          rtl: { xPercent: -100 },
+          btt: { yPercent: 100 },
+          ttb: { yPercent: -100 },
+        };
+        const slideAnimHtmlNextSlideToPos = {
+          ltr: { xPercent: 0 },
+          rtl: { xPercent: 0 },
+          btt: { yPercent: 0 },
+          ttb: { yPercent: 0 },
+        };
+        const slideAnimHtmlNextNextSlideFromPos = {
+          ltr: { xPercent: 200 },
+          rtl: { xPercent: -200 },
+          btt: { yPercent: 200 },
+          ttb: { yPercent: -200 },
+        };
+        const slideAnimHtmlNextNextSlideToPos = {
+          ltr: {
+            xPercent: 100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          rtl: {
+            xPercent: -100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          btt: {
+            yPercent: 100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          ttb: {
+            yPercent: -100,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+        };
 
-      const nextButton = scssecoCarousel.value.querySelector(".scssecoCarousel__controls--next"); // get next btn
-      const previousButton = scssecoCarousel.value.querySelector(".scssecoCarousel__controls--prev"); // get prev btn
+        slideAnimHtmlActiveSlideFrom = slideAnimHtmlActiveSlideFromPos[carouselDirection.value];
+        slideAnimHtmlActiveSlideTo = slideAnimHtmlActiveSlideToPos[carouselDirection.value];
+        slideAnimHtmlNextSlideFrom = slideAnimHtmlNextSlideFromPos[carouselDirection.value];
+        slideAnimHtmlNextSlideTo = slideAnimHtmlNextSlideToPos[carouselDirection.value];
+        slideAnimHtmlNextNextSlideFrom = slideAnimHtmlNextNextSlideFromPos[carouselDirection.value];
+        slideAnimHtmlNextNextSlideTo = slideAnimHtmlNextNextSlideToPos[carouselDirection.value];
+      }
 
-      // autoplay and hoverPause
-      if (autoplay.value === true) {
-        if (hoverPause.value === true) {
-          scssecoCarousel.value.addEventListener("mouseenter", () => {
-            isPaused.value = false;
-            // slideAnim.pause();
-          });
-          scssecoCarousel.value.addEventListener("mouseleave", () => {
-            isPaused.value = true;
-            // slideAnim.resume();
+      slideAnim
+        .fromTo(htmlActiveSlide, slideAnimHtmlActiveSlideFrom, slideAnimHtmlActiveSlideTo)
+        .fromTo(htmlNextSlide, slideAnimHtmlNextSlideFrom, slideAnimHtmlNextSlideTo, "<")
+        .fromTo(htmlNextNextSlide, slideAnimHtmlNextNextSlideFrom, slideAnimHtmlNextNextSlideTo, "<");
+    };
+
+    const slidesArrangeRifle = (slides) => {
+      if (carouselTransition.value != "rifle") return;
+
+      let slideActive;
+
+      const cloneSlide = (slide, slidePos) => {
+        const clone = slide.cloneNode(true);
+        clone.classList.add("clone");
+        clone.classList.remove("active");
+        // console.log(clone);
+        if (slidePos === "first") {
+          scssecoCarousel__stage.value.appendChild(clone);
+          // gsap.set(clone, firstSlidePos[carouselDirection.value]);
+        }
+        if (slidePos === "last") {
+          scssecoCarousel__stage.value.insertBefore(clone, scssecoCarousel__stage.value.childNodes[0]);
+          // gsap.set(clone, lastSlidePos[carouselDirection.value]);
+        }
+      };
+
+      slides.forEach((slide, index) => {
+        const datasetSlide = Number(slide.dataset.slide);
+        const datasetActiveSlide = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+
+        if (slide.classList.contains("active")) {
+          slideActive = slide;
+        }
+
+        if (datasetSlide === 1) {
+          cloneSlide(slide, "first");
+        }
+
+        if (datasetSlide === slides.length) {
+          cloneSlide(slide, "last");
+        }
+      });
+
+      let slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
+      const activeSlideNumber = Number(slideActive.dataset.slide);
+
+      const slidesAndClonesArrange = (index, direction) => {
+        if (direction === "ltr") return { xPercent: index * 100 };
+        if (direction === "rtl") return { xPercent: index * 100 * -1 };
+        if (direction === "btt") return { yPercent: index * 100 };
+        if (direction === "ttb") return { yPercent: index * 100 * -1 };
+      };
+
+      const slidesAndClonesActivePos = {
+        ltr: { xPercent: `-=${activeSlideNumber * 100}` },
+        rtl: { xPercent: `+=${activeSlideNumber * 100}` },
+        btt: { yPercent: `-=${activeSlideNumber * 100}` },
+        ttb: { yPercent: `+=${activeSlideNumber * 100}` },
+      };
+
+      slidesAndClones.forEach((slide, index) => {
+        gsap.set(slide, slidesAndClonesArrange(index, carouselDirection.value));
+      });
+
+      gsap.set(slidesAndClones, slidesAndClonesActivePos[carouselDirection.value]);
+    };
+
+    const slidesAnimRifle = (htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, anim = "next") => {
+      const slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
+      const htmlActiveSlideNumber = Number(htmlActiveSlide.dataset.slide);
+      const htmlNextSlideNumber = Number(htmlNextSlide.dataset.slide);
+
+      let slidesAndClonesPos, nextSlidePos;
+
+      if (anim === "next") {
+        if (htmlNextSlideNumber > htmlActiveSlideNumber) {
+          nextSlidePos = htmlNextSlideNumber - htmlActiveSlideNumber;
+        }
+        if (htmlNextSlideNumber === 1) {
+          nextSlidePos = 1;
+          slidesAndClones.forEach((slide, index) => {
+            if (carouselDirection.value === "ltr") {
+              gsap.set(slide, {
+                xPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "rtl") {
+              gsap.set(slide, {
+                xPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "btt") {
+              gsap.set(slide, {
+                yPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "ttb") {
+              gsap.set(slide, {
+                yPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
           });
         }
+
+        slidesAndClonesPos = {
+          ltr: {
+            xPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          rtl: {
+            xPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          btt: {
+            yPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          ttb: {
+            yPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+        };
+      }
+
+      if (anim === "prev") {
+        if (htmlNextSlideNumber < htmlActiveSlideNumber) {
+          nextSlidePos = htmlActiveSlideNumber - htmlNextSlideNumber;
+        }
+        if (htmlNextSlideNumber === scssecoCarousel__slides.value.length) {
+          nextSlidePos = 1;
+          slidesAndClones.forEach((slide, index) => {
+            if (carouselDirection.value === "ltr") {
+              gsap.set(slide, {
+                xPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "rtl") {
+              gsap.set(slide, {
+                xPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "btt") {
+              gsap.set(slide, {
+                yPercent: `-=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+            if (carouselDirection.value === "ttb") {
+              gsap.set(slide, {
+                yPercent: `+=${scssecoCarousel__slides.value.length}00`,
+              });
+            }
+          });
+        }
+
+        slidesAndClonesPos = {
+          ltr: {
+            xPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          rtl: {
+            xPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          btt: {
+            yPercent: `+=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+          ttb: {
+            yPercent: `-=${nextSlidePos}00`,
+            onStart: () => slideAnimOnStartFunct(htmlActiveSlide, htmlActiveDot),
+            onComplete: () => slideAnimOnCompleteFunct(htmlNextSlide, htmlNextDot),
+          },
+        };
+      }
+
+      slideAnim.to(slidesAndClones, slidesAndClonesPos[carouselDirection.value]);
+    };
+
+    const slidesArrangeNumber = (slides) => {
+      if (isNaN(carouselTransition.value)) return;
+
+      if (slides.length <= carouselTransition.value) {
+        console.log(
+          `${scssecoCarousel.value.id} has less slides than expected: expected ${carouselTransition.value + 1} have ${
+            slides.length
+          }`
+        );
+        scssecoCarousel.value.innerHTML = `<div><strong>${
+          scssecoCarousel.value.id
+        }</strong> has less slides than expected: expected <strong>${
+          carouselTransition.value + 1
+        }</strong> have <strong>${slides.length}</strong></div>`;
+      }
+
+      const activeSlideNumber = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      const cloneOffset = Math.round(scssecoCarousel__slides.value.length / 2); // set the middle of the viewport
+      const halfOfSlidesInViewPort = Math.round(carouselTransition.value / 2);
+      const offsetNumber =
+        scssecoCarousel__slides.value.length % 2 === 0
+          ? Number((cloneOffset + (activeSlideNumber - halfOfSlidesInViewPort)) * 100)
+          : Number((cloneOffset + (activeSlideNumber - halfOfSlidesInViewPort) - 1) * 100);
+      const resetFormula =
+        carouselTransition.value % 2 === 0
+          ? carouselDirection.value === "rtl" || carouselDirection.value === "ttb"
+            ? offsetNumber - 150
+            : offsetNumber - 50
+          : carouselDirection.value === "rtl" || carouselDirection.value === "ttb"
+          ? offsetNumber - 100
+          : offsetNumber;
+
+      let beforeSlidesClones = [];
+      slides.forEach((slide, index) => {
+        const slideNumber = Number(slide.dataset.slide);
+
+        if (slideNumber <= Math.round(slides.length / 2)) {
+          const slideClone = slide.cloneNode(true);
+          slideClone.classList.add("clone");
+          slideClone.classList.remove("active");
+          slideClone.removeAttribute("data-text");
+          scssecoCarousel__stage.value.appendChild(slideClone);
+        }
+
+        if (slideNumber > Math.round(slides.length / 2)) {
+          const slideClone = slide.cloneNode(true);
+          slideClone.classList.add("clone");
+          slideClone.classList.remove("active");
+          slideClone.removeAttribute("data-text");
+          beforeSlidesClones.push(slideClone);
+        }
+      });
+      beforeSlidesClones.reverse();
+      beforeSlidesClones.forEach((slide) => {
+        scssecoCarousel__stage.value.insertBefore(slide, scssecoCarousel__stage.value.childNodes[0]);
+      });
+
+      const slidesAndClones = Array.from(scssecoCarousel__stage.value.children);
+
+      if (carouselDirection.value === "rtl" || carouselDirection.value === "ttb") {
+        slidesAndClones.reverse();
+      }
+
+      const slideClonePos = (index) => {
+        if (carouselDirection.value === "ltr" || carouselDirection.value === "rtl")
+          return { xPercent: index * 100, width: `${100 / carouselTransition.value}%` };
+
+        if (carouselDirection.value === "ttb")
+          return { yPercent: index * 100, height: `${100 / carouselTransition.value}%` };
+
+        if (carouselDirection.value === "btt")
+          return { yPercent: index * 100, height: `${100 / carouselTransition.value}%` };
+      };
+
+      slidesAndClones.forEach((slide, index) => {
+        gsap.set(slide, slideClonePos(index));
+      });
+
+      const slidesAndClonesShowActive = {
+        ltr: { xPercent: "-=" + resetFormula },
+        rtl: { xPercent: "-=" + resetFormula },
+        btt: { yPercent: "-=" + resetFormula },
+        ttb: { yPercent: "-=" + resetFormula },
+      };
+
+      gsap.set(slidesAndClones, slidesAndClonesShowActive[carouselDirection.value]);
+    };
+
+    const carouselResponsiveMatchMedia = () => {
+      if (carouselResponsive.value != true && isNaN(carouselTransition.value)) return;
+
+      const gsapmm = gsap.matchMedia();
+
+      const mediaqXS = "(max-width: 575px)";
+      const mediaqXSrecommendedSlides = 1;
+      const mediaqSM = "(min-width: 576px) and (max-width: 767px)";
+      const mediaqSMrecommendedSlides = 2;
+      const mediaqMD = "(min-width: 768px) and (max-width: 991px)";
+      const mediaqMDrecommendedSlides = 3;
+      const mediaqLG = "(min-width: 992px) and (max-width: 1199px)";
+      const mediaqLGrecommendedSlides = 5;
+      const mediaqXL = "(min-width: 1200px) and (max-width: 1399px)";
+      const mediaqXLrecommendedSlides = 7;
+
+      gsapmm.add(mediaqXS, () => {
+        carouselTransition.value = 1;
+      });
+
+      gsapmm.add(mediaqSM, () => {
+        if (mediaqSMrecommendedSlides > carouselTransition.value) return;
+        carouselTransition.value = 2;
+      });
+
+      gsapmm.add(mediaqMD, () => {
+        if (mediaqMDrecommendedSlides > carouselTransition.value) return;
+        carouselTransition.value = 3;
+      });
+
+      gsapmm.add(mediaqLG, () => {
+        if (mediaqLGrecommendedSlides > carouselTransition.value) return;
+        carouselTransition.value = 5;
+      });
+
+      gsapmm.add(mediaqXL, () => {
+        if (mediaqXLrecommendedSlides > carouselTransition.value) return;
+        carouselTransition.value = 7;
+      });
+    };
+
+    const initVarsSlidesAnim = (anim = "next", targetDot = Number()) => {
+      const slidesLength = scssecoCarousel__slides.value.length;
+      // active slide and dot
+      const activeSlideNumber = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      const htmlActiveSlide = scssecoCarousel__stage.value.querySelector(dataSlide(activeSlideNumber));
+      const htmlActiveDot =
+        carouselControls.value === "dots" || carouselControls.value === "all"
+          ? scssecoCarousel__controls.value.querySelector(dataSlide(activeSlideNumber))
+          : null;
+
+      // next slide numbers
+      let nextSlideNumber;
+      if (anim === "next") {
+        nextSlideNumber = slidesLength < activeSlideNumber + 1 ? 1 : activeSlideNumber + 1;
+      }
+      if (anim === "prev") {
+        nextSlideNumber = activeSlideNumber === 1 ? slidesLength : activeSlideNumber - 1;
+      }
+      if (anim === "dots") {
+        nextSlideNumber = targetDot;
+      }
+
+      // next  slide and dot
+      const htmlNextSlide = scssecoCarousel__stage.value.querySelector(dataSlide(nextSlideNumber));
+      const htmlNextDot =
+        carouselControls.value === "dots" || carouselControls.value === "all"
+          ? scssecoCarousel__controls.value.querySelector(dataSlide(nextSlideNumber))
+          : null;
+
+      // console.log("slidesLength", slidesLength);
+      // console.log("activeSlideNumber", activeSlideNumber);
+      // console.log("htmlActiveSlide", htmlActiveSlide);
+      // console.log("htmlActiveDot", htmlActiveDot);
+      // console.log("prevSlideNumber", prevSlideNumber);
+      // console.log("nextSlideNumber", nextSlideNumber);
+      // console.log("htmlPrevSlide", htmlPrevSlide);
+      // console.log("htmlPrevDot", htmlPrevDot);
+      // console.log("htmlNextSlide", htmlNextSlide);
+      // console.log("htmlNextDot", htmlNextDot);
+
+      return {
+        htmlActiveSlide,
+        htmlActiveDot,
+        htmlNextSlide,
+        htmlNextDot,
+      };
+    };
+
+    const prevSlide = () => {
+      const activeSlide = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      if (slideAnim.isActive() || (carouselReset.value === false && activeSlide === 1)) return;
+
+      const { htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot } = initVarsSlidesAnim("prev");
+      if (carouselTransition.value === "fade") {
+        slideAnimFade(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot);
+      }
+      if (carouselTransition.value === "jump") {
+        slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
+      }
+      if (carouselTransition.value === "rifle" || !isNaN(carouselTransition.value)) {
+        slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
+      }
+
+      disableArrows(htmlNextSlide, "prev");
+    };
+
+    const nextSlide = () => {
+      const activeSlideNumber = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      if (
+        slideAnim.isActive() ||
+        (carouselReset.value === false && activeSlideNumber === scssecoCarousel__slides.value.length)
+      )
+        return;
+
+      const { htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot } = initVarsSlidesAnim("next");
+      if (carouselTransition.value === "fade") {
+        slideAnimFade(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot);
+      }
+      if (carouselTransition.value === "jump") {
+        slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
+      }
+      if (carouselTransition.value === "rifle" || !isNaN(carouselTransition.value)) {
+        slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
+      }
+
+      disableArrows(htmlNextSlide, "next");
+    };
+
+    const dotSlide = (e) => {
+      const targetDot = Number(e.target.dataset.slide);
+      const { htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot } = initVarsSlidesAnim("dots", targetDot);
+
+      if (slideAnim.isActive() || htmlActiveDot.dataset.slide == htmlNextDot.dataset.slide) return; // do nothing if animation is active or if dot active is the same with target dot
+
+      if (carouselTransition.value === "fade") {
+        slideAnimFade(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot);
+      }
+
+      if (carouselTransition.value === "jump") {
+        const activeDataSlide = Number(htmlActiveSlide.dataset.slide);
+        const nextDot = Number(htmlNextDot.dataset.slide);
+
+        // prev
+        if (activeDataSlide > nextDot) {
+          slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
+        }
+
+        //next
+        if (activeDataSlide < nextDot) {
+          slidesAnimJump(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
+        }
+      }
+
+      if (carouselTransition.value === "rifle" || !isNaN(carouselTransition.value)) {
+        const activeDataSlide = Number(htmlActiveSlide.dataset.slide);
+        const nextDot = Number(htmlNextDot.dataset.slide);
+
+        // prev
+        if (activeDataSlide > nextDot) {
+          slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "prev");
+        }
+
+        //next
+        if (activeDataSlide < nextDot) {
+          slidesAnimRifle(htmlActiveSlide, htmlActiveDot, htmlNextSlide, htmlNextDot, "next");
+        }
+      }
+
+      // const datasetSlide = Number(slide.dataset.slide);
+      const datasetActiveSlide = Number(scssecoCarousel__activeSlide.value.dataset.slide);
+      let anim;
+
+      if (targetDot < datasetActiveSlide) anim = "prev";
+
+      if (targetDot > datasetActiveSlide) anim = "next";
+
+      disableArrows(htmlNextSlide, anim);
+    };
+
+    const autoPlay = () => {
+      if (carouselAutoplay.value) {
         timeInt = window.setInterval(() => {
-          // Time interval
-          // console.log(!isPaused.value);
           if (isPaused.value) {
             time.value = time.value + 10;
 
-            if (time.value >= interval.value) {
+            if (time.value >= carouselInterval.value) {
               time.value = 0;
-              if (slideAnim.isActive()) {
-                return; // If animation is active do nothing
-              }
-
-              const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children);
-              const slidesLength = slides.length;
-
-              let currentSlide = ""; // create empty var for current slide
-              let firstSlide = ""; // create empty var for first slide
-              slides.forEach((slide, index) => {
-                if (slide.classList.contains("active")) {
-                  currentSlide = slide; // get current slide
-                }
-                if (slide.dataset.slidenr == 1) {
-                  firstSlide = slide; // get first slide
-                }
-              });
-
-              if (reset.value === false && currentSlide.dataset.slidenr == slidesLength) {
-                return; // if reset is false and on last slide return
-              }
-
-              const nxtSlide =
-                currentSlide.dataset.slidenr == slidesLength ? firstSlide : currentSlide.nextElementSibling; // if is last slide get 1st slide else next slide
-
-              const nextNextSlide = nxtSlide.dataset.slidenr == slidesLength ? slides[0] : nxtSlide.nextElementSibling;
-              const currentDot = dotsWrapper.querySelector(".active"); // get active dot
-              const dtActNr = currentDot.dataset.slidenr; // get active dot data-slidenr
-              const nextDot =
-                dtActNr == slidesLength
-                  ? dotsWrapper.querySelector("button[data-slidenr='1']")
-                  : currentDot.nextElementSibling; // if is last dot get 1st dot else next dot
-
-              if (slideTransition.value === "rifle" || !isNaN(slideTransition.value)) {
-                slideTransitionRifleResetEnd(currentSlide, slides, slidesPlusClones);
-              }
-
-              nextSlide(slidesPlusClones, currentSlide, nxtSlide, nextNextSlide, currentDot, nextDot);
-
-              if (reset.value === false) {
-                disablearrows(nextButton, previousButton, currentSlide, slidesLength - 1);
-              }
-            }
-            if (dev.value === true) {
-              const devTime = scssecoCarousel.value.querySelector(".dev_time");
-              devTime.innerHTML = time.value; // add time to dev stats
+              if (slideAnim.isActive()) return; // If animation is active do nothing
+              nextSlide();
             }
           }
         }, 10);
       }
+    };
 
-      // controls: Check if arrows are active -> controls: "arrow" and handle click
-      if (nextButton != null && previousButton != null) {
-        nextButton.addEventListener("click", (e) => {
-          if (slideAnim.isActive()) {
-            return; // If animation is active do nothing
-          }
+    const pauseOnHover = () => {
+      if (carouselHoverPause.value) {
+        isPaused.value = !isPaused.value;
+      }
+    };
 
-          const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children); // get all the slides including the clones if any
-          const slidesLength = slides.length; // get slides length
+    const disableArrows = (htmlNextSlide, anim = "next") => {
+      if (carouselReset.value != false || carouselControls.value === "dots" || carouselControls.value === "none")
+        return;
+      const nextSlideNumber = Number(htmlNextSlide.dataset.slide);
 
-          let currentSlide = ""; // create empty var for current slide
-          let firstSlide = ""; // create empty var for first slide
-          slides.forEach((slide, index) => {
-            if (slide.classList.contains("active")) {
-              currentSlide = slide; // Get active slide
-            }
-            if (slide.dataset.slidenr == 1) {
-              firstSlide = slide; // Get first slide
-            }
-          });
+      // console.log(nextSlideNumber === scssecoCarousel__slides.value.length);
 
-          const nxtSlide = currentSlide.dataset.slidenr == slidesLength ? firstSlide : currentSlide.nextElementSibling; // if is last slide get 1st slide else next slide
-          const nextNextSlide = nxtSlide.dataset.slidenr == slidesLength ? slides[0] : nxtSlide.nextElementSibling;
-          const currentDot = dotsWrapper.querySelector(".active"); // get active dot
-          const dtActNr = currentDot.dataset.slidenr; // get active dot data-slidenr
-          const nextDot =
-            dtActNr == slidesLength
-              ? dotsWrapper.querySelector("button[data-slidenr='1']")
-              : currentDot.nextElementSibling; // if is last dot get 1st dot else next dot
-
-          if (slideTransition.value === "rifle" || !isNaN(slideTransition.value)) {
-            slideTransitionRifleResetEnd(currentSlide, slides, slidesPlusClones);
-          }
-
-          nextSlide(slidesPlusClones, currentSlide, nxtSlide, nextNextSlide, currentDot, nextDot);
-
-          if (reset.value === false) {
-            disablearrows(nextButton, previousButton, currentSlide, slidesLength - 1);
-          }
-        });
-
-        previousButton.addEventListener("click", (e) => {
-          if (slideAnim.isActive()) {
-            return; // If animation is active do nothing
-          }
-
-          const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children); // get all the slides including the clones if any
-          const slidesLength = slides.length; // get slides length
-
-          let currentSlide = ""; // create empty var for current slide
-          let lastSlide = ""; // create empty var for last slide
-          slides.forEach((slide, index) => {
-            if (slide.classList.contains("active")) {
-              currentSlide = slide; // Get active slide
-            }
-            if (slide.dataset.slidenr == slidesLength) {
-              lastSlide = slide; // Get last slide
-            }
-          });
-
-          const prvSld = currentSlide.dataset.slidenr == 1 ? lastSlide : currentSlide.previousElementSibling; // if is first slide get last slide else prev slide
-          const prevPrevSlide = prvSld.dataset.slidenr == 1 ? slides[slidesLength - 1] : prvSld.previousElementSibling;
-          const currentDot = dotsWrapper.querySelector(".active"); // get active dot
-          const dtActNr = currentDot.dataset.slidenr; // get active dot data-slidenr
-          const prevDot =
-            dtActNr == 1
-              ? dotsWrapper.querySelector("button[data-slidenr='" + slidesLength + "']")
-              : currentDot.previousElementSibling; // if is first dot get last dot else prev dot
-
-          if (slideTransition.value === "rifle" || !isNaN(slideTransition.value)) {
-            slideTransitionRifleResetStart(currentSlide, slides, slidesPlusClones);
-          }
-
-          prevSlide(slidesPlusClones, currentSlide, prvSld, prevPrevSlide, currentDot, prevDot);
-
-          if (reset.value === false) {
-            disablearrows(previousButton, nextButton, currentSlide, 2);
-          }
-        });
+      if (anim === "next" && nextSlideNumber === scssecoCarousel__slides.value.length) {
+        scssecoCarousel__controls_nextBtn.value.disabled = true;
+      } else {
+        scssecoCarousel__controls_nextBtn.value.disabled = false;
       }
 
-      // controls: Check if dots are active -> and handle click
-      if (controls.value === "dots" || controls.value === "all") {
-        const dotsArray = Array.from(dotsWrapper.children);
-        for (let i = 0; i < slides.length; i++) {
-          if (typeof slides[i].dataset.text != "undefined") {
-            dotsArray[i].firstChild.innerHTML = slides[i].dataset.text;
-          }
-        }
-
-        dotsWrapper.addEventListener("click", (e) => {
-          const dotTarget = e.target.closest("button"); // get dot clicked
-          const currentDot = dotsWrapper.querySelector(".active"); // get active dot
-          const slidesLength = slides.length; // get slides length
-
-          if (slideAnim.isActive() || !dotTarget || currentDot.dataset.slidenr == dotTarget.dataset.slidenr) return; // do nothing if animation is active or dotTarget not exists or if dot active is the same with target dot
-
-          let currentSlide = ""; // create empty var for current slide
-          const ts_nr = Number(dotTarget.dataset.slidenr); // get target slide number
-          const targetSlide = slides[ts_nr - 1]; // get target slide
-
-          slides.forEach((slide, index) => {
-            if (slide.classList.contains("active")) {
-              currentSlide = slide; // get current slide
-            }
-          });
-
-          const cs_nr = Number(currentSlide.dataset.slidenr); // get current slide number
-          const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children); // get all the slides including the clones if any
-
-          // how much to move depends on what button is clicked
-          const dotsSlide = (amount) => {
-            let percentAmount;
-
-            const onStartFunct = () => {
-              time.value = 0; // Set time to 0
-              currentSlide.classList.remove("active"); // remove active class from current slide
-              currentDot.classList.remove("active"); // remove active class from current dot
-            };
-
-            const onCompleteFunct = () => {
-              time.value = 0; // Set time to 0
-              targetSlide.classList.add("active"); // add active class on target slide
-              dotTarget.classList.add("active"); // add active class on target dot
-            };
-
-            if (direction.value === "ltr") {
-              console.log(amount);
-              percentAmount = {
-                xPercent: amount,
-                onStart: () => onStartFunct(),
-                onComplete: () => onCompleteFunct(),
-              };
-            }
-
-            if (direction.value === "rtl") {
-              percentAmount = {
-                xPercent: amount,
-                onStart: () => onStartFunct(),
-                onComplete: () => onCompleteFunct(),
-              };
-            }
-
-            if (direction.value === "ttb") {
-              percentAmount = {
-                yPercent: amount,
-                onStart: () => onStartFunct(),
-                onComplete: () => onCompleteFunct(),
-              };
-            }
-
-            if (direction.value === "btt") {
-              percentAmount = {
-                yPercent: amount,
-                onStart: () => onStartFunct(),
-                onComplete: () => onCompleteFunct(),
-              };
-            }
-
-            slideAnim.to(slidesPlusClones, percentAmount);
-          };
-
-          // Prev animation
-          if (Number(currentDot.dataset.slidenr) > Number(dotTarget.dataset.slidenr)) {
-            if (reset.value === false) {
-              disablearrows(previousButton, nextButton, targetSlide, 1);
-            }
-
-            console.log(
-              `${Number(currentDot.dataset.slidenr)} > ${Number(dotTarget.dataset.slidenr)}`,
-              Number(currentDot.dataset.slidenr) > Number(dotTarget.dataset.slidenr),
-              "prev"
-            );
-
-            // let amount;
-            switch (slideTransition.value) {
-              case "rifle":
-                let amount;
-                if (direction.value === "ltr") amount = `+=${cs_nr - ts_nr}00`;
-                if (direction.value === "rtl") amount = `-=${cs_nr - ts_nr}00`;
-                if (direction.value === "ttb") amount = `-=${cs_nr - ts_nr}00`;
-                if (direction.value === "btt") amount = `+=${cs_nr - ts_nr}00`;
-                // const amount = direction.value === "rtl" ? `-=${cs_nr - ts_nr}00` : `+=${cs_nr - ts_nr}00`;
-                dotsSlide(amount);
-                break;
-              case "fade":
-                prevSlide("", currentSlide, targetSlide, "", currentDot, dotTarget);
-                break;
-              case "jump":
-                const prevPrevSlide =
-                  targetSlide.dataset.slidenr == 1 ? slidesPlusClones[0] : targetSlide.previousElementSibling;
-                slideTransitionJumpPrev(currentSlide, targetSlide, prevPrevSlide, currentDot, dotTarget);
-                break;
-              default: // set how much to move
-                let dAmount;
-                if (direction.value === "ltr") dAmount = `+=${cs_nr - ts_nr}00`;
-                if (direction.value === "rtl") dAmount = `-=${cs_nr - ts_nr}00`;
-                if (direction.value === "ttb") dAmount = `-=${cs_nr - ts_nr}00`;
-                if (direction.value === "btt") dAmount = `+=${cs_nr - ts_nr}00`;
-                // const dAmount = direction.value === "rtl" ? `-=${cs_nr - ts_nr}00` : `+=${cs_nr - ts_nr}00`;
-                dotsSlide(dAmount);
-            }
-          }
-
-          // Next animation
-          if (Number(currentDot.dataset.slidenr) < Number(dotTarget.dataset.slidenr)) {
-            if (reset.value === false) {
-              disablearrows(nextButton, previousButton, targetSlide, slidesLength);
-            }
-
-            console.log(
-              `${Number(currentDot.dataset.slidenr)} < ${Number(dotTarget.dataset.slidenr)}`,
-              Number(currentDot.dataset.slidenr) < Number(dotTarget.dataset.slidenr),
-              "next"
-            );
-
-            // let amount;
-            switch (slideTransition.value) {
-              case "rifle":
-                let amount;
-                if (direction.value === "ltr") amount = `-=${cs_nr - ts_nr}00`;
-                if (direction.value === "rtl") amount = `+=${cs_nr - ts_nr}00`;
-                if (direction.value === "ttb") amount = `+=${cs_nr - ts_nr}00`;
-                if (direction.value === "btt") amount = `-=${cs_nr - ts_nr}00`;
-                // const amount = direction.value === "rtl" ? `+=${ts_nr - cs_nr}00` : `-=${ts_nr - cs_nr}00`;
-                dotsSlide(amount);
-                break;
-              case "fade":
-                nextSlide("", currentSlide, targetSlide, "", currentDot, dotTarget);
-                break;
-              case "jump":
-                const slidesPlusClonesLength = slidesPlusClones.length - 1;
-                const nextNextSlide =
-                  targetSlide.dataset.slidenr == slidesLength
-                    ? slidesPlusClones[slidesPlusClonesLength]
-                    : targetSlide.nextElementSibling;
-                nextSlide("", currentSlide, targetSlide, nextNextSlide, currentDot, dotTarget);
-                break;
-              default: // set how much to move
-                // const dAmount = direction.value === "rtl" ? `+=${ts_nr - cs_nr}00` : `-=${ts_nr - cs_nr}00`;
-
-                let dAmount;
-                if (direction.value === "ltr") dAmount = `-=${cs_nr - ts_nr}00`;
-                if (direction.value === "rtl") dAmount = `+=${cs_nr - ts_nr}00`;
-                if (direction.value === "ttb") dAmount = `+=${cs_nr - ts_nr}00`;
-                if (direction.value === "btt") dAmount = `-=${cs_nr - ts_nr}00`;
-                dotsSlide(dAmount);
-            }
-          }
-        });
+      if (anim === "prev" && nextSlideNumber === 1) {
+        scssecoCarousel__controls_prevBtn.value.disabled = true;
+      } else {
+        scssecoCarousel__controls_prevBtn.value.disabled = false;
       }
+    };
 
-      // reset
-      if (reset.value === false && controls.value != "dots" && controls.value != "none") {
-        if (activeSlide.dataset.slidenr == 1) {
-          console.log("pore");
-          previousButton.disabled = true; // disable prev button if first slide is active
-        } else if (activeSlide.dataset.slidenr == slides.length) {
-          console.log("nexto");
-          nextButton.disabled = true; // disable next button if last slide is active
-        }
+    const devOptions = [
+      { name: "carouselInterval", value: carouselInterval.value, description: "duration btwn slide animations" },
+      { name: "carouselAnimDuration", value: carouselAnimDuration.value, description: "animation duration" },
+      { name: "carouselAutoplay", value: carouselAutoplay.value, description: "auto play slider" },
+      { name: "carouselHoverPause", value: carouselHoverPause.value, description: "pause on hover" },
+      { name: "carouselControls", value: carouselControls.value, description: "add controls" },
+      { name: "carouselArrows", value: carouselArrows.value, description: "text or chevrons" },
+      { name: "carouselReset", value: carouselReset.value, description: "infinite cycle" },
+      { name: "carouselTransition", value: carouselTransition.value, description: "slide effect" },
+      {
+        name: "carouselResponsive",
+        value: carouselResponsive.value,
+        description: "adjust the visible slides depending on the viewport",
+      },
+      { name: "carouselDirection", value: carouselDirection.value, description: "direction of the slide animation" },
+    ];
+
+    const devOverflow = (e) => {
+      if (e.target.checked === true) {
+        scssecoCarousel.value.style.overflow = "visible";
+        scssecoCarousel__stage.value.style.overflow = "visible";
+      } else {
+        scssecoCarousel.value.style.overflow = "";
+        scssecoCarousel__stage.value.style.overflow = "";
       }
+    };
 
-      // slideTransition: "rifle"
-      if (slideTransition.value === "rifle") {
-        // Arange slides
-        const firstSlide = scssecoCarousel__stage.value.querySelector("div[data-slidenr='1']"); // get first slide
-        const firsSlideClone = firstSlide.cloneNode(true); // clone first slide
-
-        const lastSlide = scssecoCarousel__stage.value.querySelector("div[data-slidenr='" + slides.length + "']"); // get last slide
-        const lastSlideClone = lastSlide.cloneNode(true); // clone last slide
-
-        lastSlideClone.classList.add("clone"); // add class clone to last slide clone
-        firsSlideClone.classList.add("clone"); // add class clone to first slide clone
-
-        const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children); // create array with all slides(incl clones)
-
-        slidesPlusClones.unshift(lastSlideClone); // add last child clone at the begging of the array
-        slidesPlusClones.push(firsSlideClone); // add last child clone at the end of the array
-
-        scssecoCarousel__stage.value.insertBefore(lastSlideClone, scssecoCarousel__stage.value.childNodes[0]); // add last child clone at the beggining of the stage
-        scssecoCarousel__stage.value.appendChild(firsSlideClone); // add last child clone at the end of the stage
-
-        const setSlidesInOrderX = () => {
-          for (let i = 0; i < slidesPlusClones.length; i++) {
-            gsap.set(slidesPlusClones[i], {
-              xPercent: i * 100, // set slides in order
-            });
-          }
-        };
-        const setSlidesInOrderY = () => {
-          for (let i = 0; i < slidesPlusClones.length; i++) {
-            gsap.set(slidesPlusClones[i], {
-              yPercent: i * 100, // set slides in order
-            });
-          }
-        };
-
-        if (direction.value === "ltr") {
-          setSlidesInOrderX();
-
-          gsap.set(slidesPlusClones, {
-            xPercent: `-=${activeSlide.dataset.slidenr * 100}`, // set slides so active is visible
-          });
-        }
-
-        if (direction.value === "rtl") {
-          slidesPlusClones.reverse();
-
-          setSlidesInOrderX();
-
-          gsap.set(slidesPlusClones, {
-            xPercent: "-=" + (slidesPlusClones.length - slideTransition.value) * 100, // reset slides position to 0
-          });
-
-          gsap.set(slidesPlusClones, {
-            xPercent: `+=${activeSlide.dataset.slidenr * 100}`, // set slides so active is visible
-          });
-        }
-
-        console.log("sdadsa");
-
-        if (direction.value === "ttb") {
-          slidesPlusClones.reverse();
-          // console.log(slidesPlusClones);
-          console.log(isNaN(slideTransition.value));
-          // console.log(Number(activeSlide.dataset.slidenr) - slideTransition.value);
-          setSlidesInOrderY();
-
-          gsap.set(slidesPlusClones, {
-            yPercent: isNaN(slideTransition.value)
-              ? `-=${(Number(activeSlide.dataset.slidenr) + 1) * 100}`
-              : `-=${(Number(activeSlide.dataset.slidenr) - slideTransition.value) * 100}`, // set slides so active is visible
-          });
-        }
-
-        if (direction.value === "btt") {
-          setSlidesInOrderY();
-          gsap.set(slidesPlusClones, {
-            yPercent: `-=${activeSlide.dataset.slidenr * 100}`, // set slides so active is visible
-          });
-        }
-      }
-
-      // slideTransition: "jump"
-      if (slideTransition.value === "jump") {
-        // Arange slides
-        const slidesLength = slides.length;
-        let slidesBefore = []; // create empty array for slides before the active slide
-        let slidesAfter = []; // create empty array for slides after the active slide
-        let firstSlide = ""; // create empty variable for first slide
-        let lastSlide = ""; // create empty variable for last slide
-
-        slides.forEach((slide, index) => {
-          if (slide.dataset.slidenr < activeSlide.dataset.slidenr) {
-            slidesBefore.push(slide); // add before active slides to array
-          }
-          if (slide.dataset.slidenr > activeSlide.dataset.slidenr) {
-            slidesAfter.push(slide); // add after active slides to array
-          }
-          if (slide.dataset.slidenr == 1) {
-            firstSlide = slide; // add first slide to variable
-          }
-          if (slide.dataset.slidenr == slidesLength) {
-            lastSlide = slide; // add last slide to variable
-          }
-        });
-
-        const firstSlideClone = firstSlide.cloneNode(true); // clone first slide
-        const lastSlideClone = lastSlide.cloneNode(true); // clone last slide
-
-        firstSlideClone.classList.add("clone"); // add class of clone to the first slide
-        lastSlideClone.classList.add("clone"); // add class of clone to the last slide
-        firstSlideClone.classList.remove("active"); // add class of active to the first slide
-        lastSlideClone.classList.remove("active"); // add class of active to the last slide
-
-        scssecoCarousel__stage.value.appendChild(firstSlideClone); // add first slide to DOM
-        scssecoCarousel__stage.value.insertBefore(lastSlideClone, scssecoCarousel__stage.value.childNodes[0]); // add last slide to DOM
-
-        let firstSlideCloneSet,
-          lastSlideCloneSet,
-          slidesBeforeSet,
-          slidesAfterSet = {};
-
-        if (direction.value === "ltr") {
-          firstSlideCloneSet = { xPercent: 100 };
-          lastSlideCloneSet = { xPercent: -100 };
-          slidesBeforeSet = { xPercent: -100 };
-          slidesAfterSet = { xPercent: 100 };
-        }
-        if (direction.value === "rtl") {
-          firstSlideCloneSet = { xPercent: -100 };
-          lastSlideCloneSet = { xPercent: 100 };
-          slidesBeforeSet = { xPercent: 100 };
-          slidesAfterSet = { xPercent: -100 };
-        }
-        if (direction.value === "ttb") {
-          firstSlideCloneSet = { yPercent: 100 };
-          lastSlideCloneSet = { yPercent: -100 };
-          slidesBeforeSet = { yPercent: -100 };
-          slidesAfterSet = { yPercent: 100 };
-        }
-        if (direction.value === "btt") {
-          firstSlideCloneSet = { yPercent: -100 };
-          lastSlideCloneSet = { yPercent: 100 };
-          slidesBeforeSet = { yPercent: 100 };
-          slidesAfterSet = { yPercent: -100 };
-        }
-
-        gsap.set(firstSlideClone, firstSlideCloneSet);
-        gsap.set(lastSlideClone, lastSlideCloneSet);
-
-        if (slidesBefore.length) {
-          gsap.set(slidesBefore, slidesBeforeSet);
-        }
-        if (slidesAfter.length) {
-          gsap.set(slidesAfter, slidesAfterSet);
-        }
-      }
-
-      // slideTransition: "fade"
-      if (slideTransition.value === "fade") {
-        // Arange slides
-        gsap.set(slides, {
-          autoAlpha: 0,
-          xPercent: 0,
-        });
-
-        gsap.set(activeSlide, {
-          autoAlpha: 1,
-          xPercent: 0,
-        });
-      }
-
-      if (!isNaN(slideTransition.value)) {
-        if (slides.length <= slideTransition.value) {
-          clearInterval(timeInt);
-
-          console.log(
-            `${scssecoCarousel.value.id} has less slides than expected: expected ${slideTransition.value + 1} have ${
-              slides.length
-            }`
-          );
-
-          scssecoCarousel.value.innerHTML = `${scssecoCarousel.value.id} has less slides than expected: expected ${
-            slideTransition.value + 1
-          } have ${slides.length}`;
-          return;
-        }
-
-        if (responsive.value && (direction.value === "ltr" || direction.value === "rtl")) {
-          const gsapmm = gsap.matchMedia();
-
-          const mediaqXS = "(max-width: 575px)";
-          const mediaqXSrecommendedSlides = 1;
-          const mediaqSM = "(min-width: 576px) and (max-width: 767px)";
-          const mediaqSMrecommendedSlides = 2;
-          const mediaqMD = "(min-width: 768px) and (max-width: 991px)";
-          const mediaqMDrecommendedSlides = 3;
-          const mediaqLG = "(min-width: 992px) and (max-width: 1199px)";
-          const mediaqLGrecommendedSlides = 5;
-          const mediaqXL = "(min-width: 1200px) and (max-width: 1399px)";
-          const mediaqXLrecommendedSlides = 7;
-
-          gsapmm.add(mediaqXS, () => {
-            slideTransition.value = 1;
-          });
-
-          gsapmm.add(mediaqSM, () => {
-            if (mediaqSMrecommendedSlides > slideTransition.value) return;
-            slideTransition.value = 2;
-          });
-
-          gsapmm.add(mediaqMD, () => {
-            if (mediaqMDrecommendedSlides > slideTransition.value) return;
-            slideTransition.value = 3;
-          });
-
-          gsapmm.add(mediaqLG, () => {
-            if (mediaqLGrecommendedSlides > slideTransition.value) return;
-            slideTransition.value = 5;
-          });
-
-          gsapmm.add(mediaqXL, () => {
-            if (mediaqXLrecommendedSlides > slideTransition.value) return;
-            slideTransition.value = 7;
-          });
-        }
-
-        // Arange slides
-        const middleOfSlide = Math.round(slideTransition.value / 2); // set the middle of the viewport
-        const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children); // create array with all slides(incl clones)
-        const resetFormula =
-          slideTransition.value % 2 === 0
-            ? activeSlide.dataset.slidenr * 100 + 50
-            : activeSlide.dataset.slidenr * 100 + 100;
-
-        let startClones = [];
-
-        for (let i = 0; i <= middleOfSlide; i++) {
-          let slideFS = scssecoCarousel__stage.value.querySelector("div[data-slidenr='" + (i + 1) + "']"); // get slide
-          let slideSClone = slideFS.cloneNode(true); // clone slide
-          slideSClone.classList.add("clone"); // add class of "clone" to cloned slide
-          slideSClone.classList.remove("active"); // remove "active" class if necessary
-          slidesPlusClones.push(slideSClone); // add to the end of array
-          startClones.push(slideSClone); // add to the end of empty array
-          scssecoCarousel__stage.value.appendChild(slideSClone); // add to DOM
-
-          let slideFE = scssecoCarousel__stage.value.querySelector("div[data-slidenr='" + (slides.length - i) + "']"); // get slide
-          let slideEClone = slideFE.cloneNode(true); // clone slide
-          slideEClone.classList.add("clone"); // add class of "clone" to cloned slide
-          slideEClone.classList.remove("active"); // remove "active" class if necessary
-          slidesPlusClones.unshift(slideEClone); // add at the beginning array
-          scssecoCarousel__stage.value.insertBefore(slideEClone, scssecoCarousel__stage.value.childNodes[0]); // add to DOM
-        }
-
-        if (direction.value === "rtl") {
-          slidesPlusClones.reverse();
-        }
-
-        const setSlides = (widthFormula, resetFormula) => {
-          if (direction.value === "ltr" || direction.value === "rtl") {
-            for (let i = 0; i < slidesPlusClones.length; i++) {
-              gsap.set(slidesPlusClones[i], {
-                xPercent: `${i}00`, // set slides in order
-                width: widthFormula + "%",
-              });
-            }
-
-            gsap.set(slidesPlusClones, {
-              xPercent: direction.value === "rtl" ? `+=${resetFormula}` : `-=${resetFormula}`, // set slides so active is visible
-            });
-          }
-
-          if (direction.value === "rtl") {
-            gsap.set(slidesPlusClones, {
-              xPercent: `-=${(slidesPlusClones.length - slideTransition.value) * 100}`, // set slides so active is visible
-            });
-          }
-
-          if (direction.value === "btt" || direction.value === "ttb") {
-            if (direction.value === "ttb") {
-              slidesPlusClones.reverse();
-            }
-            for (let i = 0; i < slidesPlusClones.length; i++) {
-              gsap.set(slidesPlusClones[i], {
-                yPercent: `${i}00`, // set slides in order
-                height: widthFormula + "%",
-              });
-            }
-
-            gsap.set(slidesPlusClones, {
-              yPercent: `-=${resetFormula}`, // set slides so active is visible
-            });
-          }
-
-          if (direction.value === "ttb") {
-            console.log(resetFormula);
-            // console.log(slidesPlusClones.length - slideTransition.value);
-            gsap.set(slidesPlusClones, {
-              yPercent: `-=${100}`, // set slides so active is visible
-            });
-          }
-        };
-
-        const width = 100 / slideTransition.value;
-        setSlides(width, resetFormula);
-      }
-
-      // Dev options [data-dev]
-      if (dev.value === true) {
-        const devWrap = document.createElement("div"); // create dev div wrapper
-        devWrap.classList.add("scssecoCarousel__dev"); // add class on dev div of scssecoCarousel__dev
-        devWrap.innerHTML = `<table> <thead> <tr> <th colspan="5" style="text-align: center">${scssecoCarousel.value.id}</th> </tr><tr> <th>Setting</th> <th>|</th> <th>Value</th> <th>|</th> <th>Description</th> </tr></thead> <tbody> <tr> <td>time</td><td>|</td><td> <b><span class="dev_time"></span></b> </td><td>|</td><td>time</td></tr><tr> <td>interval</td><td>|</td><td><b>${interval.value}</b></td><td>|</td><td>dur btwn animas(slide)</td></tr><tr> <td>animDuration</td><td>|</td><td><b>${animDuration.value}</b></td><td>|</td><td>anim dur</td></tr><tr></tr><tr> <td>autoplay</td><td>|</td><td><b>${autoplay.value}</b></td><td>|</td><td>auto play slider</td></tr><tr> <td>hoverPause</td><td>|</td><td><b>${hoverPause.value}</b></td><td>|</td><td>pause on hover</td></tr><tr> <td>controls</td><td>|</td><td><b>${controls.value}</b></td><td>|</td><td>add controls</td></tr><tr> <td>arrows</td><td>|</td><td><b>${arrows.value}</b></td><td>|</td><td>button text or chevron</td></tr><tr> <td>reset</td><td>|</td><td><b>${reset.value}</b></td><td>|</td><td>infinite cycle</td></tr><tr> <td>slideTransition</td><td>|</td><td><b>${slideTransition.value}</b></td><td>|</td><td>slide change effect</td></tr><tr> <td>responsive</td><td>|</td><td><b>${responsive.value}</b></td><td>|</td><td>adjust the slide number depending on the viewport</td></tr><tr> <td>direction</td><td>|</td><td><b>${direction.value}</b></td><td>|</td><td>direction of the slide animation</td></tr><tr> <td>css overflow</td><td>|</td><td> <b><input type="checkbox" class="showOverflow"/></b> </td><td>|</td><td>show overflow</td></tr></tbody></table>`; // add this content to devWrap
-
-        scssecoCarousel.value.appendChild(devWrap); // append dev stuff to the slider
-
-        const slidesPlusClones = Array.from(scssecoCarousel__stage.value.children);
-
-        slidesPlusClones.forEach((slide, index) => {
+    const addDevSlideNumber = () => {
+      if (carouselDev.value) {
+        Array.from(scssecoCarousel__stage.value.children).forEach((slide, index) => {
           const devSldNr = document.createElement("div"); // create slide nr div
           devSldNr.classList.add("scssecoCarousel__dev-slide_number"); // add class of scssecoCarousel__dev-slide_number in slide nr div
           const cloneText = slide.classList.contains("clone") ? "(c)" : "";
-          devSldNr.innerHTML = `${slide.dataset.slidenr} / ${slides.length}${cloneText}`; // add nr/total
+          devSldNr.innerHTML = `${slide.dataset.slide} / ${scssecoCarousel__slides.value.length}${cloneText}`; // add nr/total
           slide.appendChild(devSldNr); // append to slide
         });
-
-        const showOverflow = scssecoCarousel.value.querySelector(".showOverflow");
-
-        showOverflow.addEventListener("change", () => {
-          if (showOverflow.checked === true) {
-            scssecoCarousel.value.style.overflow = "visible";
-            scssecoCarousel__stage.value.style.overflow = "visible";
-          } else {
-            scssecoCarousel.value.style.overflow = "hidden";
-            scssecoCarousel__stage.value.style.overflow = "hidden";
-          }
-        });
       }
+    };
+
+    onMounted(() => {
+      scssecoCarousel__slides.value = Array.from(scssecoCarousel__stage.value.children);
+      scssecoCarousel__slides.value.forEach((slide, index) => {
+        slide.setAttribute("data-slide", index + 1);
+      });
+      scssecoCarousel__activeSlide.value = scssecoCarousel__stage.value.querySelector(".active");
+
+      carouselResponsiveMatchMedia();
+
+      autoPlay();
+
+      slidesArrangeFade();
+      slidesArrangeJump(scssecoCarousel__slides.value);
+      slidesArrangeRifle(scssecoCarousel__slides.value);
+      slidesArrangeNumber(scssecoCarousel__slides.value);
+
+      addDevSlideNumber();
     });
 
     onUnmounted(() => {
       clearInterval(timeInt);
     });
 
-    return { scssecoCarousel, scssecoCarousel__stage, isPaused };
+    return {
+      carouselControls,
+      carouselDev,
+      carouselDirection,
+      scssecoCarousel,
+      scssecoCarousel__stage,
+      scssecoCarousel__slides,
+      scssecoCarousel__activeSlide,
+      scssecoCarousel__controls,
+      scssecoCarousel__controls_prevBtn,
+      scssecoCarousel__controls_nextBtn,
+      time,
+      pauseOnHover,
+      devOptions,
+      devOverflow,
+      nextSlide,
+      prevSlide,
+      dotSlide,
+      translationsGlossary,
+    };
   },
 };
 </script>
 
 <template>
-  <div ref="scssecoCarousel" :id="carouselDetails.sliderID" class="scssecoCarousel">
+  <div
+    ref="scssecoCarousel"
+    @mouseenter="pauseOnHover()"
+    @mouseleave="pauseOnHover()"
+    :id="carouselDetails.sliderID"
+    class="scssecoCarousel"
+  >
     <div ref="scssecoCarousel__stage" class="scssecoCarousel__stage">
       <slot />
+    </div>
+
+    <div
+      ref="scssecoCarousel__controls"
+      v-if="carouselControls != 'none'"
+      class="scssecoCarousel__controls"
+      :style="{
+        direction: carouselDirection === 'ltr' ? 'ltr' : carouselDirection === 'rtl' || lang === 'ar' ? 'rtl' : 'ltr',
+      }"
+    >
+      <div v-if="carouselControls === 'arrows' || carouselControls === 'all'" class="scssecoCarousel__controls--arrows">
+        <button ref="scssecoCarousel__controls_prevBtn" class="scssecoCarousel__controls--prev" @click="prevSlide">
+          <span v-if="carouselDetails.carouselArrows === 'text'" :style="{ direction: lang === 'ar' ? 'rtl' : 'ltr' }">
+            {{ translationsGlossary.p.previous[lang] }}
+          </span>
+          <span v-else>
+            <svg
+              v-if="carouselDirection === 'rtl'"
+              xmlns="httb://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 256 256"
+            >
+              <path
+                fill="currentColor"
+                d="M96 220a12.2 12.2 0 0 1-8.5-3.5a12 12 0 0 1 0-17L159 128L87.5 56.5a12 12 0 0 1 17-17l80 80a12 12 0 0 1 0 17l-80 80A12.2 12.2 0 0 1 96 220Z"
+              />
+            </svg>
+            <svg v-else xmlns="httb://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256">
+              <path
+                fill="currentColor"
+                d="M160 220a12.2 12.2 0 0 1-8.5-3.5l-80-80a12 12 0 0 1 0-17l80-80a12 12 0 0 1 17 17L97 128l71.5 71.5a12 12 0 0 1 0 17a12.2 12.2 0 0 1-8.5 3.5Z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button ref="scssecoCarousel__controls_nextBtn" class="scssecoCarousel__controls--next" @click="nextSlide">
+          <span v-if="carouselDetails.carouselArrows === 'text'" :style="{ direction: lang === 'ar' ? 'rtl' : 'ltr' }">
+            {{ translationsGlossary.n.next[lang] }}
+          </span>
+          <span v-else>
+            <svg
+              v-if="carouselDirection === 'rtl'"
+              xmlns="httb://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 256 256"
+            >
+              <path
+                fill="currentColor"
+                d="M160 220a12.2 12.2 0 0 1-8.5-3.5l-80-80a12 12 0 0 1 0-17l80-80a12 12 0 0 1 17 17L97 128l71.5 71.5a12 12 0 0 1 0 17a12.2 12.2 0 0 1-8.5 3.5Z"
+              />
+            </svg>
+            <svg v-else xmlns="httb://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256">
+              <path
+                fill="currentColor"
+                d="M96 220a12.2 12.2 0 0 1-8.5-3.5a12 12 0 0 1 0-17L159 128L87.5 56.5a12 12 0 0 1 17-17l80 80a12 12 0 0 1 0 17l-80 80A12.2 12.2 0 0 1 96 220Z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div v-if="carouselControls === 'dots' || carouselControls === 'all'" class="scssecoCarousel__controls--dots">
+        <button
+          v-for="(slide, index) in scssecoCarousel__slides"
+          :key="index"
+          @click="dotSlide"
+          :data-slide="index + 1"
+          :class="{ active: scssecoCarousel__activeSlide.dataset.slide == index + 1 }"
+        >
+          <span v-if="slide.dataset.text" :style="{ direction: lang === 'ar' ? 'rtl' : 'ltr' }">{{
+            slide.dataset.text
+          }}</span>
+          <span v-else>{{ index + 1 }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div v-if="carouselDev" class="scssecoCarousel__dev">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="5" style="text-align: center">{{ carouselDetails.sliderID }}</th>
+          </tr>
+          <tr>
+            <th>Setting</th>
+            <th>|</th>
+            <th>Value</th>
+            <th>|</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>time</td>
+            <td>|</td>
+            <td>
+              <b>{{ time }}</b>
+            </td>
+            <td>|</td>
+            <td>miliseconds</td>
+          </tr>
+          <tr v-for="(option, index) in devOptions">
+            <td>{{ option.name }}</td>
+            <td>|</td>
+            <td>
+              <b>{{ option.value }}</b>
+            </td>
+            <td>|</td>
+            <td>{{ option.description }}</td>
+          </tr>
+          <tr>
+            <td>css overflow</td>
+            <td>|</td>
+            <td>
+              <b><input type="checkbox" @change="devOverflow" /></b>
+            </td>
+            <td>|</td>
+            <td>show overflow</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -1408,6 +1206,11 @@ export default {
 
   .scssecoCarousel__controls {
     border: 2px solid green;
+    pointer-events: none;
+    button {
+      cursor: pointer;
+      pointer-events: all;
+    }
     .scssecoCarousel__controls--arrows {
       align-items: center;
       display: flex;
@@ -1429,7 +1232,10 @@ export default {
       padding: 10px;
       button {
         &.active {
-          background-color: red;
+          background-color: var(--clr-brandSecondaryColor);
+        }
+        span {
+          pointer-events: none;
         }
       }
     }
@@ -1459,7 +1265,7 @@ export default {
     justify-content: center;
     position: absolute;
     right: 20px;
-    width: clamp(20px, 3em, 45px);
+    width: clamp(20px, 4rem, 65px);
   }
 }
 </style>

@@ -3,7 +3,7 @@ import { onMounted, ref } from "@vue/runtime-core";
 
 import translationsGlossary from "../../../../../../../../001-super_global_files/composables/translationsGlossary";
 
-import Carousel from "../../../../../../../../001-super_global_files/components/Carousel/Carousel2.vue";
+import Carousel from "../../../../../../../../001-super_global_files/components/Carousel/Carousel.vue";
 import reloadComponent from "../../../../../../../../001-super_global_files/composables/reloadComponent";
 import Slide from "../../../../../../../../001-super_global_files/components/Carousel/Slide.vue";
 

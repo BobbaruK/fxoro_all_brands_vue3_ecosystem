@@ -27,6 +27,10 @@ export default {
           routerName: "DemoComponentsComponentsRoot",
           routerLabel: translationsGlossary.c.components,
           children: {
+            accordion: {
+              routerName: "DemoComponentsComponentsAccordion",
+              routerLabel: translationsGlossary.a.accordion,
+            },
             backToTop: {
               routerName: "DemoComponentsComponentsBackToTop",
               routerLabel: translationsGlossary.b.backToTop,

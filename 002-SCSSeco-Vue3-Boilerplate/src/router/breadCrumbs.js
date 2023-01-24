@@ -284,6 +284,18 @@ const breadCrumbs = {
         ],
       },
       Components: {
+        Accordion: [
+          {
+            label: translationsGlossary.h.home,
+            href: "DemoComponentsHome",
+          },
+          {
+            label: translationsGlossary.c.components,
+          },
+          {
+            label: translationsGlossary.a.accordion,
+          },
+        ],
         BackToTop: [
           {
             label: translationsGlossary.h.home,

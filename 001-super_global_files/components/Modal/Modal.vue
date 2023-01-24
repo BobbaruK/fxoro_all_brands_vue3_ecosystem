@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { onClickOutside } from "@vueuse/core";
 import { onMounted, onUnmounted, ref, watchEffect } from "@vue/runtime-core";
 
-import { useModalStore } from "@/stores/ModalStore";
+import { useModalStore } from "../../stores/ModalStore";
 
 import translationsGlossary from "../../composables/translationsGlossary";
 

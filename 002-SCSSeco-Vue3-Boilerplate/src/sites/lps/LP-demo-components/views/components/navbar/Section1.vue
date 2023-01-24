@@ -98,6 +98,10 @@ export default {
               routerName: "DemoComponentsComponentsRoot",
               routerLabel: translationsGlossary.c.components,
               children: {
+                accordion: {
+                  routerName: "DemoComponentsComponentsAccordion",
+                  routerLabel: translationsGlossary.a.accordion,
+                },
                 badge: {
                   routerName: "DemoComponentsComponentsBadge",
                   routerLabel: translationsGlossary.b.badge,
@@ -108,22 +112,7 @@ export default {
                 },
                 carousel: {
                   routerName: "DemoComponentsComponentsCarousel",
-                  routerLabel: {
-                    en: "Carousel",
-                    it: "Carousel",
-                    tr: "Carousel",
-                    ro: "Carousel",
-                    hu: "Carousel",
-                    ar: "Carousel",
-                    de: "Carousel",
-                    es: "Carousel",
-                    sv: "Carousel",
-                    pt: "Carousel",
-                    fi: "Carousel",
-                    pl: "Carousel",
-                    th: "Carousel",
-                    ms: "Carousel",
-                  },
+                  routerLabel: translationsGlossary.c.carousel,
                 },
                 countdown: {
                   routerName: "DemoComponentsComponentsCountdown",
@@ -186,7 +175,7 @@ export default {
             th: "GitHub",
             ms: "GitHub",
           },
-          href: ["https://github.com/BobbaruK/SCSSeco-Vue3-Boilerplate", "external"],
+          href: ["https://github.com/BobbaruK/fxoro_all_brands_vue3_ecosystem", "external"],
         },
       },
     };

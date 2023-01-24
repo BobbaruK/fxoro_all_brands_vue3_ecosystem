@@ -368,6 +368,15 @@ const routes = [
             props: true,
             children: [
               {
+                path: "accordion",
+                name: "DemoComponentsComponentsAccordion",
+                component: () => import("../sites/lps/LP-demo-components/views/components/accordion/Accordion.vue"),
+                props: true,
+                meta: {
+                  breadCrumbs: breadCrumbs.LP.DemoComponents.Components.Accordion,
+                },
+              },
+              {
                 path: "back-to-top",
                 name: "DemoComponentsComponentsBackToTop",
                 component: () => import("../sites/lps/LP-demo-components/views/components/backToTop/BackToTop.vue"),

@@ -41,12 +41,31 @@ export default {
      * |  Agreement(s)                                   |
      *
      */
-    const layout = !isNaN(props.formDetails.layout) || typeof props.formDetails.layout != "undefined" ? props.formDetails.layout : 1;
+    const layout =
+      !isNaN(props.formDetails.layout) || typeof props.formDetails.layout != "undefined" ? props.formDetails.layout : 1;
 
     // translate form
     const { firstName, lastName, email, country, phone, agreement } = formTranslations(props.formDetails.button);
 
-    const { firstNameValue, firstNameError, lastNameValue, lastNameError, emailValue, emailError, prefixValue, phoneValue, phoneError, countries, countryValue, countryError, agreementValue, agreementError, captchaError, validate, validateForm } = formValidation(props.lang, props.formDetails.test);
+    const {
+      firstNameValue,
+      firstNameError,
+      lastNameValue,
+      lastNameError,
+      emailValue,
+      emailError,
+      prefixValue,
+      phoneValue,
+      phoneError,
+      countries,
+      countryValue,
+      countryError,
+      agreementValue,
+      agreementError,
+      captchaError,
+      validate,
+      validateForm,
+    } = formValidation(props.lang, props.formDetails.test);
 
     // const route = useRoute();
 
@@ -108,7 +127,12 @@ export default {
           <div class="col-12">
             <div class="form-control">
               <label :for="`${formDetails.formID}-firstName`">{{ firstName[lang] }}</label>
-              <input v-model="firstNameValue" type="text" :id="`${formDetails.formID}-firstName`" :placeholder="firstName[lang]" />
+              <input
+                v-model="firstNameValue"
+                type="text"
+                :id="`${formDetails.formID}-firstName`"
+                :placeholder="firstName[lang]"
+              />
             </div>
           </div>
           <div v-if="firstNameError[lang]" class="col-12 error">
@@ -128,7 +152,12 @@ export default {
           <div class="col-12">
             <div class="form-control">
               <label :for="`${formDetails.formID}-lastName`">{{ lastName[lang] }}</label>
-              <input v-model="lastNameValue" type="text" :id="`${formDetails.formID}-lastName`" :placeholder="lastName[lang]" />
+              <input
+                v-model="lastNameValue"
+                type="text"
+                :id="`${formDetails.formID}-lastName`"
+                :placeholder="lastName[lang]"
+              />
             </div>
           </div>
           <div v-if="lastNameError[lang]" class="col-12 error">
@@ -167,7 +196,14 @@ export default {
             <div class="form-control country">
               <label :for="`${formDetails.formID}-country`">{{ country[lang] }}</label>
               <select v-model="countryValue" :id="`${formDetails.formID}-country`">
-                <option v-for="(country, index) in countries" :key="index" :value="country.code" :data-dial-code="country.dial_code">{{ country.name }} ({{ country.code }})</option>
+                <option
+                  v-for="(country, index) in countries"
+                  :key="index"
+                  :value="country.code"
+                  :data-dial-code="country.dial_code"
+                >
+                  {{ country.name }} ({{ country.code }})
+                </option>
               </select>
             </div>
           </div>
@@ -213,7 +249,13 @@ export default {
                 <div class="form-control">
                   <input v-model="agreementValue" type="checkbox" :id="`${formDetails.formID}-agreement`" />
                   <label class="agreement" :for="`${formDetails.formID}-agreement`">
-                    {{ formDetails.agreemenType == undefined || formDetails.agreemenType == "" || formDetails.agreemenType != "woBrandName" ? agreement.wBrandName[lang] : agreement.woBrandName[lang] }}
+                    {{
+                      formDetails.agreemenType == undefined ||
+                      formDetails.agreemenType == "" ||
+                      formDetails.agreemenType != "woBrandName"
+                        ? agreement.wBrandName[lang]
+                        : agreement.woBrandName[lang]
+                    }}
                   </label>
                 </div>
               </div>

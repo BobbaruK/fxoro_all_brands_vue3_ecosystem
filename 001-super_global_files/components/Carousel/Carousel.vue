@@ -4,22 +4,21 @@ import { onMounted, onUnmounted } from "@vue/runtime-core";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 import Loader from "../Loader/Loader.vue";
 
 import translationsGlossary from "../../composables/translationsGlossary";
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: "Carousel",
-  emits: ["carouselKey"],
   components: { Loader },
   props: {
     lang: String,
     carouselDetails: Object,
   },
-  setup(props, ctx) {
+  setup(props) {
     /**
      * TODO
      *
@@ -126,8 +125,6 @@ export default {
         ? allowedDirectionTranitions.indexOf(props.carouselDetails.carouselDirection) == -1
           ? defaultDirectionTranition
           : props.carouselDetails.carouselDirection
-        : props.lang === "ar"
-        ? "rtl"
         : defaultDirectionTranition
     );
 
@@ -252,7 +249,7 @@ export default {
         const clone = slide.cloneNode(true);
         clone.classList.add("clone");
         clone.classList.remove("active");
-        
+
         if (slidePos === "first") {
           scssecoCarousel__stage.value.appendChild(clone);
           gsap.set(clone, firstSlidePos[carouselDirection.value]);

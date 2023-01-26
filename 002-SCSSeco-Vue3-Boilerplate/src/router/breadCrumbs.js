@@ -392,6 +392,18 @@ const breadCrumbs = {
             label: translationsGlossary.n.navbar,
           },
         ],
+        Table: [
+          {
+            label: translationsGlossary.h.home,
+            href: "DemoComponentsHome",
+          },
+          {
+            label: translationsGlossary.c.components,
+          },
+          {
+            label: translationsGlossary.t.table,
+          },
+        ],
       },
       Contact: [
         {

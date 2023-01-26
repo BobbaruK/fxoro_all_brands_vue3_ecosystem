@@ -449,6 +449,15 @@ const routes = [
                   breadCrumbs: breadCrumbs.LP.DemoComponents.Components.Navbar,
                 },
               },
+              {
+                path: "table",
+                name: "DemoComponentsComponentsTable",
+                component: () => import("../sites/lps/LP-demo-components/views/components/table/Table.vue"),
+                props: true,
+                meta: {
+                  breadCrumbs: breadCrumbs.LP.DemoComponents.Components.Table,
+                },
+              },
             ],
           },
           {

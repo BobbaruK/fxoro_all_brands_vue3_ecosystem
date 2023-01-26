@@ -92,35 +92,7 @@ export default {
             : Math.floor((gap % hour) / second)
           : Math.floor((gap % minute) / second);
       }
-      // if (hideW.value) {
-      //   d = Math.floor(gap / day);
-      //   h = Math.floor((gap % day) / hour);
-      //   m = Math.floor((gap % hour) / minute);
-      //   s = Math.floor((gap % minute) / second);
-      // } else if (hideD.value) {
-      //   console.log("asdsad");
-      //   h = Math.floor(gap / hour);
-      //   m = Math.floor((gap % hour) / minute);
-      //   s = Math.floor((gap % minute) / second);
-      // } else if (hideH.value) {
-      //   w = Math.floor(gap / week);
-      //   d = Math.floor((gap % week) / day);
-      //   m = Math.floor((gap % day) / minute);
-      //   s = Math.floor((gap % minute) / second);
-      // } else if (hideM.value) {
-      //   w = Math.floor(gap / week);
-      //   d = Math.floor((gap % week) / day);
-      //   h = Math.floor((gap % day) / hour);
-      //   s = Math.floor((gap % hour) / second);
-      // } else {
-      //   w = Math.floor(gap / week);
-      //   d = Math.floor((gap % week) / day);
-      //   h = Math.floor((gap % day) / hour);
-      //   m = Math.floor((gap % hour) / minute);
-      //   s = Math.floor((gap % minute) / second);
-      // }
-
-      // days.value.innerHTML = d < 0 ? Math.abs(d + 1) : d < 10 ? (d >= 0 ? `0${d}` : d) : d;
+      
       if (props.countdownDetails.stopEnd) {
         if (!hideW.value) {
           weeks.value.innerHTML = w <= 0 ? "00" : w < 10 ? `0${w}` : w;

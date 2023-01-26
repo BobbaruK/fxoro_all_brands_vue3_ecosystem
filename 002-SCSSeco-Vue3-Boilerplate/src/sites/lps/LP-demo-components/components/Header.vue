@@ -63,6 +63,10 @@ export default {
               routerName: "DemoComponentsComponentsNavbar",
               routerLabel: translationsGlossary.n.navbar,
             },
+            table: {
+              routerName: "DemoComponentsComponentsTable",
+              routerLabel: translationsGlossary.t.table,
+            },
           },
         },
         contact: {

@@ -709,6 +709,22 @@ const translationsGlossary = {
     },
   },
   t: {
+    table: {
+      en: "Table",
+      it: "Tavolo",
+      tr: "Masa",
+      ro: "Tabel",
+      hu: "Asztali",
+      ar: "الطاولة",
+      de: "Tisch",
+      es: "Tabla",
+      sv: "Bord",
+      pt: "Mesa",
+      fi: "Pöytä",
+      pl: "Stół",
+      th: "ตาราง",
+      ms: "Jadual",
+    },
     total: {
       en: "Total",
       it: "Totale",

@@ -104,30 +104,15 @@ export default {
               </thead>
               <tbody>
                 <tr v-for="(bodyCell, indexBodyCell) in bodyRow" :key="indexBodyCell">
-                  <template v-for="(headCell, indexHeadCell) in tableDetails.table.thead" :key="indexHeadCell">
+                  <template v-for="(headCell, indexHeadCell) in tableDetails.table.thead">
                     <template v-if="headCell[indexBodyCell]">
-                      <th
-                        :class="[headCell[indexBodyCell].class ? headCell[indexBodyCell].class : null]"
-                        :rowspan="
-                          headCell[indexBodyCell] && headCell[indexBodyCell].colspan
-                            ? headCell[indexBodyCell].colspan
-                            : null
-                        "
-                        :colspan="
-                          headCell[indexBodyCell] && headCell[indexBodyCell].rowspan
-                            ? headCell[indexBodyCell].rowspan
-                            : null
-                        "
-                      >
+                      <th :key="indexHeadCell" :class="[headCell[indexBodyCell].class ? headCell[indexBodyCell].class : null]" :rowspan="headCell[indexBodyCell] && headCell[indexBodyCell].colspan ? headCell[indexBodyCell].colspan : null" :colspan="headCell[indexBodyCell] && headCell[indexBodyCell].rowspan ? headCell[indexBodyCell].rowspan : null">
                         {{ headCell[indexBodyCell].name }}
                       </th>
                     </template>
                   </template>
 
-                  <td
-                    :rowspan="bodyCell.colspan ? bodyCell.colspan : null"
-                    :class="[bodyCell.class ? bodyCell.class : null]"
-                  >
+                  <td :rowspan="bodyCell.colspan ? bodyCell.colspan : null" :class="[bodyCell.class ? bodyCell.class : null]">
                     {{ bodyCell.value }}
                   </td>
                 </tr>
@@ -138,32 +123,16 @@ export default {
       </tbody>
     </table>
     <table v-else class="scssecoTable desktop">
-      <colgroup>
-        <col span="2" style="background-color: #d6eeee" />
-        <col span="3" style="background-color: pink" />
-      </colgroup>
       <thead v-if="tableDetails.table.thead">
         <tr v-for="(headRow, indexHeadRow) in tableDetails.table.thead" :key="indexHeadRow">
-          <th
-            v-for="(headCell, indexHeadCell) in headRow"
-            :key="indexHeadCell"
-            :colspan="headCell.colspan ? headCell.colspan : null"
-            :rowspan="headCell.rowspan ? headCell.rowspan : null"
-            :class="[headCell.class ? headCell.class : '']"
-          >
+          <th v-for="(headCell, indexHeadCell) in headRow" :key="indexHeadCell" :colspan="headCell.colspan ? headCell.colspan : null" :rowspan="headCell.rowspan ? headCell.rowspan : null" :class="[headCell.class ? headCell.class : '']">
             {{ headCell.name }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(bodyRow, index) in tableDetails.table.tbody">
-          <td
-            v-for="(bodyCell, index) in bodyRow"
-            :key="index"
-            :colspan="bodyCell.colspan ? bodyCell.colspan : null"
-            :rowspan="bodyCell.rowspan ? bodyCell.rowspan : null"
-            :class="[bodyCell.class ? bodyCell.class : null]"
-          >
+        <tr v-for="(bodyRow, index) in tableDetails.table.tbody" :key="index">
+          <td v-for="(bodyCell, index) in bodyRow" :key="index" :colspan="bodyCell.colspan ? bodyCell.colspan : null" :rowspan="bodyCell.rowspan ? bodyCell.rowspan : null" :class="[bodyCell.class ? bodyCell.class : null]">
             {{ bodyCell.value }}
           </td>
         </tr>

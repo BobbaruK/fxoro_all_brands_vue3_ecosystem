@@ -51,9 +51,9 @@ export default {
     };
 
     const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#122932");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#122932");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#122932");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#122932");
     });
 
     return {};

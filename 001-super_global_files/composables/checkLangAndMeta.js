@@ -1,40 +1,58 @@
+import { useHead } from "unhead";
+
 /**
  *  check Lang and Meta
  */
 
-const checkLangAndMeta = (propsLang = "", lang = "", documentPageTitle = {}, metaDescription = {}, brandColor = "") => {
-  // <html> lang and dir
-  const htmlDoc = document.querySelector("html");
-  if (lang.indexOf(propsLang) > -1) {
-    htmlDoc.setAttribute("lang", propsLang);
-    if (propsLang == "ar") {
-      htmlDoc.setAttribute("dir", "rtl");
-    } else {
-      htmlDoc.setAttribute("dir", "ltr");
-    }
-  }
-
-  // <head> title
-  const docTitle = document.querySelector("title");
-  docTitle.innerText = `${documentPageTitle[propsLang]} | ${process.env.VUE_APP_BRAND_TITLE}`;
-
-  // meta description && theme colors
-  document.querySelectorAll("meta").forEach((meta) => {
-    if (meta.name == "description") {
-      meta.content = metaDescription[propsLang];
-    }
-    if (meta.name == "theme-color") {
-      meta.content = brandColor;
-    }
-    if (meta.name == "msapplication-TileColor") {
-      meta.content = brandColor;
-    }
-  });
-
-  document.querySelectorAll("link").forEach((link) => {
-    if (link.rel === "mask-icon") {
-      link.setAttribute("color", brandColor);
-    }
+const checkLangAndMeta = (propsLang = "", documentPageTitle = {}, metaDescription = {}, brandColor = "") => {
+  useHead({
+    title: `${documentPageTitle[propsLang]} | ${process.env.VUE_APP_BRAND_TITLE}`,
+    htmlAttrs: {
+      lang: propsLang,
+      dir: propsLang === "ar" ? "rtl" : "ltr",
+    },
+    meta: [
+      {
+        name: "description",
+        content: metaDescription[propsLang],
+      },
+      {
+        name: "theme-color",
+        content: brandColor,
+      },
+      {
+        name: "msapplication-TileColor",
+        content: brandColor,
+      },
+    ],
+    link: [
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-32x32.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-16x16.png",
+      },
+      {
+        rel: "manifest",
+        href: "/site.webmanifest",
+      },
+      {
+        rel: "mask-icon",
+        href: "/safari-pinned-tab.svg",
+        color: brandColor,
+      },
+    ],
   });
 
   return {};

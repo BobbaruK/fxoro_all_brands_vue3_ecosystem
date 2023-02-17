@@ -36,9 +36,9 @@ export default {
     };
 
     const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#FFA900");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#FFA900");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#FFA900");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#FFA900");
     });
 
     /**

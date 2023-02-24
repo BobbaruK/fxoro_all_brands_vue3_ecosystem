@@ -24,20 +24,11 @@ export default {
 
     onMounted(() => {
       if (lpLangs.indexOf(route.params.lang) == -1) {
-        router.replace({ name: "OilHome", params: { lang: defaultLang } });
+        router.replace({ name: "OilV1Home", params: { lang: defaultLang } });
       }
     });
 
-    // form call
-    const formCall = (e) => {
-      ctx.emit("showForm");
-    };
-
-    const eFormDets = (e) => {
-      ctx.emit("formDetails", e);
-    };
-
-    return { formCall, eFormDets };
+    return {};
   },
 };
 </script>
@@ -50,7 +41,7 @@ export default {
     </div>
   </div>
   <main>
-    <router-view @showForm="formCall" @formDetails="eFormDets" />
+    <router-view />
   </main>
   <Footer :lang="lang" />
   <BackToTop :bttDetails="{ bttID: 'backToTopOilV1' }" />

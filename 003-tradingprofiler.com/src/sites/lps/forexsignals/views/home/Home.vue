@@ -2,7 +2,6 @@
 import { onUpdated } from "@vue/runtime-core";
 
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
-import languages from "../../composables/translations/languages";
 
 import Section1 from "./Section1.vue";
 import Section2 from "./Section2.vue";
@@ -54,10 +53,9 @@ export default {
       ms: "",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#095d98");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#095d98");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#095d98");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#095d98");
     });
 
     return {};

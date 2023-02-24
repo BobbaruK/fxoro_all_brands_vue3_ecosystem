@@ -2,7 +2,6 @@
 import { onUpdated } from "@vue/runtime-core";
 
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
-import languages from "../../composables/translations/languages";
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";
 
 import Section1 from "./Section1.vue";
@@ -36,10 +35,9 @@ export default {
       ms: "Demo2 - Services(ms) - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#1E1E24");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1E1E24");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#1E1E24");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1E1E24");
     });
 
     return {};

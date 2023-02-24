@@ -11,8 +11,6 @@ export default {
   setup() {
     const route = useRoute();
 
-    console.log(route.params.lang);
-
     const { content, privacyLinkLabel } = footerTransl();
 
     return { route, content, privacyLinkLabel };
@@ -28,7 +26,13 @@ export default {
         <div class="col-12">
           <a class="privacyLink" :href="`${route.params.lang}/privacy-policy`">{{ privacyLinkLabel[lang] }}</a>
         </div>
-        <img src="@/sites/brand/assets/imgs/logos/TradingProfilerLogoSquare-color-white.svg" alt="Logo" class="logo" width="200" height="120" />
+        <img
+          src="@/sites/brand/assets/imgs/logos/TradingProfilerLogoSquare-color-white.svg"
+          alt="Logo"
+          class="logo"
+          width="200"
+          height="120"
+        />
       </div>
     </div>
   </footer>

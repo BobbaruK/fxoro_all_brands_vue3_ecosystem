@@ -4,17 +4,18 @@ import { onMounted } from "@vue/runtime-core";
 
 import languages from "./composables/languages";
 
-import Header from "@/sites/brand/components/Header.vue";
-import Footer from "@/sites/brand/components/Footer.vue";
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 import BackToTop from "../../../../001-super_global_files/components/BackToTop/BackToTop.vue";
 
-import "../../../../001-super_global_files/assets/scss/scsseco_global.scss";
 import "./assets/scss/scsseco_brand.scss";
+
 export default {
   name: "Brand",
   components: { Header, Footer, BackToTop },
   props: {
     lang: String,
+    productID: String,
   },
   setup() {
     const route = useRoute();
@@ -47,18 +48,4 @@ export default {
   <BackToTop :bttDetails="{ bttID: 'backToTopBrand' }" />
 </template>
 
-<style lang="scss">
-// @use "../brand/assets/scss/abstracts/variables" as vars;
-@use "../brand/assets/scss/abstracts/mixins" as mxns;
-
-.topBg {
-  @include mxns.mediamax(xl) {
-    background-image: url(./assets/imgs/topBG.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-bottom: 6px solid var(--clr-brandPrimaryColor);
-    color: var(--clr-white);
-  }
-}
-</style>
+<style lang="scss"></style>

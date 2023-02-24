@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 
 import Section1 from "./Section1.vue";
@@ -49,32 +48,10 @@ export default {
       ms: "",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescritopn, "#317689");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescritopn, "#317689");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescritopn, "#317689");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescritopn, "#317689");
     });
-
-    // ctx.emit("formDetails", {
-    //   id: "demo-modal",
-    //   layout: 1,
-    //   button: {
-    //     en: "Register Now",
-    //     it: "",
-    //     tr: "",
-    //     ro: "",
-    //     hu: "",
-    //     ar: "سجل الان",
-    //     de: "",
-    //     es: "",
-    //     sv: "",
-    //     pt: "",
-    //     fi: "",
-    //     pl: "",
-    //     th: "",
-    //     ms: "",
-    //   },
-    // });
 
     return {};
   },

@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 
 import Section1 from "./Section1.vue";
@@ -51,50 +50,25 @@ export default {
       ms: "",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#143842");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#143842");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#143842");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#143842");
     });
 
     // form call
-    const formCall = (e) => {
-      ctx.emit("showForm");
-    };
 
-    ctx.emit("formDetails", {
-      id: "oil-modal",
-      layout: 1,
-      button: {
-        en: "Register Now",
-        it: "",
-        tr: "",
-        ro: "",
-        hu: "",
-        ar: "سجل الان",
-        de: "",
-        es: "",
-        sv: "",
-        pt: "",
-        fi: "",
-        pl: "",
-        th: "",
-        ms: "",
-      },
-    });
-
-    return { formCall };
+    return {};
   },
 };
 </script>
 
 <template>
   <Teleport to="#teleportS1">
-    <Section1 :lang="lang" @showForm="formCall" />
+    <Section1 :lang="lang" />
   </Teleport>
   <Section2 :lang="lang" />
   <Section3 :lang="lang" />
-  <Section4 :lang="lang" @showForm="formCall" />
+  <Section4 :lang="lang" />
 </template>
 
 <style lang="scss">
@@ -135,9 +109,24 @@ $borderRadius: 10px;
       select {
         /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#41220b+0,41220b+44,c36522+100 */
         background: var(--clr-brandPrimaryColor-dark); /* Old browsers */
-        background: -moz-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background: -moz-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* FF3.6-15 */
+        background: -webkit-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(
+          to bottom,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
         border-radius: $borderRadius;
         border: 1px solid var(--clr-brandPrimaryColor-dark);
@@ -180,9 +169,24 @@ $borderRadius: 10px;
       button[type="submit"] {
         /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#41220b+0,41220b+44,c36522+100 */
         background: var(--clr-brandPrimaryColor-dark); /* Old browsers */
-        background: -moz-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background: -moz-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* FF3.6-15 */
+        background: -webkit-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(
+          to bottom,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         border-radius: $borderRadius;
         border: 2px solid var(--clr-brandPrimaryColor-light);
         color: var(--clr-brandPrimaryColor-light);

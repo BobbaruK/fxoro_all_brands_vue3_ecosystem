@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 import translationsGlossary from "../../../../../../../../001-super_global_files/composables/translationsGlossary";
 
@@ -36,7 +35,6 @@ export default {
       ms: `DemoComponents - ${translationsGlossary.b.backToTop.ms} - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!`
     };
 
-    const { lpLangs } = languages();
     checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#590004");
     onUpdated(() => {
       checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#590004");

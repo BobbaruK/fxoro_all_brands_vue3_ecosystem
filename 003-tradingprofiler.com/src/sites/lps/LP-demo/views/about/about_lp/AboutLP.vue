@@ -2,7 +2,6 @@
 import { onUpdated } from "@vue/runtime-core";
 
 import checkLangAndMeta from "../../../../../../../../001-super_global_files/composables/checkLangAndMeta";
-import languages from "../../../composables/translations/languages";
 
 import Section1 from "./Section1.vue";
 
@@ -47,13 +46,12 @@ export default {
       fi: "Demo1 - About LP(fi) - Kun kirjoitat metakuvausta, pidä se 140–160 merkin pituisena, jotta Google voi näyttää koko viestisi. Muista lisätä avainsanasi!",
       pl: "Demo1 - About LP(pl) - Pisząc metaopis, zachowaj długość od 140 do 160 znaków, aby Google mogło wyświetlić całą wiadomość. Nie zapomnij podać słowa kluczowego!",
       th: "Demo1 - About LP(th) - เมื่อเขียนคำอธิบายเมตา ให้มีความยาวระหว่าง 140 ถึง 160 อักขระ เพื่อให้ Google สามารถแสดงข้อความทั้งหมดของคุณได้ อย่าลืมใส่คีย์เวิร์ดของคุณ!",
-      ms: "Demo1 - About LP(ms) - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!"
+      ms: "Demo1 - About LP(ms) - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#571F4E");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#571F4E");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#571F4E");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#571F4E");
     });
 
     return {};

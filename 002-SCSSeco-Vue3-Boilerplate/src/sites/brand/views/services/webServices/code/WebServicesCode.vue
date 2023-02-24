@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../../../composables/languages";
 import checkLangAndMeta from "../../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 
 import Section1 from "./Section1.vue";
@@ -44,10 +43,9 @@ export default {
       fi: "Brand - Web Services Code(fi) - Kun kirjoitat metakuvausta, pidä se 140–160 merkin pituisena, jotta Google voi näyttää koko viestisi. Muista lisätä avainsanasi!",
       pl: "Brand - Web Services Code(pl) - Pisząc metaopis, zachowaj długość od 140 do 160 znaków, aby Google mogło wyświetlić całą wiadomość. Nie zapomnij podać słowa kluczowego!",
       th: "Brand - Web Services Code(th) - เมื่อเขียนคำอธิบายเมตา ให้มีความยาวระหว่าง 140 ถึง 160 อักขระ เพื่อให้ Google สามารถแสดงข้อความทั้งหมดของคุณได้ อย่าลืมใส่คีย์เวิร์ดของคุณ!",
-      ms: "Brand - Web Services Code(ms) - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!"
+      ms: "Brand - Web Services Code(ms) - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!",
     };
 
-    const { lpLangs } = languages();
     checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#FFA900");
     onUpdated(() => {
       checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#FFA900");

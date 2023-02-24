@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 import translationsGlossary from "../../../../../../../../001-super_global_files/composables/translationsGlossary";
 
@@ -33,13 +32,12 @@ export default {
       fi: `DemoComponents - ${translationsGlossary.b.badge.fi} - Kun kirjoitat metakuvausta, pidä se 140–160 merkin pituisena, jotta Google voi näyttää koko viestisi. Muista lisätä avainsanasi!`,
       pl: `DemoComponents - ${translationsGlossary.b.badge.pl} - Pisząc metaopis, zachowaj długość od 140 do 160 znaków, aby Google mogło wyświetlić całą wiadomość. Nie zapomnij podać słowa kluczowego!`,
       th: `DemoComponents - ${translationsGlossary.b.badge.th} - เมื่อเขียนคำอธิบายเมตา ให้มีความยาวระหว่าง 140 ถึง 160 อักขระ เพื่อให้ Google สามารถแสดงข้อความทั้งหมดของคุณได้ อย่าลืมใส่คีย์เวิร์ดของคุณ!`,
-      ms: `DemoComponents - ${translationsGlossary.b.badge.ms} - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!`
+      ms: `DemoComponents - ${translationsGlossary.b.badge.ms} - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!`,
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#590004");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#590004");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#590004");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#590004");
     });
 
     return {};

@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 
 import Section1 from "./Section1.vue";
@@ -51,10 +50,9 @@ export default {
       ms: "",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#143842");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#143842");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescription, "#143842");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#143842");
     });
 
     return {};
@@ -170,9 +168,24 @@ html[dir="rtl"] .formOverlay {
       select {
         /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#41220b+0,41220b+44,c36522+100 */
         background: var(--clr-brandPrimaryColor-dark); /* Old browsers */
-        background: -moz-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background: -moz-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* FF3.6-15 */
+        background: -webkit-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(
+          to bottom,
+          var(--clr-brandPrimaryColor-dark) 0%,
+          var(--clr-brandPrimaryColor-dark) 65%,
+          var(--clr-brandPrimaryColor-light) 100%
+        ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 
         border-radius: $borderRadius;
         border: 1px solid var(--clr-brandPrimaryColor-dark);
@@ -214,9 +227,24 @@ html[dir="rtl"] .formOverlay {
       button[type="submit"] {
         /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#41220b+0,41220b+44,c36522+100 */
         background: var(--clr-brandPrimaryColor); /* Old browsers */
-        background: -moz-linear-gradient(top, var(--clr-brandPrimaryColor) 0%, var(--clr-brandPrimaryColor) 65%, var(--clr-brandSecondaryColor) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, var(--clr-brandPrimaryColor) 0%, var(--clr-brandPrimaryColor) 65%, var(--clr-brandSecondaryColor) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, var(--clr-brandPrimaryColor) 0%, var(--clr-brandPrimaryColor) 65%, var(--clr-brandSecondaryColor) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        background: -moz-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor) 0%,
+          var(--clr-brandPrimaryColor) 65%,
+          var(--clr-brandSecondaryColor) 100%
+        ); /* FF3.6-15 */
+        background: -webkit-linear-gradient(
+          top,
+          var(--clr-brandPrimaryColor) 0%,
+          var(--clr-brandPrimaryColor) 65%,
+          var(--clr-brandSecondaryColor) 100%
+        ); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(
+          to bottom,
+          var(--clr-brandPrimaryColor) 0%,
+          var(--clr-brandPrimaryColor) 65%,
+          var(--clr-brandSecondaryColor) 100%
+        ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         border-radius: $borderRadius;
         border: 2px solid var(--clr-brandSecondaryColor);
         color: var(--clr-brandSecondaryColor);

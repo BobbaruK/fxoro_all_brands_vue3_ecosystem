@@ -27,6 +27,10 @@ export default {
           routerName: "DemoComponentsComponentsRoot",
           routerLabel: translationsGlossary.c.components,
           children: {
+            accordion: {
+              routerName: "DemoComponentsComponentsAccordion",
+              routerLabel: translationsGlossary.a.accordion,
+            },
             backToTop: {
               routerName: "DemoComponentsComponentsBackToTop",
               routerLabel: translationsGlossary.b.backToTop,
@@ -38,6 +42,10 @@ export default {
             button: {
               routerName: "DemoComponentsComponentsBreadcrumb",
               routerLabel: translationsGlossary.b.breadcrumb,
+            },
+            carousel: {
+              routerName: "DemoComponentsComponentsCarousel",
+              routerLabel: translationsGlossary.c.carousel,
             },
             countdown: {
               routerName: "DemoComponentsComponentsCountdown",
@@ -54,6 +62,10 @@ export default {
             navbar: {
               routerName: "DemoComponentsComponentsNavbar",
               routerLabel: translationsGlossary.n.navbar,
+            },
+            table: {
+              routerName: "DemoComponentsComponentsTable",
+              routerLabel: translationsGlossary.t.table,
             },
           },
         },

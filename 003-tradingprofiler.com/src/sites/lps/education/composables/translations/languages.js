@@ -7,7 +7,7 @@ const languages = () => {
     // "tr",
     // "ro",
     // "hu",
-    "ar",
+    // "ar",
     // "de",
     // "es",
     // "sv",

@@ -1,8 +1,7 @@
 <script>
-import { onMounted, onUpdated, ref, watchEffect } from "@vue/runtime-core";
+import { onUpdated, ref, watchEffect } from "@vue/runtime-core";
 
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";
-import languages from "../../../composables/languages";
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 import { useWebStoreBrand } from "@/stores/WebStoreBrand"; // web store
 
@@ -55,7 +54,6 @@ export default {
       ms: `Brand - ${translationsGlossary.p.product.ms} - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!`,
     };
 
-    const { lpLangs } = languages();
     checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#FFA900");
     onUpdated(() => {
       checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#FFA900");

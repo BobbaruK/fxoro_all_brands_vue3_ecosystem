@@ -1,7 +1,6 @@
 <script>
 import { onUpdated } from "@vue/runtime-core";
 
-import languages from "../../composables/translations/languages";
 import checkLangAndMeta from "../../../../../../../001-super_global_files/composables/checkLangAndMeta";
 
 import Section1 from "./Section1.vue";
@@ -48,10 +47,9 @@ export default {
       ms: "",
     };
 
-    const { lpLangs } = languages();
-    checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescritopn, "#fdb60e");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescritopn, "#fdb60e");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, documentTitleTransl, metaDescritopn, "#fdb60e");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescritopn, "#fdb60e");
     });
 
     return {};

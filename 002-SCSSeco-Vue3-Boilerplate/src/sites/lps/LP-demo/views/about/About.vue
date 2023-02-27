@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "LP~Demo1~AboutRoot",
+  name: "LP~DemoV1~AboutRoot",
   props: {
     lang: String,
   },

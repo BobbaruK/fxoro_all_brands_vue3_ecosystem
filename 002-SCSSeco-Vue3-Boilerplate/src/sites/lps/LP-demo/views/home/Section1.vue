@@ -1,21 +1,39 @@
 <script>
 import { ref } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 
-import demoSection1Transl from "../../composables/translations/pages/home/demoSection1Transl";
+import demoV1HomeSection1Transl from "../../composables/translations/pages/home/demoV1HomeSection1Transl";
+import demoV3HomeSection1Transl from "../../composables/translations/pages/home/demoV3HomeSection1Transl";
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";
 
 import Modal from "../../../../../../../001-super_global_files/components/Modal/Modal.vue";
 import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
 
 export default {
-  name: "LP~Demo1~Home~Section1",
+  name: "LP~DemoV1~Home~Section1",
   components: { Modal, Form },
   props: {
     lang: String,
   },
   setup() {
+    const router = useRouter();
+    const lpName = router.currentRoute.value.matched[1].name;
     // Translations
-    const { title, content, formBtn } = demoSection1Transl();
+    const title = ref({});
+    const content = ref({});
+    const formBtn = ref({});
+
+    if (lpName === "Demo" || lpName === "DemoV2") {
+      title.value = demoV1HomeSection1Transl().title;
+      content.value = demoV1HomeSection1Transl().content;
+      formBtn.value = demoV1HomeSection1Transl().formBtn;
+    }
+
+    if (lpName === "DemoV3") {
+      title.value = demoV3HomeSection1Transl().title;
+      content.value = demoV3HomeSection1Transl().content;
+      formBtn.value = demoV3HomeSection1Transl().formBtn;
+    }
 
     // Modal with form
     const showModalForm = ref(false);
@@ -30,14 +48,7 @@ export default {
       button: translationsGlossary.j.join,
     };
 
-    return {
-      title,
-      content,
-      formBtn,
-      showModalForm,
-      modalDetailsForm,
-      formDetails,
-    };
+    return { title, content, formBtn, showModalForm, modalDetailsForm, formDetails };
   },
 };
 </script>

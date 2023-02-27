@@ -4,11 +4,11 @@ const { defaultLang } = languages();
 const lpDemo2Routes = [
   {
     // /lp redirect
-    path: "demo/v2",
+    path: "demo2",
     redirect: { name: "Demo2Home", params: { lang: `${defaultLang}` } },
   },
   {
-    path: "demo/v2",
+    path: "demo2",
     name: "Demo2",
     component: () => import("../Demo.vue"),
     props: true,

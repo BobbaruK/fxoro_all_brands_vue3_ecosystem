@@ -45,7 +45,13 @@ export default {
 </template>
 
 <style lang="scss">
-#backToTopDemoComponents {
-  // position: absolute;
+@use "./assets/scss/abstracts/colorPalette" as colPal;
+
+:root {
+  @each $type, $colors in colPal.$brandColors {
+    @each $color, $value in $colors {
+      --clr-#{$color}: #{$value};
+    }
+  }
 }
 </style>

@@ -1,19 +1,35 @@
 <script>
-import aboutLPSection1Transl from "../../../composables/translations/pages/about/about_lp/aboutLPSection1Transl";
+import { ref } from "@vue/reactivity";
+import { useRouter } from "vue-router";
+
+import demoV1AboutLPSection1Transl from "../../../composables/translations/pages/about/about_lp/demoV1AboutLPSection1Transl";
+import demoV3AboutLPSection1Transl from "../../../composables/translations/pages/about/about_lp/demoV3AboutLPSection1Transl";
 
 export default {
-  name: "LP~Demo1~About~Section1",
+  name: "LP~DemoV1~About~Section1",
   components: {},
   props: {
     lang: String,
   },
   setup() {
-    const { title, content } = aboutLPSection1Transl();
+    const router = useRouter();
+    const lpName = router.currentRoute.value.matched[1].name;
 
-    return {
-      title,
-      content,
-    };
+    // Translations
+    const title = ref({});
+    const content = ref({});
+
+    if (lpName === "Demo" || lpName === "DemoV2") {
+      title.value = demoV1AboutLPSection1Transl().title;
+      content.value = demoV1AboutLPSection1Transl().content;
+    }
+
+    if (lpName === "DemoV3") {
+      title.value = demoV3AboutLPSection1Transl().title;
+      content.value = demoV3AboutLPSection1Transl().content;
+    }
+
+    return { title, content };
   },
 };
 </script>

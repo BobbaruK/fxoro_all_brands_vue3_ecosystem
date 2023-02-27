@@ -1,4 +1,7 @@
 <script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
 import Navbar from "../../../../../../001-super_global_files/components/Navbar/Navbar.vue";
 import LanguageChooser from "../../../../../../001-super_global_files/components/LanguageChooser/LanguageChooser.vue";
 import languages from "../composables/translations/languages";
@@ -6,16 +9,43 @@ import translationsGlossary from "../../../../../../001-super_global_files/compo
 
 export default {
   components: { Navbar, LanguageChooser },
-  name: "LP~Demo1~Header",
+  name: "LP~DemoV1~Header",
   props: {
     lang: String,
   },
   setup() {
+    const router = useRouter();
+    const lpName = router.currentRoute.value.matched[1].name;
+
+    const routerHome = ref("");
+    const routerAbout = ref("");
+    const routerServices = ref("");
+    const routerContact = ref("");
+
+    if (lpName === "Demo") {
+      routerHome.value = "DemoV1Home";
+      routerAbout.value = "DemoV1About";
+      routerServices.value = "DemoV1Services";
+      routerContact.value = "DemoV1Contact";
+    }
+    if (lpName === "DemoV2") {
+      routerHome.value = "DemoV2Home";
+      routerAbout.value = "DemoV2About";
+      routerServices.value = "DemoV2Services";
+      routerContact.value = "DemoV2Contact";
+    }
+    if (lpName === "DemoV3") {
+      routerHome.value = "DemoV3Home";
+      routerAbout.value = "DemoV3About";
+      routerServices.value = "DemoV3Services";
+      routerContact.value = "DemoV3Contact";
+    }
+
     const menuDetails = {
       menuID: "headerMenu",
       menuItems: {
         home: {
-          routerName: "Demo1Home",
+          routerName: routerHome.value,
           routerLabel: translationsGlossary.h.home,
         },
         test: {
@@ -374,11 +404,11 @@ export default {
           },
         },
         about: {
-          routerName: "Demo1About",
+          routerName: routerAbout.value,
           routerLabel: translationsGlossary.a.about,
         },
         services: {
-          routerName: "Demo1Services",
+          routerName: routerServices.value,
           routerLabel: translationsGlossary.s.services,
         },
         // components: {
@@ -425,7 +455,7 @@ export default {
           },
         },
         contact: {
-          routerName: "Demo1Contact",
+          routerName: routerContact.value,
           routerLabel: translationsGlossary.c.contact,
         },
       },

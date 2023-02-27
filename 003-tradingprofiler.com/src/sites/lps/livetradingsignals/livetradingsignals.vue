@@ -43,6 +43,16 @@ export default {
 </template>
 
 <style lang="scss">
+@use "./assets/scss/abstracts/colorPalette" as colPal;
+
+:root {
+  @each $type, $colors in colPal.$brandColors {
+    @each $color, $value in $colors {
+      --clr-#{$color}: #{$value};
+    }
+  }
+}
+
 .loader {
   background: rgb(0 0 0 / 0.7);
   inset: 0;

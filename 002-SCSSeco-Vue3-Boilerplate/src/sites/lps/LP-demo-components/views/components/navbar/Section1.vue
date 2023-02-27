@@ -28,7 +28,7 @@ export default {
           href: [window.location.origin + "/"],
         },
         demo1: {
-          routerName: "Demo1Home",
+          routerName: "DemoV1Home",
           routerLabel: {
             en: "Demo1",
             it: "Demo1",
@@ -240,7 +240,7 @@ export default {
       href: [window.location.origin + &quot;/&quot;],
     },
     demo1: {
-      routerName: &quot;Demo1Home&quot;,
+      routerName: &quot;DemoV1Home&quot;,
       routerLabel: {
         en: &quot;Demo1&quot;,
         ...

@@ -7,7 +7,7 @@ import translationsGlossary from "../../../../../../../001-super_global_files/co
 import Section1 from "./Section1.vue";
 
 export default {
-  name: "LP~Demo1~Contact",
+  name: "LP~DemoV1~Contact",
   components: { Section1 },
   props: {
     lang: String,

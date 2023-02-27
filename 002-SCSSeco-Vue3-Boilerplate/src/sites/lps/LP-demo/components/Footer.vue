@@ -2,7 +2,7 @@
 import footerTransl from "../../../../../../001-super_global_files/composables/footerTransl";
 
 export default {
-  name: "LP~Demo1~Footer",
+  name: "LP~DemoV1~Footer",
   props: {
     lang: String,
   },

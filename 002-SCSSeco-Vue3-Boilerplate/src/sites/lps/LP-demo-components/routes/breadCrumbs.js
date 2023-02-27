@@ -178,7 +178,7 @@ const breadCrumbs = {
       },
       {
         label: translationsGlossary.c.contact,
-        href: "Demo1Contact",
+        href: "DemoV1Contact",
       },
     ],
   },

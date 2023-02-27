@@ -60,6 +60,15 @@ export default {
 <style lang="scss">
 @use "./assets/scss/abstracts/variables" as vars;
 @use "./assets/scss/abstracts/mixins" as mxns;
+@use "./assets/scss/abstracts/colorPalette" as colPal;
+
+:root {
+  @each $type, $colors in colPal.$brandColors {
+    @each $color, $value in $colors {
+      --clr-#{$color}: #{$value};
+    }
+  }
+}
 
 #siteWrapper {
   display: grid;

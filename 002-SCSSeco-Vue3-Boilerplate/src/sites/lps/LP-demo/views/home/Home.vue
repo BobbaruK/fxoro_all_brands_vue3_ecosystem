@@ -6,7 +6,7 @@ import checkLangAndMeta from "../../../../../../../001-super_global_files/compos
 import Section1 from "./Section1.vue";
 
 export default {
-  name: "LP~Demo1~Home",
+  name: "LP~DemoV1~Home",
   components: { Section1 },
   props: {
     lang: String,

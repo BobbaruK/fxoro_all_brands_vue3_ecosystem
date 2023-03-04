@@ -10,7 +10,6 @@ import Loader from "../Loader/Loader.vue";
 
 import translationsGlossary from "../../composables/translationsGlossary";
 
-
 export default {
   name: "Carousel",
   components: { Loader },
@@ -724,7 +723,7 @@ export default {
     };
 
     const carouselResponsiveMatchMedia = () => {
-      if (carouselResponsive.value != true && isNaN(carouselTransition.value)) return;
+      if (carouselResponsive.value !== true && !isNaN(carouselTransition.value)) return;
 
       const gsapmm = gsap.matchMedia();
 

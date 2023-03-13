@@ -198,7 +198,7 @@ const formValidation = (lang, test) => {
             })
               .then((response) => response.json())
               .then((resp) => {
-                if (resp.success === true && resp.score > 0.5) {
+                if (resp.success === true && resp.score > 0.6) {
                   // console.log("merge peste .5");
                   sendToCRM();
                 } else {
@@ -249,7 +249,7 @@ const formValidation = (lang, test) => {
           })
             .then((response) => response.json())
             .then((resp) => {
-              if (resp.success === true && resp.score > 0.5) {
+              if (resp.success === true && resp.score > 0.6) {
                 // console.log("merge peste .5");
                 // sendToCRM();
               } else {

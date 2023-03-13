@@ -50,6 +50,19 @@ export default {
 
 <style lang="scss">
 @use "./assets/scss/abstracts/colorPalette" as colPal;
+@use "./assets/scss/abstracts/mixins" as mxns;
+
+.topBg {
+  border-bottom: 6px solid var(--clr-brandPrimaryColor);
+  color: var(--clr-white);
+
+  @include mxns.mediamax(xl) {
+    background-image: url(./assets/imgs/topBG.jpg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
 
 :root {
   @each $type, $colors in colPal.$brandColors {

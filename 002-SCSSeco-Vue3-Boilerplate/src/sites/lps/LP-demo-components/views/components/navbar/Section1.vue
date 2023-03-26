@@ -95,43 +95,47 @@ export default {
               routerLabel: translationsGlossary.a.about,
             },
             components: {
-              routerName: "DemoComponentsComponentsRoot",
+              routerName: "DemoComponentsRoot",
               routerLabel: translationsGlossary.c.components,
               children: {
                 accordion: {
-                  routerName: "DemoComponentsComponentsAccordion",
+                  routerName: "DemoComponentsAccordion",
                   routerLabel: translationsGlossary.a.accordion,
                 },
                 badge: {
-                  routerName: "DemoComponentsComponentsBadge",
+                  routerName: "DemoComponentsBadge",
                   routerLabel: translationsGlossary.b.badge,
                 },
                 button: {
-                  routerName: "DemoComponentsComponentsBreadcrumb",
+                  routerName: "DemoComponentsBreadcrumb",
                   routerLabel: translationsGlossary.b.breadcrumb,
                 },
                 carousel: {
-                  routerName: "DemoComponentsComponentsCarousel",
+                  routerName: "DemoComponentsCarousel",
                   routerLabel: translationsGlossary.c.carousel,
                 },
                 countdown: {
-                  routerName: "DemoComponentsComponentsCountdown",
+                  routerName: "DemoComponentsCountdown",
                   routerLabel: translationsGlossary.c.countdown,
                 },
                 languageChooser: {
-                  routerName: "DemoComponentsComponentsLanguageChooser",
+                  routerName: "DemoComponentsLanguageChooser",
                   routerLabel: translationsGlossary.l.languageChooser,
                 },
+                loader: {
+                  routerName: "DemoComponentsLoader",
+                  routerLabel: translationsGlossary.l.loader,
+                },
                 modal: {
-                  routerName: "DemoComponentsComponentsModal",
+                  routerName: "DemoComponentsModal",
                   routerLabel: translationsGlossary.m.modal,
                 },
                 navbar: {
-                  routerName: "DemoComponentsComponentsNavbar",
+                  routerName: "DemoComponentsNavbar",
                   routerLabel: translationsGlossary.n.navbar,
                 },
                 table: {
-                  routerName: "DemoComponentsComponentsTable",
+                  routerName: "DemoComponentsTable",
                   routerLabel: translationsGlossary.t.table,
                 },
               },
@@ -162,7 +166,7 @@ export default {
           },
           href: [window.location.origin + "/lp/demo3"],
         },
-        google: {
+        github: {
           routerLabel: {
             en: "GitHub",
             it: "GitHub",
@@ -271,31 +275,31 @@ export default {
           routerLabel: translationsGlossary.a.about,
         },
         components: {
-          routerName: &quot;DemoComponentsComponentsRoot&quot;,
+          routerName: &quot;DemoComponentsRoot&quot;,
           routerLabel: translationsGlossary.c.components,
           children: {
             badge: {
-              routerName: &quot;DemoComponentsComponentsBadge&quot;,
+              routerName: &quot;DemoComponentsBadge&quot;,
               routerLabel: translationsGlossary.b.badge,
             },
             button: {
-              routerName: &quot;DemoComponentsComponentsBreadcrumb&quot;,
+              routerName: &quot;DemoComponentsBreadcrumb&quot;,
               routerLabel: translationsGlossary.b.breadcrumb,
             },
             countdown: {
-              routerName: &quot;DemoComponentsComponentsCountdown&quot;,
+              routerName: &quot;DemoComponentsCountdown&quot;,
               routerLabel: translationsGlossary.c.countdown,
             },
             languageChooser: {
-              routerName: &quot;DemoComponentsComponentsLanguageChooser&quot;,
+              routerName: &quot;DemoComponentsLanguageChooser&quot;,
               routerLabel: translationsGlossary.l.languageChooser,
             },
             modal: {
-              routerName: &quot;DemoComponentsComponentsModal&quot;,
+              routerName: &quot;DemoComponentsModal&quot;,
               routerLabel: translationsGlossary.m.modal,
             },
             navbar: {
-              routerName: &quot;DemoComponentsComponentsNavbar&quot;,
+              routerName: &quot;DemoComponentsNavbar&quot;,
               routerLabel: translationsGlossary.n.navbar,
             },
           },

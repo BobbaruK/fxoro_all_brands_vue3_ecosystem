@@ -98,6 +98,18 @@ const breadCrumbs = {
           label: translationsGlossary.b.breadcrumb,
         },
       ],
+      Caret: [
+        {
+          label: translationsGlossary.h.home,
+          href: "DemoComponentsHome",
+        },
+        {
+          label: translationsGlossary.c.components,
+        },
+        {
+          label: translationsGlossary.c.caret,
+        },
+      ],
       Carousel: [
         {
           label: translationsGlossary.h.home,
@@ -134,6 +146,18 @@ const breadCrumbs = {
           label: translationsGlossary.l.languageChooser,
         },
       ],
+      Loader: [
+        {
+          label: translationsGlossary.h.home,
+          href: "DemoComponentsHome",
+        },
+        {
+          label: translationsGlossary.c.components,
+        },
+        {
+          label: translationsGlossary.l.loader,
+        },
+      ],
       Modal: [
         {
           label: translationsGlossary.h.home,
@@ -156,6 +180,33 @@ const breadCrumbs = {
         },
         {
           label: translationsGlossary.n.navbar,
+        },
+      ],
+      SVGMask: [
+        {
+          label: translationsGlossary.h.home,
+          href: "DemoComponentsHome",
+        },
+        {
+          label: translationsGlossary.c.components,
+        },
+        {
+          label: {
+            en: "SVGMask",
+            it: "SVGMask",
+            tr: "SVGMask",
+            ro: "SVGMask",
+            hu: "SVGMask",
+            ar: "SVGMask",
+            de: "SVGMask",
+            es: "SVGMask",
+            sv: "SVGMask",
+            pt: "SVGMask",
+            fi: "SVGMask",
+            pl: "SVGMask",
+            th: "SVGMask",
+            ms: "SVGMask",
+          },
         },
       ],
       Table: [

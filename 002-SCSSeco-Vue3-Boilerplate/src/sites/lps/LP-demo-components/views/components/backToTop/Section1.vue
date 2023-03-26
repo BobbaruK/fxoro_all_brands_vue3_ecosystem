@@ -37,15 +37,21 @@ export default {
           <h1>{{ translationsGlossary.b.backToTop[lang] }}</h1>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <pre><code class="language-html">&lt;BackToTop :bttDetails=&quot;{ bttID: 'backToTopDemoComponents_Demo' }&quot; /&gt;</code></pre>
+      <div class="row" style="margin-top: 55vh">
+        <div class="col-12 col-lg-6">
+          <div>
+            <pre><code class="language-html">&lt;BackToTop class=&quot;backToTopExample&quot; :caret=&quot;'caret-down-bold'&quot; /&gt;</code></pre>
+          </div>
+          <div>
+            <BackToTop class="backToTopExample" :caret="'caret-down-bold'" />
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div style="position: static !important; margin-top: 100vh">
-            <BackToTop :bttDetails="{ bttID: 'backToTopDemoComponents_Demo' }" />
+        <div class="col-12 col-lg-6">
+          <div>
+            <pre><code class="language-html">&lt;BackToTop :progress=&quot;false&quot; class=&quot;backToTopExample&quot; /&gt;</code></pre>
+          </div>
+          <div>
+            <BackToTop :progress="false" class="backToTopExample" />
           </div>
         </div>
       </div>
@@ -53,9 +59,11 @@ export default {
   </section>
 </template>
 
-<style>
-#backToTopDemoComponents_Demo {
-  position: relative;
-  inset: 0;
+<style lang="scss">
+html {
+  .backToTopExample {
+    position: relative;
+    inset: 0 !important;
+  }
 }
 </style>

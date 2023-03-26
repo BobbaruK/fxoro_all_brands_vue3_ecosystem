@@ -39,7 +39,7 @@ export default {
     <router-view />
   </main>
   <Footer :lang="lang" />
-  <BackToTop :bttDetails="{ bttID: 'backToTopDemoV2' }" />
+  <BackToTop  :bttID="'backToTopDemo2'" />
 </template>
 
 <style lang="scss">

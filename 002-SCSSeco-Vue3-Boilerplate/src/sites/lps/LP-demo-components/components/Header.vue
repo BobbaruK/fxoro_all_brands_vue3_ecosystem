@@ -24,47 +24,74 @@ export default {
           routerLabel: translationsGlossary.a.about,
         },
         components: {
-          routerName: "DemoComponentsComponentsRoot",
+          routerName: "DemoComponentsRoot",
           routerLabel: translationsGlossary.c.components,
           children: {
             accordion: {
-              routerName: "DemoComponentsComponentsAccordion",
+              routerName: "DemoComponentsAccordion",
               routerLabel: translationsGlossary.a.accordion,
             },
             backToTop: {
-              routerName: "DemoComponentsComponentsBackToTop",
+              routerName: "DemoComponentsBackToTop",
               routerLabel: translationsGlossary.b.backToTop,
             },
             badge: {
-              routerName: "DemoComponentsComponentsBadge",
+              routerName: "DemoComponentsBadge",
               routerLabel: translationsGlossary.b.badge,
             },
             button: {
-              routerName: "DemoComponentsComponentsBreadcrumb",
+              routerName: "DemoComponentsBreadcrumb",
               routerLabel: translationsGlossary.b.breadcrumb,
             },
+            caret: {
+              routerName: "DemoComponentsCaret",
+              routerLabel: translationsGlossary.c.caret,
+            },
             carousel: {
-              routerName: "DemoComponentsComponentsCarousel",
+              routerName: "DemoComponentsCarousel",
               routerLabel: translationsGlossary.c.carousel,
             },
             countdown: {
-              routerName: "DemoComponentsComponentsCountdown",
+              routerName: "DemoComponentsCountdown",
               routerLabel: translationsGlossary.c.countdown,
             },
+            loader: {
+              routerName: "DemoComponentsLoader",
+              routerLabel: translationsGlossary.l.loader,
+            },
             languageChooser: {
-              routerName: "DemoComponentsComponentsLanguageChooser",
+              routerName: "DemoComponentsLanguageChooser",
               routerLabel: translationsGlossary.l.languageChooser,
             },
             modal: {
-              routerName: "DemoComponentsComponentsModal",
+              routerName: "DemoComponentsModal",
               routerLabel: translationsGlossary.m.modal,
             },
             navbar: {
-              routerName: "DemoComponentsComponentsNavbar",
+              routerName: "DemoComponentsNavbar",
               routerLabel: translationsGlossary.n.navbar,
             },
+            svgMask: {
+              routerName: "DemoComponentsSVGMask",
+              routerLabel: {
+                en: "SVGMask",
+                it: "SVGMask",
+                tr: "SVGMask",
+                ro: "SVGMask",
+                hu: "SVGMask",
+                ar: "SVGMask",
+                de: "SVGMask",
+                es: "SVGMask",
+                sv: "SVGMask",
+                pt: "SVGMask",
+                fi: "SVGMask",
+                pl: "SVGMask",
+                th: "SVGMask",
+                ms: "SVGMask",
+              },
+            },
             table: {
-              routerName: "DemoComponentsComponentsTable",
+              routerName: "DemoComponentsTable",
               routerLabel: translationsGlossary.t.table,
             },
           },

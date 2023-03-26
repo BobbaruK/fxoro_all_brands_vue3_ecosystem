@@ -40,7 +40,17 @@ const formValidation = (lang, test) => {
   // console.log(window.location.href);
 
   // Errors
-  const { firstNameErr, lastNameErr, emailEmptyErr, invalidEmailErr, phoneEmptyErr, invalidPhoneErr, countryErr, agreementErr, captchaErr } = formErrors();
+  const {
+    firstNameErr,
+    lastNameErr,
+    emailEmptyErr,
+    invalidEmailErr,
+    phoneEmptyErr,
+    invalidPhoneErr,
+    countryErr,
+    agreementErr,
+    captchaErr,
+  } = formErrors();
 
   // countryValue.value = lang.toUpperCase();
   getCountry(countryValue, IPAddress, countryName, validate);
@@ -153,7 +163,12 @@ const formValidation = (lang, test) => {
         urlencoded.append("CampaignName", `${process.env.VUE_APP_BRAND_TITLE} - ${lang.toUpperCase()}`);
         urlencoded.append("Advertiser", "");
         urlencoded.append("Referrer", document.referrer === "" ? window.location.href : document.referrer);
-        urlencoded.append("Cookie", `${window.location.origin}/${lang}/thank-you?fname=${firstNameValue.value}&lName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`);
+        urlencoded.append(
+          "Cookie",
+          `${window.location.origin}/${lang}/thank-you?fname=${firstNameValue.value}&lName=${
+            lastNameValue.value
+          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
+        );
         urlencoded.append("CustomField", "");
         urlencoded.append("AcceptTermsAndConditions", agreementValue.value);
         urlencoded.append("ApproveReceiveCommercial", true);
@@ -177,7 +192,9 @@ const formValidation = (lang, test) => {
 
         // router.push({ name: "ThankYou", params: { lang: route.params.lang } }); // go to thank you page
         // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
-        window.location.href = `/${lang}/thank-you?fname=${firstNameValue.value}&lName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+        window.location.href = `/${lang}/thank-you?fname=${firstNameValue.value}&lName=${lastNameValue.value}&email=${
+          emailValue.value
+        }&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
       } catch (err) {
         if (logs === "true") {
           console.log(`%cLooks like there was a problem with the register API(s):`, logStylesAPI, err);
@@ -198,7 +215,7 @@ const formValidation = (lang, test) => {
             })
               .then((response) => response.json())
               .then((resp) => {
-                if (resp.success === true && resp.score > 0.5) {
+                if (resp.success === true && resp.score > 0.6) {
                   // console.log("merge peste .5");
                   sendToCRM();
                 } else {
@@ -221,7 +238,11 @@ const formValidation = (lang, test) => {
         console.log(`CampaignName: ${process.env.VUE_APP_BRAND_TITLE} - ${lang.toUpperCase()}`);
         console.log(`Advertiser: `);
         console.log(`Referrer: ${document.referrer === "" ? window.location.href : document.referrer}`);
-        console.log(`Cookie: ${window.location.origin}/${lang}/thank-you?fname=${firstNameValue.value}&lName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`);
+        console.log(
+          `Cookie: ${window.location.origin}/${lang}/thank-you?fname=${firstNameValue.value}&lName=${
+            lastNameValue.value
+          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
+        );
         console.log(`CustomField: `);
         console.log(`AcceptTermsAndConditions: ${agreementValue.value}`);
         console.log(`ApproveReceiveCommercial: ${true}`);
@@ -231,7 +252,9 @@ const formValidation = (lang, test) => {
         // router.push({ name: "ThankYou", params: { lang: route.params.lang } });
         setTimeout(() => {
           validate.value = false;
-          window.location.href = `/${lang}/thank-you?fname=${firstNameValue.value}&lName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+          window.location.href = `/${lang}/thank-you?fname=${firstNameValue.value}&lName=${lastNameValue.value}&email=${
+            emailValue.value
+          }&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
           // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
         }, 3000);
       }
@@ -249,7 +272,7 @@ const formValidation = (lang, test) => {
           })
             .then((response) => response.json())
             .then((resp) => {
-              if (resp.success === true && resp.score > 0.5) {
+              if (resp.success === true && resp.score > 0.6) {
                 // console.log("merge peste .5");
                 // sendToCRM();
               } else {

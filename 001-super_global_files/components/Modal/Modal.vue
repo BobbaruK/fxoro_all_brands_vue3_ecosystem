@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { onClickOutside } from "@vueuse/core";
 import { onMounted, onUnmounted, ref, watchEffect } from "@vue/runtime-core";
 
-import { useModalStore } from "../../stores/ModalStore";
+import { useModalStore } from "./stores/ModalStore";
 
 import translationsGlossary from "../../composables/translationsGlossary";
 
@@ -33,7 +33,7 @@ export default {
       },
     });
 
-    const onBeforeFormLoad = (e) => {
+    const onBeforeModalLoad = (e) => {
       gsap.set(e, {
         autoAlpha: 0,
       });
@@ -103,7 +103,7 @@ export default {
 
     const closeBtn = translationsGlossary.c.close;
 
-    return { onBeforeFormLoad, closeModal, modal, closeBtn };
+    return { onBeforeModalLoad, closeModal, modal, closeBtn };
   },
 };
 </script>
@@ -111,7 +111,7 @@ export default {
 <template>
   <Teleport to="#modals">
     <div :id="modalDetails.modalID">
-      <transition appear @before-enter="onBeforeFormLoad" :css="false">
+      <transition appear @before-enter="onBeforeModalLoad" :css="false">
         <div class="modalOverlay">
           <div ref="modal" class="modal" :style="{ maxWidth: modalDetails.maxWidth }">
             <div class="close" @click="closeModal">&#215; {{ closeBtn[lang] }}</div>
@@ -150,6 +150,7 @@ export default {
     margin: 0 calc(vars.$gap / 2);
     max-height: 100vh;
     max-width: 500px;
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 30px 15px 15px;
     position: relative;

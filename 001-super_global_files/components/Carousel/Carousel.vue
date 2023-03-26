@@ -1031,6 +1031,11 @@ export default {
 </script>
 
 <template>
+  <strong>TODO</strong>: vezi ca responsive are buguri ** <br />
+  daca nu pun <code>carouselResponsive: false</code>, <br />
+  cand am <code>carouselTransition: fade|jump|rifle</code> <br />
+  o ia randeaua cand se schimba viewportu <br />
+  cel mai bine vezi la <a href="#heroSlider" style="text-decoration: underline">heroSlider</a>, la <a href="#sliderTabs" style="text-decoration: underline">sliderTabs</a> si la <a href="#sliderTabsVertical" style="text-decoration: underline">sliderTabsVertical</a>
   <div
     ref="scssecoCarousel"
     @mouseenter="pauseOnHover()"

@@ -1,12 +1,19 @@
 <script>
 import { useRoute } from "vue-router";
 
+import Caret from "../Caret/Caret.vue";
+
 export default {
   name: "Breadcrumbs",
+  components: { Caret },
   props: {
-    lang: String,
+    lang: {
+      type: String,
+      required: true,
+    },
     showHomeIcon: {
       type: Boolean,
+      default: false,
       required: false,
     },
   },
@@ -53,20 +60,7 @@ export default {
                 <span v-else>
                   {{ crumb.label[lang] }}
                 </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  aria-hidden="true"
-                  role="img"
-                  class="chevron"
-                  width="15"
-                  height="15"
-                  preserveAspectRatio="xMidYMid meet"
-                  viewBox="0 0 24 24"
-                  v-if="index != route.meta.breadCrumbs.length - 1"
-                >
-                  <path fill="currentColor" d="M10 6L8.59 7.41L13.17 12l-4.58 4.59L10 18l6-6l-6-6z"></path>
-                </svg>
+                <Caret v-if="index != route.meta.breadCrumbs.length - 1" />
               </li>
             </ul>
           </nav>
@@ -80,7 +74,7 @@ export default {
 section#breadCrumbsSection.breadCrumbsWrapper {
   --gap: 0.5rem;
 
-  padding: 0.5rem 0;
+  padding: var(--gap) 0;
   nav {
     ul {
       align-content: center;
@@ -94,17 +88,24 @@ section#breadCrumbsSection.breadCrumbsWrapper {
       line-height: 1;
       margin: 0;
       padding: 0;
-      li {
-        align-content: center;
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: var(--gap);
-        height: 30px;
-        justify-content: flex-start;
-        img.chevron {
-        }
+    }
+    li {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: var(--gap);
+      justify-content: flex-start;
+    }
+    span.caretWrapper {
+      align-items: center;
+      display: grid;
+      height: 0.7em;
+      transform: rotate(-90deg);
+      width: 0.7em;
+      span {
+        width: inherit;
+        height: inherit;
       }
     }
   }
@@ -114,9 +115,9 @@ html[dir="rtl"] {
   section#breadCrumbsSection.breadCrumbsWrapper {
     nav {
       ul {
-        img.chevron {
-          transform: scale(-1);
-        }
+      }
+      span.caretWrapper {
+        transform: rotate(90deg);
       }
     }
   }

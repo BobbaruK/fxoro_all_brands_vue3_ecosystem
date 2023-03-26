@@ -6,17 +6,7 @@ import pageNotFoundRoutes from "../sites/pagenotfound/routes/pageNotFoundRoutes"
 import lpsRoutes from "../sites/lps/routes/lpsRoutes";
 
 const routes = [
-  /**
-   * ! **Redirect to old amazon
-   */
-  //     {
-  //       path: "amazon/",
-  //       name: "AmazonOld",
-  //       component: () => import("../sites/lps/old/amazon_old.vue"),
-  //     },
-  //   ],
-  // },
-
+  //
   ...brandRoutes,
   ...thankYouRoutes,
   ...pageNotFoundRoutes,

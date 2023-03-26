@@ -43,46 +43,46 @@ export default {
         <div class="col-12">
           <Accordion>
             <AccordionItem>
-              <template #title>1Lorem, ipsum dolor.</template>
-              <template #content>1Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+              <template #title>Default One</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
             <AccordionItem class="active">
-              <template #title>2Lorem, ipsum dolor.</template>
-              <template #content>2Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+              <template #title>Default Two</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
             <AccordionItem>
-              <template #title>3Lorem, ipsum dolor.</template>
-              <template #content>3Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+              <template #title>Default Three</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
             <AccordionItem class="active">
-              <template #title>4Lorem, ipsum dolor.</template>
-              <template #content>4Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+              <template #title>Default Four</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
             <AccordionItem>
-              <template #title>5Lorem, ipsum dolor.</template>
-              <template #content>5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+              <template #title>Default Five</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
           </Accordion>
           <pre><code class="language-html">&lt;Accordion&gt;
   &lt;AccordionItem&gt;
-    &lt;template #title&gt;1Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;1Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Default One&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem class=&quot;active&quot;&gt;
-    &lt;template #title&gt;2Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;2Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Default Two&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem&gt;
-    &lt;template #title&gt;3Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;3Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Default Three&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem class=&quot;active&quot;&gt;
-    &lt;template #title&gt;4Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;4Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Default Four&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem&gt;
-    &lt;template #title&gt;5Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Default Five&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
 &lt;/Accordion&gt;</code></pre>
         </div>
@@ -93,100 +93,48 @@ export default {
           <h2>Flush false</h2>
         </div>
         <div class="col-12">
-          <Accordion>
-            <AccordionItem :flush="false">
-              <template #title>1Lorem, ipsum dolor.</template>
-              <template #content>1Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+          <Accordion :flush="false">
+            <AccordionItem>
+              <template #title>Flush False One</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
-            <AccordionItem class="active" :flush="false">
-              <template #title>2Lorem, ipsum dolor.</template>
-              <template #content>2Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+            <AccordionItem class="active">
+              <template #title>Flush False Two</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
-            <AccordionItem :flush="false">
-              <template #title>3Lorem, ipsum dolor.</template>
-              <template #content>3Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+            <AccordionItem>
+              <template #title>Flush False Three</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
-            <AccordionItem :flush="false" class="active">
-              <template #title>4Lorem, ipsum dolor.</template>
-              <template #content>4Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+            <AccordionItem class="active">
+              <template #title>Flush False Four</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
-            <AccordionItem :flush="false">
-              <template #title>5Lorem, ipsum dolor.</template>
-              <template #content>5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+            <AccordionItem>
+              <template #title>Flush False Five</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
           </Accordion>
           <pre><code class="language-html">&lt;Accordion&gt;
   &lt;AccordionItem :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;1Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;1Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Lorem, ipsum dolor.&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem class=&quot;active&quot; :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;2Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;2Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Lorem, ipsum dolor.&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;3Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;3Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Lorem, ipsum dolor.&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem :flush=&quot;false&quot; class=&quot;active&quot;&gt;
-    &lt;template #title&gt;4Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;4Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Lorem, ipsum dolor.&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
   &lt;AccordionItem :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;5Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
-  &lt;/AccordionItem&gt;
-&lt;/Accordion&gt;</code></pre>
-        </div>
-      </div>
-      <br /><br /><br />
-      <div class="row">
-        <div class="col-12">
-          <h2>Custom flush</h2>
-        </div>
-        <div class="col-12">
-          <Accordion>
-            <AccordionItem class="active">
-              <template #title>1Lorem, ipsum dolor.</template>
-              <template #content>1Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
-            </AccordionItem>
-            <AccordionItem :flush="false">
-              <template #title>2Lorem, ipsum dolor.</template>
-              <template #content>2Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
-            </AccordionItem>
-            <AccordionItem :flush="false">
-              <template #title>3Lorem, ipsum dolor.</template>
-              <template #content>3Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
-            </AccordionItem>
-            <AccordionItem class="active">
-              <template #title>4Lorem, ipsum dolor.</template>
-              <template #content>4Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
-            </AccordionItem>
-            <AccordionItem :flush="false">
-              <template #title>5Lorem, ipsum dolor.</template>
-              <template #content>5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
-            </AccordionItem>
-          </Accordion>
-          <pre><code class="language-html">&lt;Accordion&gt;
-  &lt;AccordionItem class=&quot;active&quot;&gt;
-    &lt;template #title&gt;1Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;1Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
-  &lt;/AccordionItem&gt;
-  &lt;AccordionItem :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;2Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;2Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
-  &lt;/AccordionItem&gt;
-  &lt;AccordionItem :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;3Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;3Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
-  &lt;/AccordionItem&gt;
-  &lt;AccordionItem class=&quot;active&quot;&gt;
-    &lt;template #title&gt;4Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;4Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
-  &lt;/AccordionItem&gt;
-  &lt;AccordionItem :flush=&quot;false&quot;&gt;
-    &lt;template #title&gt;5Lorem, ipsum dolor.&lt;/template&gt;
-    &lt;template #content&gt;5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
+    &lt;template #title&gt;Lorem, ipsum dolor.&lt;/template&gt;
+    &lt;template #content&gt;Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.&lt;/template&gt;
   &lt;/AccordionItem&gt;
 &lt;/Accordion&gt;</code></pre>
         </div>
@@ -233,18 +181,12 @@ export default {
             <AccordionItem class="active">
               <template #title>4 - Lorem, ipsum dolor.</template>
               <template #content>
-                <Countdown
-                  :countdownDetails="{
-                    countdownID: 'accordionCountDown',
-                    countdownTo: new Date(`February 10 2023 13:00:00`),
-                  }"
-                  :lang="lang"
-                />
+                <Countdown :lang="lang" :countdownTo="new Date(`December 10 2023 13:00:00`)" id="accordionCountDown" />
               </template>
             </AccordionItem>
             <AccordionItem>
               <template #title>5 - Lorem, ipsum dolor.</template>
-              <template #content>5Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
+              <template #content>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sunt.</template>
             </AccordionItem>
           </Accordion>
         </div>
@@ -276,6 +218,17 @@ export default {
       }
     }
     .scssecoAccordion__Content {
+      .countdown {
+        max-height: 93px;
+        .loader {
+          max-height: 40px;
+          max-width: 40px;
+          svg {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
     }
     &.active {
       .scssecoAccordion__Header {

@@ -3,12 +3,12 @@ import { onMounted } from "@vue/runtime-core";
 import { useWebStoreBrand } from "@/stores/WebStoreBrand"; // web store
 import translationsGlossary from "../../composables/translationsGlossary";
 
-import CarretWrapper from "../CarretWrapper/CarretWrapper.vue";
+import Caret from "../Caret/Caret.vue";
 import Badge from "../Badge/Badge.vue";
 
 export default {
   name: "Navbar",
-  components: { CarretWrapper, Badge },
+  components: { Caret, Badge },
   props: {
     lang: String,
     details: Object,
@@ -277,7 +277,7 @@ export default {
               :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
             >
               {{ parent.routerLabel[lang] }}
-              <CarretWrapper v-if="parent.hasOwnProperty('children')" />
+              <Caret v-if="parent.hasOwnProperty('children')" />
             </span>
           </router-link>
           <a
@@ -331,7 +331,7 @@ export default {
                     :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
                   >
                     {{ child.routerLabel[lang] }}
-                    <CarretWrapper v-if="child.hasOwnProperty('children')" />
+                    <Caret v-if="child.hasOwnProperty('children')" />
                   </span>
                 </router-link>
                 <a

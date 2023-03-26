@@ -43,7 +43,7 @@ export default {
     <router-view />
   </main>
   <Footer :lang="lang" />
-  <BackToTop :bttDetails="{ bttID: 'backToTopCryptoUniverseV1' }" />
+  <BackToTop />
 </template>
 
 <style lang="scss">

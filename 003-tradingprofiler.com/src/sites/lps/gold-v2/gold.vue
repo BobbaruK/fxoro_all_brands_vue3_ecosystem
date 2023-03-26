@@ -54,7 +54,7 @@ export default {
     <router-view @showForm="formCall" @formDetails="eFormDets" />
   </main>
   <Footer :lang="lang" />
-  <BackToTop :bttDetails="{ bttID: 'backToTopGoldV2' }" />
+  <BackToTop />
 </template>
 
 <style lang="scss">

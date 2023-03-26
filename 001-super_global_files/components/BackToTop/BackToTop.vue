@@ -5,23 +5,36 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { onMounted } from "@vue/runtime-core";
 
+import Caret from "../Caret/Caret.vue";
+import caretPropValidation from "../Caret/composables/caretPropValidation";
+
 gsap.registerPlugin(ScrollToPlugin);
 
 export default {
   name: "BackToTop",
+  components: { Caret },
   props: {
-    bttDetails: {
-      type: Object,
+    progress: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    caret: {
+      type: String,
+      required: false,
+      ...caretPropValidation(),
     },
   },
   setup(props) {
-    // Action
+    // Scroll to top of the page
     const bttFunct = () => {
       gsap.to(window, { scrollTo: "#siteWrapper" });
     };
 
+    // Get the BackToTop button element
     const backToTop = ref();
 
+    // Set animation defaults
     const bttAnims = gsap.timeline({
       paused: true,
       defaults: {
@@ -30,48 +43,45 @@ export default {
       },
     });
 
-    onMounted(() => {
-      gsap.set(`#${backToTop.value.id}`, {
-        autoAlpha: 0,
-        yPercent: 70,
-      });
-
-      bttAnims.to(`#${backToTop.value.id}`, {
-        autoAlpha: 1,
-        yPercent: 0,
-      });
-    });
-
-    //
-    const progress = ref();
+    // Calculate scrolling percent
+    const progressPercent = ref();
     window.addEventListener("scroll", () => {
       let scrollTop = window.scrollY;
       let docHeight = document.body.offsetHeight;
       let winHeight = window.innerHeight;
       let scrollPercent = scrollTop / (docHeight - winHeight);
-      progress.value = Math.round(scrollPercent * 100);
+      progressPercent.value = Math.round(scrollPercent * 100);
 
-      if (progress.value > 0) {
+      if (progressPercent.value > 0) {
         bttAnims.play();
-      } else if (progress.value == 0) {
+      } else if (progressPercent.value == 0) {
         bttAnims.reverse();
       }
     });
 
-    return { bttFunct, backToTop, progress };
+    onMounted(() => {
+      // set opacity and position
+      gsap.set(backToTop.value, {
+        autoAlpha: 0,
+        yPercent: 70,
+      });
+
+      // animate opacity and position
+      bttAnims.to(backToTop.value, {
+        autoAlpha: 1,
+        yPercent: 0,
+      });
+    });
+
+    return { bttFunct, backToTop, progressPercent };
   },
 };
 </script>
 
 <template>
-  <button ref="backToTop" @click="bttFunct" :id="bttDetails.bttID" class="backToTop" aria-label="Back to top">
-    <svg width="32" height="32" viewBox="0 0 512 512">
-      <path
-        fill="currentColor"
-        d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3L86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
-      />
-    </svg>
-    <div class="progress" :style="{ width: progress + '%' }"></div>
+  <button ref="backToTop" @click="bttFunct" class="backToTop" aria-label="Back to top">
+    <Caret :caret="caret" />
+    <div v-if="progress" class="progress" :style="{ width: progressPercent + '%' }"></div>
   </button>
 </template>
 
@@ -85,34 +95,24 @@ export default {
   background: var(--clr-brandSecondaryColor);
   border-radius: 5px;
   border: 1px solid var(--clr-brandPrimaryColor);
+  color: var(--clr-brandPrimaryColor);
   cursor: pointer;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  height: 30px;
+  font-size: 20px;
+  font-size: clamp(20px, 2vw, 25px);
+  height: 1.5em;
   inset: auto 1rem 1rem auto;
   justify-content: center;
   opacity: 0.7;
   overflow: hidden;
   position: fixed;
   transition: all 320ms linear;
-  width: 30px;
+  width: 1.5em;
   cursor: pointer;
   @include mxns.mediamin(sm) {
     inset: auto 1.5rem 2rem auto;
-  }
-  @include mxns.mediamin(xl) {
-    height: 35px;
-    width: 35px;
-  }
-  @include mxns.mediamin(xxl) {
-    height: 40px;
-    width: 40px;
-  }
-  svg {
-    path {
-      fill: var(--clr-brandPrimaryColor);
-    }
   }
   &.nearBottom,
   &:hover,
@@ -122,12 +122,7 @@ export default {
   &:hover,
   &:focus {
     background: var(--clr-brandPrimaryColor);
-    // border: 1px solid var(--clr-brandSecondaryColor);
-    svg {
-      path {
-        fill: var(--clr-brandSecondaryColor);
-      }
-    }
+    color: var(--clr-brandSecondaryColor);
     .progress {
       background: var(--clr-brandSecondaryColor);
     }
@@ -137,6 +132,10 @@ export default {
     height: 3px;
     inset: auto auto 0 0;
     position: absolute;
+  }
+
+  .caretWrapper {
+    transform: rotate(180deg);
   }
 }
 

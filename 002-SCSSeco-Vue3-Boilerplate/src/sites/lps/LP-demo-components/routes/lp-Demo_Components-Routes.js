@@ -56,17 +56,17 @@ const lpDemoComponentsRoutes = [
       {
         // redirect
         path: ":lang/components",
-        redirect: { name: "DemoComponentsComponentsCountdown", params: { lang: `${defaultLang}` } },
+        redirect: { name: "DemoComponentsCountdown", params: { lang: `${defaultLang}` } },
       },
       {
         path: ":lang/components",
-        name: "DemoComponentsComponentsRoot",
+        name: "DemoComponentsRoot",
         component: () => import("../views/components/Components.vue"),
         props: true,
         children: [
           {
             path: "accordion",
-            name: "DemoComponentsComponentsAccordion",
+            name: "DemoComponentsAccordion",
             component: () => import("../views/components/accordion/Accordion.vue"),
             props: true,
             meta: {
@@ -75,7 +75,7 @@ const lpDemoComponentsRoutes = [
           },
           {
             path: "back-to-top",
-            name: "DemoComponentsComponentsBackToTop",
+            name: "DemoComponentsBackToTop",
             component: () => import("../views/components/backToTop/BackToTop.vue"),
             props: true,
             meta: {
@@ -84,7 +84,7 @@ const lpDemoComponentsRoutes = [
           },
           {
             path: "badge",
-            name: "DemoComponentsComponentsBadge",
+            name: "DemoComponentsBadge",
             component: () => import("../views/components/badge/Badge.vue"),
             props: true,
             meta: {
@@ -93,7 +93,7 @@ const lpDemoComponentsRoutes = [
           },
           {
             path: "breadcrumb",
-            name: "DemoComponentsComponentsBreadcrumb",
+            name: "DemoComponentsBreadcrumb",
             component: () => import("../views/components/breadcrumb/Breadcrumb.vue"),
             props: true,
             meta: {
@@ -101,8 +101,17 @@ const lpDemoComponentsRoutes = [
             },
           },
           {
+            path: "caret",
+            name: "DemoComponentsCaret",
+            component: () => import("../views/components/caret/Caret.vue"),
+            props: true,
+            meta: {
+              breadCrumbs: breadCrumbs.DemoComponents.Components.Caret,
+            },
+          },
+          {
             path: "carousel",
-            name: "DemoComponentsComponentsCarousel",
+            name: "DemoComponentsCarousel",
             component: () => import("../views/components/carousel/Carousel.vue"),
             props: true,
             meta: {
@@ -111,7 +120,7 @@ const lpDemoComponentsRoutes = [
           },
           {
             path: "countdown",
-            name: "DemoComponentsComponentsCountdown",
+            name: "DemoComponentsCountdown",
             component: () => import("../views/components/countdown/Countdown.vue"),
             props: true,
             meta: {
@@ -120,7 +129,7 @@ const lpDemoComponentsRoutes = [
           },
           {
             path: "language-chooser",
-            name: "DemoComponentsComponentsLanguageChooser",
+            name: "DemoComponentsLanguageChooser",
             component: () => import("../views/components/languageChooser/LanguageChooser.vue"),
             props: true,
             meta: {
@@ -128,8 +137,17 @@ const lpDemoComponentsRoutes = [
             },
           },
           {
+            path: "loader",
+            name: "DemoComponentsLoader",
+            component: () => import("../views/components/loader/Loader.vue"),
+            props: true,
+            meta: {
+              breadCrumbs: breadCrumbs.DemoComponents.Components.Loader,
+            },
+          },
+          {
             path: "modal",
-            name: "DemoComponentsComponentsModal",
+            name: "DemoComponentsModal",
             component: () => import("../views/components/modal/Modal.vue"),
             props: true,
             meta: {
@@ -138,7 +156,7 @@ const lpDemoComponentsRoutes = [
           },
           {
             path: "navbar",
-            name: "DemoComponentsComponentsNavbar",
+            name: "DemoComponentsNavbar",
             component: () => import("../views/components/navbar/Navbar.vue"),
             props: true,
             meta: {
@@ -146,8 +164,17 @@ const lpDemoComponentsRoutes = [
             },
           },
           {
+            path: "svg-mask",
+            name: "DemoComponentsSVGMask",
+            component: () => import("../views/components/svgMask/svgMask.vue"),
+            props: true,
+            meta: {
+              breadCrumbs: breadCrumbs.DemoComponents.Components.Navbar,
+            },
+          },
+          {
             path: "table",
-            name: "DemoComponentsComponentsTable",
+            name: "DemoComponentsTable",
             component: () => import("../views/components/table/Table.vue"),
             props: true,
             meta: {

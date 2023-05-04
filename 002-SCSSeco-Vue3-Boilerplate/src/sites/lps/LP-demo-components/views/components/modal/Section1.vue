@@ -3,7 +3,8 @@ import { onMounted, ref } from "@vue/runtime-core";
 
 import translationsGlossary from "../../../../../../../../001-super_global_files/composables/translationsGlossary";
 
-import Modal from "../../../../../../../../001-super_global_files/components/Modal/Modal.vue";
+import Modal from "../../../../../../../../001-super_global_files/components/Modal/Modal2.vue";
+
 
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -36,6 +37,18 @@ export default {
 <template>
   <section id="section1" class="section">
     <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1>test test</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <Modal :lang="lang">
+            <h2>cutare</h2>
+          </Modal>
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <h1>{{ translationsGlossary.m.modal[lang] }}</h1>
@@ -161,7 +174,7 @@ setup() {
       </div>
     </div>
   </section>
-  <Modal
+  <!-- <Modal
     :lang="lang"
     :modalDetails="{
       modalID: 'simple-modal',
@@ -223,7 +236,7 @@ setup() {
     <button class="scssecoBtn" @click="showDelayedModal = !showDelayedModal">
       {{ translationsGlossary.c.close[lang] }}
     </button>
-  </Modal>
+  </Modal> -->
 </template>
 
 <style></style>

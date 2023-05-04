@@ -134,6 +134,33 @@ const breadCrumbs = {
           label: translationsGlossary.c.countdown,
         },
       ],
+      FormElement: [
+        {
+          label: translationsGlossary.h.home,
+          href: "DemoComponentsHome",
+        },
+        {
+          label: translationsGlossary.c.components,
+        },
+        {
+          label: {
+            en: "Form Element",
+            it: "Form Element",
+            tr: "Form Element",
+            ro: "Form Element",
+            hu: "Form Element",
+            ar: "Form Element",
+            de: "Form Element",
+            es: "Form Element",
+            sv: "Form Element",
+            pt: "Form Element",
+            fi: "Form Element",
+            pl: "Form Element",
+            th: "Form Element",
+            ms: "Form Element",
+          },
+        },
+      ],
       LanguageChooser: [
         {
           label: translationsGlossary.h.home,

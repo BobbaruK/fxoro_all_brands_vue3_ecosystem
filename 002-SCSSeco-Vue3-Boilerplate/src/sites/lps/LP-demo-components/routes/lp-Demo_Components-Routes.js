@@ -128,6 +128,15 @@ const lpDemoComponentsRoutes = [
             },
           },
           {
+            path: "form-elements",
+            name: "DemoComponentsFormElements",
+            component: () => import("../views/components/formElements/FormElements.vue"),
+            props: true,
+            meta: {
+              breadCrumbs: breadCrumbs.DemoComponents.Components.FormElement,
+            },
+          },
+          {
             path: "language-chooser",
             name: "DemoComponentsLanguageChooser",
             component: () => import("../views/components/languageChooser/LanguageChooser.vue"),

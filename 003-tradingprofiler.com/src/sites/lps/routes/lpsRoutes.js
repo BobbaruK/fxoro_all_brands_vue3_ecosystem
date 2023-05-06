@@ -14,6 +14,9 @@ import lpGoldV2Routes from "../gold-v2/routes/lp-GoldV2-Routes";
 import lpLiveTradingSignalsRoutes from "../livetradingsignals/routes/lp-LiveTradingSignals-Routes";
 import lpOilV1Routes from "../oil-v1/routes/lp-OilV1-Routes";
 import lpOilV2Routes from "../oil-v2/routes/lp-OilV2-Routes";
+import lpSignalsRoutes from "../signals/routes/lp-Signals-Routes";
+import lpTradingSignals3Routes from "../trading-signals3/routes/lp-TradingSignals3-Routes";
+import lpSignalKit02V2Routes from "../signalkit02_v2/routes/lp-SignalKit02V2-Routes";
 
 const lpsRoutes = [
   {
@@ -37,6 +40,9 @@ const lpsRoutes = [
       ...lpLiveTradingSignalsRoutes,
       ...lpOilV1Routes,
       ...lpOilV2Routes,
+      ...lpSignalsRoutes,
+      ...lpTradingSignals3Routes,
+      ...lpSignalKit02V2Routes,
     ],
   },
 ];

@@ -40,6 +40,11 @@ export default {
      * |  Country      ||  Phone        ||  Submit       |
      * |  Agreement(s)                                   |
      *
+     * Layout 4
+     * |  First Name   ||  Last Name    ||  Email        |
+     * |  Phone                         ||  Country      |
+     * |  Submit                        ||  Agreement(s) |
+     *
      */
     const layout =
       !isNaN(props.formDetails.layout) || typeof props.formDetails.layout != "undefined" ? props.formDetails.layout : 1;
@@ -117,10 +122,12 @@ export default {
     <div class="row">
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
-          'col-sm-6': layout == 2,
-          'col-sm-6 col-md-4': layout == 3,
-          'order-1': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-sm-6': layout === 2 || layout === 4,
+          'col-md-3': layout === 4,
+          'col-sm-6 col-md-4': layout === 3,
+          'order-1': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          firstNameWrapper: true,
         }"
       >
         <div class="row">
@@ -142,10 +149,12 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
-          'col-sm-6': layout == 2,
-          'col-sm-6 col-md-4': layout == 3,
-          'order-2': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-sm-6': layout === 2 || layout === 4,
+          'col-md-3': layout === 4,
+          'col-sm-6 col-md-4': layout === 3,
+          'order-2': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          lastNameWrapper: true,
         }"
       >
         <div class="row">
@@ -167,9 +176,11 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          'col-md-6': layout == 4,
           'col-md-4': layout == 3,
-          'order-3': layout == 1 || layout == 2 || layout == 3,
+          'order-3': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          emailWrapper: true,
         }"
       >
         <div class="row">
@@ -186,9 +197,11 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          'col-md-6': layout == 4,
           'col-md-4': layout == 3,
-          'order-4': layout == 1 || layout == 2 || layout == 3,
+          'order-4': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          countryWrapper: true,
         }"
       >
         <div class="row">
@@ -214,9 +227,11 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          'col-md-6': layout == 4,
           'col-md-4': layout == 3,
-          'order-5': layout == 1 || layout == 2 || layout == 3,
+          'order-5': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          phoneWrapper: true,
         }"
       >
         <div class="row">
@@ -236,10 +251,12 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
           'col-md-12': layout == 3,
-          'order-6': layout == 1 || layout == 2,
-          'order-6 order-md-7': layout == 3,
+          'col-md-6': layout == 4,
+          'order-6': layout == 1 || layout == 2 || layout === 4,
+          'order-6 order-md-7': layout == 3 || layout === 4,
+          agreementWrapper: true,
         }"
       >
         <div class="row">
@@ -268,10 +285,12 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3,
+          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
           'col-md-4': layout == 3,
-          'order-7': layout == 1 || layout == 2,
-          'order-7 order-md-6': layout == 3,
+          'col-md-6': layout == 4,
+          'order-7': layout == 1 || layout == 2 || layout === 4,
+          'order-7 order-md-6': layout == 3 || layout === 4,
+          submitWrapper: true,
         }"
       >
         <div class="form-control">

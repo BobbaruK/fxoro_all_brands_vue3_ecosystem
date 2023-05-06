@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as vars;
+
+// -----------------------------------------------------------------------------
+/* This file contains all styles related to the button component. */
+// -----------------------------------------------------------------------------
+
+.scssecoBtn {
+  background: var(--clr-brandPrimaryColor);
+  border-radius: vars.$borderRadius;
+  color: var(--clr-black);
+  font-weight: 900;
+  padding: 15px 30px;
+  transition: background vars.$animDur ease-in-out, color vars.$animDur ease-in-out;
+
+  &:hover,
+  &:focus {
+    background: var(--clr-brandSecondaryColor);
+  }
+}

@@ -52,6 +52,9 @@ $brandColors: (
   ),
   "primary": (
     "brandPrimaryColor": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, $brandPrimaryColor-l),
+    "brandPrimaryColor-hue": $brandPrimaryColor-h,
+    "brandPrimaryColor-saturation": $brandPrimaryColor-s,
+    "brandPrimaryColor-lightness": $brandPrimaryColor-l,
   ),
   "primary_monocromatic": (
     "brandPrimaryColor-100": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 90%),
@@ -83,6 +86,9 @@ $brandColors: (
   ),
   "secondary": (
     "brandSecondaryColor": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, $brandSecondaryColor-l),
+    "brandSecondaryColor-hue": $brandSecondaryColor-h,
+    "brandSecondaryColor-saturation": $brandSecondaryColor-s,
+    "brandSecondaryColor-lightness": $brandSecondaryColor-l,
   ),
   "secondary_monocromatic": (
     "brandSecondaryColor-100": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 90%),

@@ -30,10 +30,11 @@ html {
 
 // Body styles
 body {
-  background-color: var(--clr-brandSecondaryColor-100);
+  background-color: var(--clr-gray-100);
   color: var(--clr-brandPrimaryColor-900);
   font-family: vars.$fontFamily;
   overflow-x: hidden;
+  line-height: 1.5;
   #siteWrapper {
   }
 }

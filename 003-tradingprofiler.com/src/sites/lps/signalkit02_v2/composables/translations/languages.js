@@ -5,7 +5,7 @@ const languages = () => {
     "en",
     // "th",
     // "hu",
-    "ar",
+    // "ar",
     // ""
   ];
   const defaultLang = "en";

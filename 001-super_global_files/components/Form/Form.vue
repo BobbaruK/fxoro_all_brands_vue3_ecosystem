@@ -42,7 +42,7 @@ export default {
      *
      * Layout 4
      * |  First Name   ||  Last Name    ||  Email        |
-     * |  Phone                         ||  Country      |
+     * |  Country                       ||  Phone        |
      * |  Submit                        ||  Agreement(s) |
      *
      */
@@ -176,10 +176,10 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
-          'col-md-6': layout == 4,
-          'col-md-4': layout == 3,
-          'order-3': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-md-6': layout === 4,
+          'col-md-4': layout === 3,
+          'order-3': layout === 1 || layout === 2 || layout === 3 || layout === 4,
           emailWrapper: true,
         }"
       >
@@ -197,10 +197,10 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
-          'col-md-6': layout == 4,
-          'col-md-4': layout == 3,
-          'order-4': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-md-6': layout === 4,
+          'col-md-4': layout === 3,
+          'order-4': layout === 1 || layout === 2 || layout === 3 || layout === 4,
           countryWrapper: true,
         }"
       >
@@ -227,10 +227,10 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
-          'col-md-6': layout == 4,
-          'col-md-4': layout == 3,
-          'order-5': layout == 1 || layout == 2 || layout == 3 || layout === 4,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-md-6': layout === 4,
+          'col-md-4': layout === 3,
+          'order-5': layout === 1 || layout === 2 || layout === 3 || layout === 4,
           phoneWrapper: true,
         }"
       >
@@ -251,11 +251,11 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
-          'col-md-12': layout == 3,
-          'col-md-6': layout == 4,
-          'order-6': layout == 1 || layout == 2 || layout === 4,
-          'order-6 order-md-7': layout == 3 || layout === 4,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-md-12': layout === 3,
+          'col-md-6': layout === 4,
+          'order-6': layout === 1 || layout === 2 || layout === 4,
+          'order-6 order-md-7': layout === 3 || layout === 4,
           agreementWrapper: true,
         }"
       >
@@ -267,8 +267,8 @@ export default {
                   <input v-model="agreementValue" type="checkbox" :id="`${formDetails.formID}-agreement`" />
                   <label class="agreement" :for="`${formDetails.formID}-agreement`">
                     {{
-                      formDetails.agreemenType == undefined ||
-                      formDetails.agreemenType == "" ||
+                      formDetails.agreemenType === undefined ||
+                      formDetails.agreemenType === "" ||
                       formDetails.agreemenType != "woBrandName"
                         ? agreement.wBrandName[lang]
                         : agreement.woBrandName[lang]
@@ -285,11 +285,11 @@ export default {
       </div>
       <div
         :class="{
-          'col-12': layout == 1 || layout == 2 || layout == 3 || layout === 4,
-          'col-md-4': layout == 3,
-          'col-md-6': layout == 4,
-          'order-7': layout == 1 || layout == 2 || layout === 4,
-          'order-7 order-md-6': layout == 3 || layout === 4,
+          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
+          'col-md-4': layout === 3,
+          'col-md-6': layout === 4,
+          'order-7': layout === 1 || layout === 2 || layout === 4,
+          'order-7 order-md-6': layout === 3 || layout === 4,
           submitWrapper: true,
         }"
       >

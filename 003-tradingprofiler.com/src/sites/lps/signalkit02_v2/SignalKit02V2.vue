@@ -34,7 +34,10 @@ export default {
 </script>
 
 <template>
-  <Header :lang="lang" />
+  <div class="topBG">
+    <Header :lang="lang" />
+    <div id="teleportS1"></div>
+  </div>
   <main>
     <router-view />
   </main>
@@ -51,5 +54,14 @@ export default {
       --clr-#{$color}: #{$value};
     }
   }
+}
+
+.topBG {
+  background-image: url(./assets/imgs/header.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
 }
 </style>

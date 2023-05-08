@@ -15,7 +15,7 @@ const financialMarketsSection1Transl = () => {
     // th: "",
     // ms: ""
 
-    en: "FX<span>ORO</span>. Your doorway to global financial markets.",
+    en: `<span>${process.env.VUE_APP_BRAND_TITLE}</span>. Your doorway to global financial markets.`,
     it: " ",
     tr: "",
     ro: "",

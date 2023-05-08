@@ -32,9 +32,14 @@ export default {
 @use "../assets/scss/abstracts/mixins" as mxns;
 
 header#header.siteHeader {
+  padding-top: 1rem !important;
+  padding-bottom: 0 !important;
   .logo {
     img {
       max-width: 200px;
+      @include mxns.mediamax(md) {
+        max-width: 130px;
+      }
     }
   }
 }

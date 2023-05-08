@@ -45,6 +45,9 @@ header#header.siteHeader {
   .logo {
     img {
       max-width: 200px;
+      @include mxns.mediamax(md) {
+        max-width: 150px;
+      }
     }
   }
 }

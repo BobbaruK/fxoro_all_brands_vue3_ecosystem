@@ -15,7 +15,7 @@ const freedomToTradeSection1Transl = () => {
     // th: "",
     // ms: ""
 
-    en: "FX<span>ORO</span> gives you the ability to enter the financial markets",
+    en: `${process.env.VUE_APP_BRAND_TITLE} gives you the ability to enter the financial markets`,
     it: " ",
     tr: "",
     ro: "",

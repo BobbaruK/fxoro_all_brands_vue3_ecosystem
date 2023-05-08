@@ -33,6 +33,9 @@ export default {
 
 header#header.siteHeader {
   padding: 1rem 0 !important;
+  @include mxns.mediamax(lg) {
+    padding-bottom: 0 !important;
+  }
   .siteHeaderInner {
     align-content: center;
     align-items: center;
@@ -45,6 +48,9 @@ header#header.siteHeader {
   .logo {
     img {
       max-width: 200px;
+      @include mxns.mediamax(lg) {
+        max-width: 150px;
+      }
     }
   }
 }

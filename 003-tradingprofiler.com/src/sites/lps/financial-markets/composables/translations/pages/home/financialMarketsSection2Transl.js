@@ -15,7 +15,7 @@ const financialMarketsSection2Transl = () => {
     // th: "",
     // ms: ""
 
-    en: "What <strong>FX<span>ORO</span></strong> can offer?",
+    en: `What <strong>${process.env.VUE_APP_BRAND_TITLE}</strong> can offer?`,
     it: " ",
     tr: "",
     ro: "",

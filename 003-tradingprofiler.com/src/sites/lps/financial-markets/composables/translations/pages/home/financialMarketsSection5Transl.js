@@ -50,7 +50,7 @@ const financialMarketsSection5Transl = () => {
         ms: "",
       },
       para: {
-        en: "Free Access and training guides from the <strong>FX<span>ORO</span></strong> library at any time.",
+        en: `Free Access and training guides from the <strong>${process.env.VUE_APP_BRAND_TITLE}</strong> library at any time.`,
         it: "",
         tr: "",
         ro: "",
@@ -84,7 +84,7 @@ const financialMarketsSection5Transl = () => {
         ms: "",
       },
       para: {
-        en: "Free Access and training guides from the <strong>FX<span>ORO</span></strong> library at any time.",
+        en: `Free Access and training guides from the <strong>${process.env.VUE_APP_BRAND_TITLE}</strong> library at any time.`,
         it: "",
         tr: "",
         ro: "",

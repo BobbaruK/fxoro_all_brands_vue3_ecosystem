@@ -34,7 +34,19 @@ export default {
           </ol>
         </div>
         <div class="col-12 col-lg-5 imgWrapper">
-          <img src="../../assets/imgs/phone.png" alt="Phone" />
+          <!-- <img src="../../assets/imgs/phone.png" alt="Phone" /> -->
+          <picture>
+            <source srcset="../../assets/imgs/phone.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/phone.webp" type="image/webp" />
+            <img
+              src="../../assets/imgs/phone.png"
+              alt="Phone"
+              width="285"
+              height="320"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
     </div>
@@ -63,7 +75,8 @@ section#section5.freeEducation {
   p {
     margin: 0;
   }
-  img {
+  img,
+  picture {
     display: block;
   }
   ol {

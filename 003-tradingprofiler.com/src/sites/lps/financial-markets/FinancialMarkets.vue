@@ -58,13 +58,23 @@ export default {
 }
 
 .topBG {
-  background-image: url(./assets/imgs/topBG-mobile.jpg);
+  // background-image: url(./assets/imgs/topBG-mobile.jpg);
+  background-image: image-set(
+    url(./assets/imgs/topBG-mobile.avif),
+    url(./assets/imgs/topBG-mobile.webp),
+    url(./assets/imgs/topBG-mobile.jpg)
+  );
   background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
   @include mxns.mediamin(md) {
     // background-position: center;
-    background-image: url(./assets/imgs/topBG-desktop.jpg);
+    // background-image: url(./assets/imgs/topBG-desktop.jpg);
+    background-image: image-set(
+      url(./assets/imgs/topBG-desktop.avif),
+      url(./assets/imgs/topBG-desktop.webp),
+      url(./assets/imgs/topBG-desktop.jpg)
+    );
   }
 }
 

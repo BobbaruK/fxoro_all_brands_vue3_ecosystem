@@ -32,8 +32,30 @@ export default {
         <div class="col-12 titleWrapper">
           <h1 v-html="title[lang]" />
           <button class="scssecoBtn" @click="goToForm" v-html="button[lang]" />
-          <img src="../../assets/imgs/mobile.png" alt="Mobile" class="mobile" />
-          <img src="../../assets/imgs/pencils.png" alt="Pencils" class="pencils" />
+          <picture class="mobile">
+            <source srcset="../../assets/imgs/mobile.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/mobile.webp" type="image/webp" />
+            <img
+              src="../../assets/imgs/mobile.png"
+              alt="Mobile"
+              width="285"
+              height="320"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <picture class="pencils">
+            <source srcset="../../assets/imgs/pencils.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/pencils.webp" type="image/webp" />
+            <img
+              src="../../assets/imgs/pencils.png"
+              alt="Pencils"
+              width="285"
+              height="320"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
     </div>
@@ -116,7 +138,8 @@ export default {
     }
   }
 
-  img {
+  img,
+  picture {
     &.mobile {
       @include mxns.mediamax(md) {
         margin-top: 2rem;

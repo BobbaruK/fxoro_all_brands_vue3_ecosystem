@@ -37,7 +37,11 @@ export default {
   <div class="topBG">
     <Header :lang="lang" />
     <div id="teleportS1"></div>
-    <img src="./assets/imgs/laptop.png" alt="Laptop" class="laptop" />
+    <picture class="laptop">
+      <source srcset="./assets/imgs/laptop.avif" type="image/avif" />
+      <source srcset="./assets/imgs/laptop.webp" type="image/webp" />
+      <img src="./assets/imgs/laptop.png" alt="Laptop" loading="lazy" decoding="async" />
+    </picture>
   </div>
   <main>
     <router-view />
@@ -59,7 +63,11 @@ export default {
 }
 
 .topBG {
-  background-image: url(./assets/imgs/signals-main-picture.jpg);
+  background-image: image-set(
+    url(./assets/imgs/signals-main-picture.avif),
+    url(./assets/imgs/signals-main-picture.webp),
+    url(./assets/imgs/signals-main-picture.jpg)
+  );
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -75,7 +83,7 @@ export default {
     z-index: 1;
   }
 
-  img.laptop {
+  .laptop {
     display: none;
     position: absolute;
     top: 0;

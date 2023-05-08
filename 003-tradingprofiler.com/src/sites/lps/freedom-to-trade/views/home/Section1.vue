@@ -32,11 +32,35 @@ export default {
       <div class="row">
         <div class="col-12 col-md-6 col-xl-7 title">
           <h1 v-html="title[lang]" />
-          <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-none d-md-block" />
+          <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-none d-md-block" /> -->
+          <picture class="d-none d-md-block">
+            <source srcset="../../assets/imgs/hand.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/hand.webp" type="image/webp" />
+            <img
+              src="../../assets/imgs/hand.png"
+              alt="Phone"
+              width="325"
+              height="539"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
         <div class="col-12 col-md-6 col-xl-5">
           <Form :lang="lang" :formDetails="formDetails" />
-          <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-block d-md-none" />
+          <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-block d-md-none" /> -->
+          <picture class="d-block d-md-none">
+            <source srcset="../../assets/imgs/hand.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/hand.webp" type="image/webp" />
+            <img
+              src="../../assets/imgs/hand.png"
+              alt="Phone"
+              width="325"
+              height="539"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
     </div>
@@ -73,10 +97,10 @@ section#section1.subHeader {
       text-align: start;
     }
   }
-  img {
+  picture {
     max-width: 300px;
     height: auto;
-    margin: 30px auto 0;
+    margin: 30px auto -10px;
     width: 100%;
     @include mxns.mediamin(md) {
       position: absolute;

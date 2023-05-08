@@ -27,7 +27,20 @@ export default {
       <div class="row">
         <div class="col-12 col-md-7" v-html="content[lang]" />
         <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
-          <img src="../../assets/imgs/devices.png" alt="Devices" />
+          <!-- <img src="../../assets/imgs/devices.png" alt="Devices" /> -->
+
+          <picture>
+            <source srcset="../../assets/imgs/devices.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/devices.webp" type="image/webp" />
+            <img
+              src="../../assets/imgs/devices.png"
+              alt="Phone"
+              width="285"
+              height="320"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
     </div>
@@ -38,14 +51,22 @@ export default {
 @use "../../assets/scss/abstracts/mixins" as mxns;
 
 section#section3.trade {
-  background-image: url(../../assets/imgs/s3BG-mobile.jpg);
+  background-image: image-set(
+    url(../../assets/imgs/s3BG-mobile.avif),
+    url(../../assets/imgs/s3BG-mobile.webp),
+    url(../../assets/imgs/s3BG-mobile.jpg)
+  );
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   color: var(--clr-white);
   text-align: center;
   @include mxns.mediamin(md) {
-    background-image: url(../../assets/imgs/s3BG.jpg);
+    background-image: image-set(
+      url(../../assets/imgs/s3BG.avif),
+      url(../../assets/imgs/s3BG.webp),
+      url(../../assets/imgs/s3BG.jpg)
+    );
     text-align: start;
   }
   h2 {
@@ -57,7 +78,8 @@ section#section3.trade {
       color: #f8bb39;
     }
   }
-  img {
+  img,
+  picture {
     max-width: 400px;
     width: 100%;
     @include mxns.mediamin(md) {

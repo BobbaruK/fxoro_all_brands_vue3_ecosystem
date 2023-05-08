@@ -34,7 +34,7 @@ export default {
     };
 
     const metaDescription = {
-      en: "",
+      en: "Discover the newest forex trends and learn the language of the market.",
       it: "",
       tr: "",
       ro: "",

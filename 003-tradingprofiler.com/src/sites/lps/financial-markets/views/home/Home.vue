@@ -54,9 +54,9 @@ export default {
       ms: "",
     };
 
-    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1E1E24");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1b1e36");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1E1E24");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1b1e36");
     });
 
     return {};

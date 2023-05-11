@@ -30,9 +30,9 @@ export default {
     const title = tyTitleTransl;
 
     const { lpLangs, defaultLang } = languages();
-    checkLangAndMeta(props.lang, lpLangs, title);
+    checkLangAndMeta(props.lang, tyTitleTransl, {}, "#000000");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, lpLangs, title);
+    checkLangAndMeta(props.lang, tyTitleTransl, {}, "#000000");
     });
 
     /**

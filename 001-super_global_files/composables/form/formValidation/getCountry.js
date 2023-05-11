@@ -30,7 +30,7 @@ const getCountry = async (countryValue, IPAddress, countryName, validate) => {
 
     // console.log(data);
 
-    countryValue.value = data.Language.toUpperCase(); // set country
+    countryValue.value = data.IsoCode.toUpperCase(); // set country
     IPAddress.value = data.IpAddress; // IPAddress
     countryName.value = data.Name; // Country Name
 

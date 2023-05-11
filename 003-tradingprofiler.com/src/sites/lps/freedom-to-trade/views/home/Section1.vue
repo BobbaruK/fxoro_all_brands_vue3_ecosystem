@@ -34,10 +34,10 @@ export default {
           <h1 v-html="title[lang]" />
           <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-none d-md-block" /> -->
           <picture class="d-none d-md-block">
-            <source srcset="../../assets/imgs/hand.avif" type="image/avif" />
-            <source srcset="../../assets/imgs/hand.webp" type="image/webp" />
+            <source srcset="../../assets/imgs/phone.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/phone.webp" type="image/webp" />
             <img
-              src="../../assets/imgs/hand.png"
+              src="../../assets/imgs/phone.png"
               alt="Phone"
               width="325"
               height="539"
@@ -50,10 +50,10 @@ export default {
           <Form :lang="lang" :formDetails="formDetails" />
           <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-block d-md-none" /> -->
           <picture class="d-block d-md-none">
-            <source srcset="../../assets/imgs/hand.avif" type="image/avif" />
-            <source srcset="../../assets/imgs/hand.webp" type="image/webp" />
+            <source srcset="../../assets/imgs/phone.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/phone.webp" type="image/webp" />
             <img
-              src="../../assets/imgs/hand.png"
+              src="../../assets/imgs/phone.png"
               alt="Phone"
               width="325"
               height="539"
@@ -100,14 +100,17 @@ section#section1.subHeader {
   picture {
     max-width: 300px;
     height: auto;
-    margin: 30px auto -10px;
+    margin: 30px auto -340px;
     width: 100%;
+    @include mxns.mediamin(sm) {
+      margin-bottom: -200px;
+    }
     @include mxns.mediamin(md) {
       position: absolute;
       margin: 0;
-      right: 0;
-      bottom: -50px;
-      max-width: 200px;
+      right: 30px;
+      bottom: -110px;
+      max-width: 260px;
     }
     @include mxns.mediamin(lg) {
       bottom: -160px;
@@ -116,6 +119,10 @@ section#section1.subHeader {
     @include mxns.mediamin(xl) {
       bottom: -90px;
       max-width: 250px;
+    }
+    @include mxns.mediamin(xxl) {
+      bottom: -240px;
+      max-width: 320px;
     }
   }
 }

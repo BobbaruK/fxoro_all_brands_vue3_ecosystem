@@ -1,4 +1,4 @@
-import translationsGlossary from "../../translationsGlossary";
+import translationsGlossary from "../../../../composables/translationsGlossary";
 
 const formTranslations = () => {
   const firstName = translationsGlossary.f.firstName;

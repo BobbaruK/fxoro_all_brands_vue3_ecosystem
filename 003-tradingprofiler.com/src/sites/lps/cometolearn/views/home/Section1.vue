@@ -1,6 +1,6 @@
 <script>
 import Header from "../../components/Header.vue";
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 import comeToLearnSection1Transl from "../../composables/translations/pages/home/comeToLearnSection1Transl";
 

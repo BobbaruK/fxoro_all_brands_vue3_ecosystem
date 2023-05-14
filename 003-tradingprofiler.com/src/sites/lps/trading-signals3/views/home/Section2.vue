@@ -1,7 +1,7 @@
 <script>
 import tradingSignals3Section2Transl from "../../composables/translations/pages/home/tradingSignals3Section2Transl";
 
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 export default {
   name: "LP~TradingSignals3~Home~Section2",

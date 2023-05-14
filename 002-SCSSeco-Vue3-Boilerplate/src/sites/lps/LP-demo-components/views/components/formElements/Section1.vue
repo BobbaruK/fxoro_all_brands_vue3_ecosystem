@@ -1,9 +1,9 @@
 <script>
 import { onMounted } from "@vue/runtime-core";
 
-import Input from "../../../../../../../../001-super_global_files/components/Form/Input/Input.vue";
-import Textarea from "../../../../../../../../001-super_global_files/components/Form/Textarea/Textarea.vue";
-import Select from "../../../../../../../../001-super_global_files/components/Form/Select/Select.vue";
+import Input from "../../../../../../../../001-super_global_files/components/Form/elements/Input/Input.vue";
+import Textarea from "../../../../../../../../001-super_global_files/components/Form/elements/Textarea/Textarea.vue";
+import Select from "../../../../../../../../001-super_global_files/components/Form/elements/Select/Select.vue";
 
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";

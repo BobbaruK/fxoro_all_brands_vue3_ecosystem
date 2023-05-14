@@ -5,7 +5,7 @@ import demoSection1Transl from "../../composables/translations/pages/home/demoSe
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";
 
 import Modal from "../../../../../../../001-super_global_files/components/Modal/Modal.vue";
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 export default {
   name: "LP~DemoComponents~Home~Section1",

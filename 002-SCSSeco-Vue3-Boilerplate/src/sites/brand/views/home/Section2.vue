@@ -2,7 +2,7 @@
 import { ref } from "@vue/reactivity";
 
 import Modal from "../../../../../../001-super_global_files/components/Modal/Modal.vue";
-import Form from "../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 export default {
   name: "Brand~Home~Section2",

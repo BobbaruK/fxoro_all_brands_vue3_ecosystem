@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 import goldSection1Transl from "../../composables/translations/pages/home/goldSection1Transl";
 

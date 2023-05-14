@@ -1,7 +1,7 @@
 <script>
 import signalKit02V2Section1Transl from "../../composables/translations/pages/home/signalKit02V2Section1Transl";
 
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 export default {
   name: "LP~SignalKit02V2~Home~Section1",

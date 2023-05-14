@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Modal from "../../../../../../001-super_global_files/components/Modal/Modal.vue";
-import Form from "../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 import homeSection4Transl from "../../composables/pages/home/homeSection4Transl";
 

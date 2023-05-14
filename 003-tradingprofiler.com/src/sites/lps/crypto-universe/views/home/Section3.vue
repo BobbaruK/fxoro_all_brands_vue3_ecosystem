@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 import Modal from "../../../../../../../001-super_global_files/components/Modal/Modal.vue";
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 import cryptoUniverseSection3Transl from "../../composables/translations/pages/home/cryptoUniverseSection3Transl";
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";

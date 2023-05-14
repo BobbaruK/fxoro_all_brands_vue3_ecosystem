@@ -3,7 +3,7 @@ import { onMounted, ref } from "@vue/runtime-core";
 
 import Accordion from "../../../../../../../../001-super_global_files/components/Accordion/Accordion.vue";
 import AccordionItem from "../../../../../../../../001-super_global_files/components/Accordion/AccordionItem.vue";
-import Form from "../../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 import Countdown from "../../../../../../../../001-super_global_files/components/Countdown/Countdown.vue";
 
 import translationsGlossary from "../../../../../../../../001-super_global_files/composables/translationsGlossary";

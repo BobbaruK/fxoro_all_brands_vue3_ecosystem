@@ -8,7 +8,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 import Modal from "../../../../../../../001-super_global_files/components/Modal/Modal.vue";
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 import cryptoUniverseSection1Transl from "../../composables/translations/pages/home/cryptoUniverseSection1Transl";
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";

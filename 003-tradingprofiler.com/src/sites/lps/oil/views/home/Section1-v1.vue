@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 import oilSection1Transl from "../../composables/translations/pages/home/oilSection1Transl";
 
 import Modal from "../../../../../../../001-super_global_files/components/Modal/Modal.vue";
-import Form from "../../../../../../../001-super_global_files/components/Form/Form.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
 
 export default {
   name: "LP~Oil~Home~Section1V1",

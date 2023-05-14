@@ -1,4 +1,8 @@
 <script>
+/**
+ * FXORO Register Form
+ */
+
 import { ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
 // import { useRoute } from "vue-router";
@@ -8,18 +12,18 @@ import {
   // VueReCaptcha,
   useReCaptcha,
 } from "vue-recaptcha-v3";
-import { useFormIDStore } from "./stores/FormIDStore";
+import { useFormIDStore } from "../../stores/FormIDStore";
 
-import dataSite from "../../dataSite.json";
+import dataSite from "../../../../dataSite.json";
 
-import countryList from "./composables/validation/countryList";
-import getCountry from "./composables/validation/getCountry";
-import formErrors from "./composables/translations/formErrors";
-import formTranslations from "../../composables/form/translations/formTranslations";
-import layoutPropValidation from "./composables/validation/props/layoutPropValidation";
-import agreementTypePropValidation from "./composables/validation/props/agreementTypePropValidation";
+import countryList from "../../composables/validation/countryList";
+import getCountry from "../../composables/validation/getCountry";
+import formErrors from "../../composables/translations/formErrors";
+import formTranslations from "../../composables/translations/formTranslations";
+import layoutPropValidation from "../../composables/validation/props/layoutPropValidation";
+import agreementTypePropValidation from "../../composables/validation/props/agreementTypePropValidation";
 
-import Loader from "../Loader/Loader.vue";
+import Loader from "../../../Loader/Loader.vue";
 
 export default {
   name: "Form",

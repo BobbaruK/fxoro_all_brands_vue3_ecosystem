@@ -94,26 +94,21 @@ export default {
       modalID: "brand-home-modal-form-section4",
     };
 
-    const formDetails = {
-      formID: "brand-home-section4",
-      layout: 1,
-      agreemenType: "woBrandName",
-      button: {
-        en: "Register Now",
-        it: "",
-        tr: "",
-        ro: "",
-        hu: "",
-        ar: "سجل الان",
-        de: "",
-        es: "",
-        sv: "",
-        pt: "",
-        fi: "",
-        pl: "",
-        th: "",
-        ms: "",
-      },
+    const formButton = {
+      en: "Register Now",
+      it: "",
+      tr: "",
+      ro: "",
+      hu: "",
+      ar: "سجل الان",
+      de: "",
+      es: "",
+      sv: "",
+      pt: "",
+      fi: "",
+      pl: "",
+      th: "",
+      ms: "",
     };
 
     return {
@@ -130,7 +125,7 @@ export default {
       // Modal form combo
       showModalForm,
       modalDetailsForm,
-      formDetails,
+      formButton,
     };
   },
 };
@@ -152,7 +147,7 @@ export default {
       </div>
     </div>
     <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
-      <Form :lang="lang" :formDetails="formDetails" />
+      <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="1" :test="false" />
     </Modal>
   </section>
 </template>
@@ -182,7 +177,4 @@ section#section4.form {
     max-width: 40ch;
   }
 }
-
-// Form
-// see Section1.vue
 </style>

@@ -1,22 +1,25 @@
 const loaderPropValidation = () => {
+  const values = [
+    "audio",
+    "ball-triangle",
+    "bars",
+    "circles",
+    "grid",
+    "hearts",
+    "oval",
+    "puff",
+    "rings",
+    "spinning-circles",
+    "tail-spin",
+    "three-dots",
+  ];
+  const def = "rings";
+
   return {
-    default: "rings",
+    default: def,
     validator(value) {
       // The value must match one of these strings
-      return [
-        "audio",
-        "ball-triangle",
-        "bars",
-        "circles",
-        "grid",
-        "hearts",
-        "oval",
-        "puff",
-        "rings",
-        "spinning-circles",
-        "tail-spin",
-        "three-dots",
-      ].includes(value);
+      return values.includes(value);
     },
   };
 };

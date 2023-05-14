@@ -102,6 +102,10 @@ export default {
                   routerName: "DemoComponentsAccordion",
                   routerLabel: translationsGlossary.a.accordion,
                 },
+                backToTop: {
+                  routerName: "DemoComponentsBackToTop",
+                  routerLabel: translationsGlossary.b.backToTop,
+                },
                 badge: {
                   routerName: "DemoComponentsBadge",
                   routerLabel: translationsGlossary.b.badge,
@@ -109,6 +113,10 @@ export default {
                 button: {
                   routerName: "DemoComponentsBreadcrumb",
                   routerLabel: translationsGlossary.b.breadcrumb,
+                },
+                caret: {
+                  routerName: "DemoComponentsCaret",
+                  routerLabel: translationsGlossary.c.caret,
                 },
                 carousel: {
                   routerName: "DemoComponentsCarousel",
@@ -119,31 +127,31 @@ export default {
                   routerLabel: translationsGlossary.c.countdown,
                 },
                 input: {
-                  routerName: "DemoComponentsInput",
+                  routerName: "DemoComponentsFormElements",
                   routerLabel: {
-                    en: "Input",
-                    it: "Input",
-                    tr: "Input",
-                    ro: "Input",
-                    hu: "Input",
-                    ar: "Input",
-                    de: "Input",
-                    es: "Input",
-                    sv: "Input",
-                    pt: "Input",
-                    fi: "Input",
-                    pl: "Input",
-                    th: "Input",
-                    ms: "Input",
+                    en: "Form Elements",
+                    it: "Form Elements",
+                    tr: "Form Elements",
+                    ro: "Form Elements",
+                    hu: "Form Elements",
+                    ar: "Form Elements",
+                    de: "Form Elements",
+                    es: "Form Elements",
+                    sv: "Form Elements",
+                    pt: "Form Elements",
+                    fi: "Form Elements",
+                    pl: "Form Elements",
+                    th: "Form Elements",
+                    ms: "Form Elements",
                   },
-                },
-                languageChooser: {
-                  routerName: "DemoComponentsLanguageChooser",
-                  routerLabel: translationsGlossary.l.languageChooser,
                 },
                 loader: {
                   routerName: "DemoComponentsLoader",
                   routerLabel: translationsGlossary.l.loader,
+                },
+                languageChooser: {
+                  routerName: "DemoComponentsLanguageChooser",
+                  routerLabel: translationsGlossary.l.languageChooser,
                 },
                 modal: {
                   routerName: "DemoComponentsModal",
@@ -152,6 +160,25 @@ export default {
                 navbar: {
                   routerName: "DemoComponentsNavbar",
                   routerLabel: translationsGlossary.n.navbar,
+                },
+                svgMask: {
+                  routerName: "DemoComponentsSVGMask",
+                  routerLabel: {
+                    en: "SVGMask",
+                    it: "SVGMask",
+                    tr: "SVGMask",
+                    ro: "SVGMask",
+                    hu: "SVGMask",
+                    ar: "SVGMask",
+                    de: "SVGMask",
+                    es: "SVGMask",
+                    sv: "SVGMask",
+                    pt: "SVGMask",
+                    fi: "SVGMask",
+                    pl: "SVGMask",
+                    th: "SVGMask",
+                    ms: "SVGMask",
+                  },
                 },
                 table: {
                   routerName: "DemoComponentsTable",

@@ -64,3 +64,69 @@ export default {
   <Section1 :lang="lang" />
   <Section2 :lang="lang" />
 </template>
+
+<style lang="scss">
+@use "../../assets/scss/abstracts/mixins" as mxns;
+
+form.registerForm {
+  .form-control {
+    label {
+      font-size: 14px;
+      &:not(.agreement):not(.gdpr) {
+        bottom: 5px;
+        display: none;
+        left: 0;
+        padding: 5px;
+        // pointer-events: none;
+        // position: absolute;
+      }
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      background: #e7e7e7;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #495057;
+      border: 1px solid #ced4da;
+      display: block;
+      width: 100%;
+      padding: 0.375rem 0.75rem;
+      @include mxns.mediamin(lg) {
+        font-size: 16px;
+      }
+      &::placeholder {
+        color: var(--clr-gray-600);
+      }
+    }
+    .phone {
+      [type="text"] {
+        border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+      }
+      [type="tel"] {
+        border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+      }
+    }
+    button[type="submit"] {
+      background: var(--clr-brandSecondaryColor);
+      border: medium none;
+      border-radius: 20px;
+      color: #fff;
+      display: block;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 250%;
+      margin: 0 auto;
+      max-width: 200px;
+      text-align: center;
+      width: 100%;
+      padding: 0;
+      &:hover {
+        background: var(--clr-brandSecondaryColor-dark);
+      }
+    }
+  }
+}
+</style>

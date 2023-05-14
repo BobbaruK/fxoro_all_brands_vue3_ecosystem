@@ -9,14 +9,10 @@ const app = createApp(App);
 const pinia = createPinia();
 const head = createHead();
 
-app
-  .use(head)
-  .use(router)
-  .use(pinia)
-  .use(VueReCaptcha, {
-    siteKey: process.env.VUE_APP_GCAPTCHA_KEY,
-    loaderOptions: {
-      useRecaptchaNet: true,
-    },
-  });
+app.use(head).use(router).use(pinia).use(VueReCaptcha, {
+  siteKey: process.env.VUE_APP_GCAPTCHA_KEY,
+  loaderOptions: {
+    // useRecaptchaNet: true,
+  },
+});
 app.mount("#siteWrapper");

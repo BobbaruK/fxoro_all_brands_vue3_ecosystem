@@ -11,17 +11,13 @@ export default {
   },
   setup() {
     // Translations
-    const { title, content } = freedomToTradeSection1Transl();
+    const { title } = freedomToTradeSection1Transl();
 
-    const formDetails = {
-      formID: "freedomToTrade-section1",
-      layout: 1,
-      button: {
-        en: "Start trading",
-      },
+    const formBtn = {
+      en: "Start trading",
     };
 
-    return { title, content, formDetails };
+    return { title, formBtn };
   },
 };
 </script>
@@ -47,7 +43,14 @@ export default {
           </picture>
         </div>
         <div class="col-12 col-md-6 col-xl-5">
-          <Form :lang="lang" :formDetails="formDetails" />
+          <Form
+            class="section3Form-V2"
+            :agreementType="'wBrandName'"
+            :buttonText="formBtn[lang]"
+            :lang="lang"
+            :layout="1"
+            :test="false"
+          />
           <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-block d-md-none" /> -->
           <picture class="d-block d-md-none">
             <source srcset="../../assets/imgs/phone.avif" type="image/avif" />
@@ -123,62 +126,6 @@ section#section1.subHeader {
     @include mxns.mediamin(xxl) {
       bottom: -240px;
       max-width: 320px;
-    }
-  }
-}
-
-#freedomToTrade-section1-form {
-  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.16);
-  color: var(--clr-black);
-  background-color: var(--clr-white);
-  padding: 1rem;
-  @include mxns.mediamin(md) {
-    padding: 1.7rem;
-    margin: 0;
-  }
-  .form-control {
-    label {
-      &:not(.agreement):not(.gdpr) {
-        bottom: 5px;
-        display: none;
-        left: 0;
-        padding: 5px;
-        // pointer-events: none;
-        // position: absolute;
-      }
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    select {
-      width: 100%;
-      height: 40px;
-      background: var(--clr-white);
-      border: solid 1px var(--clr-gray-500);
-      font-size: 14px;
-      color: #000;
-      border-radius: 0px;
-      &::placeholder {
-        color: var(--clr-gray-500);
-      }
-    }
-    .phone {
-      [type="text"] {
-        // border-radius: var(--borderRadius) 0 0 var(--borderRadius);
-      }
-      [type="tel"] {
-        // border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
-      }
-    }
-    button[type="submit"] {
-      background-color: var(--clr-brandPrimaryColor);
-      border-radius: 0;
-      padding: 1rem 2rem;
-      text-transform: uppercase;
-      &:hover {
-        background-color: var(--clr-brandSecondaryColor);
-        color: var(--clr-white);
-      }
     }
   }
 }

@@ -18,28 +18,24 @@ export default {
     // Translations
     const { title, subTitle, para, formTitle } = comeToLearnSection1Transl();
 
-    const formDetails = {
-      formID: "comeToLearn-section1",
-      layout: 1,
-      button: {
-        en: "Get the guide",
-        it: "",
-        tr: "",
-        ro: "",
-        hu: "",
-        ar: "",
-        de: "",
-        es: "",
-        sv: "",
-        pt: "",
-        fi: "",
-        pl: "",
-        th: "",
-        ms: "",
-      },
+    const formButton = {
+      en: "Get the guide",
+      it: "",
+      tr: "",
+      ro: "",
+      hu: "",
+      ar: "",
+      de: "",
+      es: "",
+      sv: "",
+      pt: "",
+      fi: "",
+      pl: "",
+      th: "",
+      ms: "",
     };
 
-    return { title, subTitle, para, formTitle, formDetails };
+    return { title, subTitle, para, formTitle, formButton };
   },
 };
 </script>
@@ -57,7 +53,7 @@ export default {
         <div class="col-12 col-lg-6 form">
           <div class="formWrapper">
             <h2 v-html="formTitle[lang]"></h2>
-            <Form :lang="lang" :formDetails="formDetails" />
+            <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="1" :test="false" />
           </div>
         </div>
       </div>
@@ -167,7 +163,7 @@ section#section1.subHeader {
           font-weight: bold;
         }
       }
-      form#comeToLearn-section1-form {
+      form.registerForm {
         $borderRadius: 10px;
 
         @include mxns.mediamin(sm) {

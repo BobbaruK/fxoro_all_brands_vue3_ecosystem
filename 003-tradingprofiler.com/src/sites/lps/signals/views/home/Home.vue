@@ -68,3 +68,60 @@ export default {
   <Section2 :lang="lang" />
   <Section3 :lang="lang" />
 </template>
+
+<style lang="scss">
+@use "../../assets/scss/abstracts/mixins" as mxns;
+
+form.registerForm {
+  .form-control {
+    label {
+      font-size: 0.8rem;
+      &:not(.agreement):not(.gdpr) {
+        bottom: 5px;
+        display: none;
+        left: 0;
+        padding: 5px;
+        // pointer-events: none;
+        // position: absolute;
+      }
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      border: 1px solid var(--clr-black);
+      // color: var(--clr-white);
+      height: 40px;
+      &::placeholder {
+        color: var(--clr-gray-400);
+      }
+    }
+
+    select option {
+      background: var(--clr-brandSecondaryColor-light);
+      color: var(--clr-black);
+    }
+    .phone {
+      [type="text"] {
+        // border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+      }
+      [type="tel"] {
+        // border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+      }
+    }
+    button[type="submit"] {
+      background: var(--clr-brandSecondaryColor); /* Old browsers */
+      display: inline-block;
+      border-radius: var(--borderRadius);
+      color: var(--clr-black);
+      height: auto;
+      padding: 20px 10px;
+      font-size: 32px;
+      font-weight: 900;
+      &:hover {
+        background: var(--clr-brandPrimaryColor); /* Old browsers */
+      }
+    }
+  }
+}
+</style>

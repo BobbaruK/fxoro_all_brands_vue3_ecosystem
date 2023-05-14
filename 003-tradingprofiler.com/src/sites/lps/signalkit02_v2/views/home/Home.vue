@@ -66,3 +66,94 @@ export default {
   </Teleport>
   <Section2 :lang="lang" />
 </template>
+
+<style lang="scss">
+@use "../../assets/scss/abstracts/mixins" as mxns;
+
+form.registerForm {
+  padding: 0;
+
+  .firstNameWrapper {
+    @include mxns.mediamin(sm) {
+      padding-inline-end: 0;
+    }
+  }
+
+  .lastNameWrapper {
+    @include mxns.mediamin(sm) {
+      padding-inline-start: 0;
+    }
+  }
+
+  .emailWrapper,
+  .phoneWrapper {
+    @include mxns.mediamin(md) {
+      padding-inline-start: 0;
+    }
+  }
+
+  .agreementWrapper {
+    @include mxns.mediamin(lg) {
+      padding-inline-start: 0;
+    }
+  }
+
+  .agreementWrapper,
+  .submitWrapper {
+    @include mxns.mediamax(lg) {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+  }
+
+  .form-control {
+    label {
+      color: var(--clr-white);
+      &:not(.agreement):not(.gdpr) {
+        bottom: 5px;
+        display: none;
+        left: 0;
+        padding: 5px;
+        // pointer-events: none;
+        // position: absolute;
+      }
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      background-color: var(--clr-white);
+      border: 1px solid var(--clr-black);
+      border-radius: 0;
+      color: #484848;
+      font-size: 1rem;
+      padding: 0.625rem 0.875rem;
+      &::placeholder {
+        color: var(--clr-gray-500);
+      }
+    }
+    .phone {
+      [type="text"] {
+        // border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+      }
+      [type="tel"] {
+        // border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+      }
+    }
+    button[type="submit"] {
+      background-color: transparent;
+      border: 2px solid var(--clr-white);
+      border-radius: 0;
+      color: var(--clr-white);
+      font-size: 1.5rem;
+      padding: 0.75rem 1.125rem;
+      width: 100%;
+      line-height: 0.99;
+      &:hover {
+        border-color: var(--clr-brandSecondaryColor);
+        background-color: var(--clr-brandSecondaryColor);
+      }
+    }
+  }
+}
+</style>

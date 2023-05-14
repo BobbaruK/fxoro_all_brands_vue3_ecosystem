@@ -260,30 +260,33 @@ const formValidation = (lang, test) => {
       }
     } else {
       // if test == true
+      console.log("dsadadssd");
 
-      grecaptcha.ready(() => {
-        grecaptcha.execute(process.env.VUE_APP_GCAPTCHA_KEY, { action: "submit" }).then(function (token) {
-          let captchaData = new FormData();
-          captchaData.append("token", token);
-          captchaData.append("domain", window.location.hostname);
-          fetch("https://piutrading.com/recaptcha-verify/", {
-            method: "POST",
-            body: captchaData, // Send the form data
-          })
-            .then((response) => response.json())
-            .then((resp) => {
-              if (resp.success === true && resp.score > 0.6) {
-                // console.log("merge peste .5");
-                // sendToCRM();
-              } else {
-                // console.log("merge sub .5");
-                validate.value = false;
-                captchaError.value = captchaErr;
-              }
-              return;
-            });
-        });
-      });
+      // recaptcha();
+
+      // grecaptcha.ready(() => {
+      //   grecaptcha.execute(process.env.VUE_APP_GCAPTCHA_KEY, { action: "submit" }).then(function (token) {
+      //     let captchaData = new FormData();
+      //     captchaData.append("token", token);
+      //     captchaData.append("domain", window.location.hostname);
+      //     fetch("https://piutrading.com/recaptcha-verify/", {
+      //       method: "POST",
+      //       body: captchaData, // Send the form data
+      //     })
+      //       .then((response) => response.json())
+      //       .then((resp) => {
+      //         if (resp.success === true && resp.score > 0.6) {
+      //           // console.log("merge peste .5");
+      //           // sendToCRM();
+      //         } else {
+      //           // console.log("merge sub .5");
+      //           validate.value = false;
+      //           captchaError.value = captchaErr;
+      //         }
+      //         return;
+      //       });
+      //   });
+      // });
     }
   };
 

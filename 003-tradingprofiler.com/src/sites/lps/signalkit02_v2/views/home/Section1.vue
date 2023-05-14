@@ -11,30 +11,26 @@ export default {
   },
   setup() {
     // Translations
-    const { title, formTitle, para } = signalKit02V2Section1Transl();
+    const { title, para, formTitle } = signalKit02V2Section1Transl();
 
-    const formDetails = {
-      formID: "signalKit02V2-section1",
-      layout: 4,
-      button: {
-        en: "Register Today!",
-        it: "",
-        tr: "",
-        ro: "",
-        hu: "",
-        ar: "",
-        de: "",
-        es: "",
-        sv: "",
-        pt: "",
-        fi: "",
-        pl: "",
-        th: "",
-        ms: "",
-      },
+    const formBtn = {
+      en: "Register Today!",
+      it: "",
+      tr: "",
+      ro: "",
+      hu: "",
+      ar: "",
+      de: "",
+      es: "",
+      sv: "",
+      pt: "",
+      fi: "",
+      pl: "",
+      th: "",
+      ms: "",
     };
 
-    return { title, formTitle, para, formDetails };
+    return { title, para, formTitle, formBtn };
   },
 };
 </script>
@@ -50,7 +46,13 @@ export default {
           </div>
           <div class="formWrapper">
             <h2 v-html="formTitle[lang]" />
-            <Form :lang="lang" :formDetails="formDetails" />
+            <Form
+              :agreementType="'wBrandName'"
+              :buttonText="formBtn[lang]"
+              :lang="lang"
+              :layout="4"
+              :test="false"
+            />
           </div>
         </div>
       </div>
@@ -60,93 +62,6 @@ export default {
 
 <style lang="scss">
 @use "../../assets/scss/abstracts/mixins" as mxns;
-
-#signalKit02V2-section1-form {
-  padding: 0;
-
-  .firstNameWrapper {
-    @include mxns.mediamin(sm) {
-      padding-inline-end: 0;
-    }
-  }
-
-  .lastNameWrapper {
-    @include mxns.mediamin(sm) {
-      padding-inline-start: 0;
-    }
-  }
-
-  .emailWrapper,
-  .phoneWrapper {
-    @include mxns.mediamin(md) {
-      padding-inline-start: 0;
-    }
-  }
-
-  .agreementWrapper {
-    @include mxns.mediamin(lg) {
-      padding-inline-start: 0;
-    }
-  }
-
-  .agreementWrapper,
-  .submitWrapper {
-    @include mxns.mediamax(lg) {
-      max-width: 100%;
-      flex: 0 0 100%;
-    }
-  }
-
-  .form-control {
-    label {
-      color: var(--clr-white);
-      &:not(.agreement):not(.gdpr) {
-        bottom: 5px;
-        display: none;
-        left: 0;
-        padding: 5px;
-        // pointer-events: none;
-        // position: absolute;
-      }
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    select {
-      background-color: var(--clr-white);
-      border: 1px solid var(--clr-black);
-      border-radius: 0;
-      color: #484848;
-      font-size: 1rem;
-      padding: 0.625rem 0.875rem;
-      &::placeholder {
-        color: var(--clr-gray-500);
-      }
-    }
-    .phone {
-      [type="text"] {
-        // border-radius: var(--borderRadius) 0 0 var(--borderRadius);
-      }
-      [type="tel"] {
-        // border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
-      }
-    }
-    button[type="submit"] {
-      background-color: transparent;
-      border: 2px solid var(--clr-white);
-      border-radius: 0;
-      color: var(--clr-white);
-      font-size: 1.5rem;
-      padding: 0.75rem 1.125rem;
-      width: 100%;
-      line-height: 0.99;
-      &:hover {
-        border-color: var(--clr-brandSecondaryColor);
-        background-color: var(--clr-brandSecondaryColor);
-      }
-    }
-  }
-}
 
 section#section1.subHeader {
   $dot-size: 2px;
@@ -206,6 +121,10 @@ section#section1.subHeader {
   .formWrapper {
     $bg-color: var(--clr-brandPrimaryColor-800);
     $dot-color: var(--clr-brandPrimaryColor-700);
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     > * {
       position: relative;

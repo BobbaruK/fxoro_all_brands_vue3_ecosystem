@@ -1,9 +1,12 @@
 const caretPropValidation = () => {
+  const values = ["caret-down", "caret-down-bold"];
+  const def = "caret-down";
+
   return {
-    default: "caret-down",
+    default: def,
     validator(value) {
       // The value must match one of these strings
-      return ["caret-down", "caret-down-bold"].includes(value);
+      return values.includes(value);
     },
   };
 };

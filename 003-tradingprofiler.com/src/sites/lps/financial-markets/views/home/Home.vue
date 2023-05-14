@@ -74,3 +74,61 @@ export default {
   <Section5 :lang="lang" />
   <Section6 :lang="lang" />
 </template>
+
+<style lang="scss">
+@use "../../assets/scss/abstracts/mixins" as mxns;
+
+form.registerForm {
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.16);
+  background-color: var(--clr-white);
+  padding: 1rem;
+  @include mxns.mediamin(md) {
+    padding: 1.7rem;
+    margin: 0;
+  }
+  .form-control {
+    label {
+      &:not(.agreement):not(.gdpr) {
+        bottom: 5px;
+        display: none;
+        left: 0;
+        padding: 5px;
+        // pointer-events: none;
+        // position: absolute;
+      }
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      height: 40px;
+      background: #fff;
+      border: solid 1px #707070;
+      font-size: 14px;
+      color: #000;
+      border-radius: 0px;
+
+      &::placeholder {
+        color: var(--clr-gray-700);
+      }
+    }
+    .phone {
+      [type="text"] {
+        // border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+      }
+      [type="tel"] {
+        // border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+      }
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      &:hover {
+        color: var(--clr-brandSecondaryColor);
+      }
+    }
+  }
+}
+</style>

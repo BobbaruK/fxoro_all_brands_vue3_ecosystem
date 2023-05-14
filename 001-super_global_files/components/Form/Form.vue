@@ -1,18 +1,54 @@
 <script>
+import { ref } from "@vue/reactivity";
+import { watchEffect } from "@vue/runtime-core";
 // import { useRoute } from "vue-router";
-
-import formValidation from "../../composables/form/formValidation/formValidation";
-import formTranslations from "../../composables/form/translations/formTranslations";
-import Loader from "../Loader/Loader.vue";
-
 import { onMounted } from "@vue/runtime-core";
+import { isValidNumberForRegion, AsYouType } from "libphonenumber-js";
+import {
+  // VueReCaptcha,
+  useReCaptcha,
+} from "vue-recaptcha-v3";
+import { useFormIDStore } from "./stores/FormIDStore";
+
+import dataSite from "../../dataSite.json";
+
+import countryList from "./composables/validation/countryList";
+import getCountry from "./composables/validation/getCountry";
+import formErrors from "./composables/translations/formErrors";
+import formTranslations from "../../composables/form/translations/formTranslations";
+import layoutPropValidation from "./composables/validation/props/layoutPropValidation";
+import agreementTypePropValidation from "./composables/validation/props/agreementTypePropValidation";
+
+import Loader from "../Loader/Loader.vue";
 
 export default {
   name: "Form",
   components: { Loader },
   props: {
-    lang: String,
-    formDetails: Object,
+    agreementType: {
+      type: String,
+      required: false,
+      ...agreementTypePropValidation(),
+    },
+    buttonText: {
+      type: String,
+      // required: true
+      required: false,
+    },
+    lang: {
+      type: String,
+      required: true,
+    },
+    layout: {
+      type: Number,
+      required: false,
+      ...layoutPropValidation(),
+    },
+    test: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props) {
     /**
@@ -46,49 +82,337 @@ export default {
      * |  Submit                        ||  Agreement(s) |
      *
      */
-    const layout =
-      !isNaN(props.formDetails.layout) || typeof props.formDetails.layout != "undefined" ? props.formDetails.layout : 1;
 
-    // translate form
-    const { firstName, lastName, email, country, phone, agreement } = formTranslations(props.formDetails.button);
-
-    const {
-      firstNameValue,
-      firstNameError,
-      lastNameValue,
-      lastNameError,
-      emailValue,
-      emailError,
-      prefixValue,
-      phoneValue,
-      phoneError,
-      countries,
-      countryValue,
-      countryError,
-      agreementValue,
-      agreementError,
-      captchaError,
-      validate,
-      validateForm,
-    } = formValidation(props.lang, props.formDetails.test);
-
-    // const route = useRoute();
+    const registerForm = ref(null);
+    const formClass = "registerForm";
+    const formID = useFormIDStore();
+    const refLabelFName = ref(null);
+    const refFName = ref(null);
+    const refLabelLName = ref(null);
+    const refLName = ref(null);
+    const refLabelEmail = ref(null);
+    const refEmail = ref(null);
+    const refLabelCountry = ref(null);
+    const refCountry = ref(null);
+    const refLabelPhone = ref(null);
+    const refPhone = ref(null);
+    const refLabelAgreement = ref(null);
+    const refAgreement = ref(null);
 
     onMounted(() => {
-      let captchaScript;
+      const forms = Array.from(document.querySelectorAll(`.${formClass}`));
+      formID.addIDs(forms);
 
-      // if (!document.getElementById("captchaScript") && route.name == "Demo1Home") {
-      if (!document.getElementById("captchaScript")) {
-        captchaScript = document.createElement("script");
-        captchaScript.type = "text/javascript";
-        captchaScript.src = `https://www.google.com/recaptcha/api.js?render=${process.env.VUE_APP_GCAPTCHA_KEY}`;
-        captchaScript.id = "captchaScript";
-        document.head.appendChild(captchaScript);
-      }
+      const fNameID = `firstName-${registerForm.value.id}`;
+      refLabelFName.value.htmlFor = fNameID;
+      refFName.value.id = fNameID;
+
+      const lNameID = `lastName-${registerForm.value.id}`;
+      refLabelLName.value.htmlFor = lNameID;
+      refLName.value.id = lNameID;
+
+      const emailID = `email-${registerForm.value.id}`;
+      refLabelEmail.value.htmlFor = emailID;
+      refEmail.value.id = emailID;
+
+      const countryID = `country-${registerForm.value.id}`;
+      refLabelCountry.value.htmlFor = countryID;
+      refCountry.value.id = countryID;
+
+      const phoneID = `phone-${registerForm.value.id}`;
+      refLabelPhone.value.htmlFor = phoneID;
+      refPhone.value.id = phoneID;
+
+      const agreementID = `agreement-${registerForm.value.id}`;
+      refLabelAgreement.value.htmlFor = agreementID;
+      refAgreement.value.id = agreementID;
     });
 
+    // translate form
+    const { firstName, lastName, email, country, phone, agreement } = formTranslations();
+
+    // Form validation
+    const firstNameValue = ref(null); // FirstName
+    const firstNameError = ref({}); // First Name Error
+    const lastNameValue = ref(null); // LastName
+    const lastNameError = ref({}); // Last Name Error
+    const emailValue = ref(null); // EMail
+    const emailError = ref({}); // Email Error
+    const prefixValue = ref(null); // PhoneCountryCode
+    const phoneValue = ref(null); // PhoneNumber
+    const phoneError = ref({}); // Phone number Error
+    const { countries } = countryList(); // Countries
+    const countryValue = ref(null); // Country
+    const countryName = ref(null); // IPCountry
+    const countryCode = ref(null); // Country
+    const countryError = ref({}); // Country Error
+    const agreementValue = ref(true); // AcceptTermsAndConditions
+    const agreementError = ref({}); // Agreement Error
+    const captchaError = ref({}); // Captcha error
+
+    const IPAddress = ref(null);
+
+    const validate = ref(true);
+
+    const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
+
+    // Errors
+    const {
+      firstNameErr,
+      lastNameErr,
+      emailEmptyErr,
+      invalidEmailErr,
+      phoneEmptyErr,
+      invalidPhoneErr,
+      countryErr,
+      agreementErr,
+      captchaErr,
+    } = formErrors();
+
+    getCountry(countryValue, IPAddress, countryName, validate);
+
+    // Update prefix when country select
+    watchEffect(() => {
+      countries.forEach((country) => {
+        if (country.code === countryValue.value) {
+          prefixValue.value = country.dial_code;
+          countryCode.value = country.code;
+        }
+      });
+      phoneValue.value = phoneValue.value ? new AsYouType(countryValue.value).input(phoneValue.value) : "";
+    });
+
+    // Submit validation
+    const validateForm = (e) => {
+      firstNameError.value = {};
+      lastNameError.value = {};
+      emailError.value = {};
+      phoneError.value = {};
+      countryError.value = {};
+      agreementError.value = {};
+      captchaError.value = {};
+
+      // First name empty
+      if (firstNameValue.value == null || firstNameValue.value.length == 0) {
+        firstNameError.value = firstNameErr;
+      }
+
+      // Last name empty
+      if (lastNameValue.value == null || lastNameValue.value.length == 0) {
+        lastNameError.value = lastNameErr;
+      }
+
+      // Email empty
+      if (emailValue.value == null || emailValue.value.length == 0) {
+        emailError.value = emailEmptyErr;
+      }
+
+      // Invalid email
+      const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Email Pattern
+      const emailPatternBool = emailPattern.test(emailValue.value);
+      if (emailPatternBool == false && emailValue.value != null && emailValue.value.length != 0) {
+        emailError.value = invalidEmailErr;
+      }
+
+      // Phone empty
+      if (phoneValue.value == null || phoneValue.value.length == 0) {
+        phoneError.value = phoneEmptyErr;
+      } else if (!isValidNumberForRegion(phoneValue.value, countryCode.value.toUpperCase())) {
+        // Invalid phone
+
+        phoneError.value = invalidPhoneErr;
+      }
+
+      // Country select
+      if (countryValue.value == null) {
+        countryError.value = countryErr;
+      }
+
+      // Agreement check
+      if (agreementValue.value === false) {
+        agreementError.value = agreementErr;
+      }
+
+      // If a field is empty return
+      if (
+        firstNameValue.value == null ||
+        firstNameValue.value.length == 0 ||
+        lastNameValue.value == null ||
+        lastNameValue.value.length == 0 ||
+        emailValue.value == null ||
+        emailValue.value.length == 0 ||
+        emailPatternBool == false ||
+        phoneValue.value == null ||
+        phoneValue.value.length == 0 ||
+        !isValidNumberForRegion(phoneValue.value, countryCode.value.toUpperCase()) ||
+        countryValue.value == null ||
+        agreementValue.value === false
+      ) {
+        return;
+      }
+
+      validate.value = true;
+
+      // Send to CRM
+      const sendToCRM = async () => {
+        const logs = process.env.VUE_APP_LOG_ERRORS;
+        const logStylesAPI = ["font-size: 14px", "font-weight: bold"].join(";");
+
+        if (process.env.VUE_APP_SEND_TO_CRM != "true") {
+          console.log(`process.env.VUE_APP_SEND_TO_CRM is ${process.env.VUE_APP_SEND_TO_CRM}`);
+          return;
+        }
+
+        try {
+          //* Main country API
+          let data = "";
+          const myHeaders = new Headers();
+          myHeaders.append("Accept", "application/json");
+          myHeaders.append("DNT", "1");
+          myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+          const urlencoded = new URLSearchParams();
+          urlencoded.append("FirstName", firstNameValue.value);
+          urlencoded.append("LastName", lastNameValue.value);
+          urlencoded.append("EMail", emailValue.value);
+          urlencoded.append("Country", countryValue.value);
+          urlencoded.append("PhoneCountryCode", prefixValue.value);
+          urlencoded.append("PhoneNumber", phoneValue.value);
+          urlencoded.append("Language", props.lang.toUpperCase());
+          urlencoded.append("CampaignName", `${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`);
+          urlencoded.append("Advertiser", "");
+          urlencoded.append("Referrer", document.referrer === "" ? window.location.href : document.referrer);
+          urlencoded.append(
+            "Cookie",
+            `${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
+              lastNameValue.value
+            }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
+          );
+          urlencoded.append("CustomField", "");
+          urlencoded.append("AcceptTermsAndConditions", agreementValue.value);
+          urlencoded.append("ApproveReceiveCommercial", true);
+          urlencoded.append("IPAddress", IPAddress.value);
+          urlencoded.append("IPCountry", countryName.value);
+          const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: "follow",
+          };
+          const loadDataFXAPI = await fetch(dataSite.fxoroRegisterUser, requestOptions);
+
+          if (!loadDataFXAPI.ok) {
+            throw Error();
+          }
+
+          // data = await loadDataFXAPI.json();
+
+          validate.value = false;
+
+          // router.push({ name: "ThankYou", params: { lang: route.params.lang } }); // go to thank you page
+          // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
+          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
+            lastNameValue.value
+          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+        } catch (err) {
+          if (logs === "true") {
+            console.log(`%cLooks like there was a problem with the register API(s):`, logStylesAPI, err);
+          }
+        }
+      };
+
+      // Recaptcha
+      const recaptcha = async () => {
+        // (optional) Wait until recaptcha has been loaded.
+        await recaptchaLoaded();
+
+        const token = await executeRecaptcha("submit");
+
+        let captchaData = new FormData();
+        captchaData.append("token", token);
+        captchaData.append("domain", window.location.hostname);
+
+        try {
+          let data = "";
+
+          const checkCaptcha = await fetch("https://piutrading.com/recaptcha-verify/", {
+            method: "POST",
+            body: captchaData, // Send the form data
+          });
+
+          if (!checkCaptcha.ok) {
+            throw Error();
+          }
+
+          data = await checkCaptcha.json();
+
+          if (data.success === true && data.score > 0.6) {
+            if (!props.test) {
+              sendToCRM();
+              return;
+            }
+
+            console.log(`score: ${data.score}; test: ${props.test}`);
+            console.log("fire sendToCRM()");
+          } else {
+            validate.value = false;
+            captchaError.value = captchaErr;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      // Validate
+      if (!props.test) {
+        recaptcha();
+      } else {
+        console.log(`FirstName: ${firstNameValue.value}`);
+        console.log(`LastName: ${lastNameValue.value}`);
+        console.log(`EMail: ${emailValue.value}`);
+        console.log(`Country: ${countryValue.value}`);
+        console.log(`PhoneCountryCode: ${prefixValue.value}`);
+        console.log(`PhoneNumber: ${phoneValue.value}`);
+        console.log(`Language: ${props.lang.toUpperCase()}`);
+        console.log(`CampaignName: ${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`);
+        console.log(`Advertiser: `);
+        console.log(`Referrer: ${document.referrer === "" ? window.location.href : document.referrer}`);
+        console.log(
+          `Cookie: ${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
+            lastNameValue.value
+          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
+        );
+        console.log(`CustomField: `);
+        console.log(`AcceptTermsAndConditions: ${agreementValue.value}`);
+        console.log(`ApproveReceiveCommercial: ${true}`);
+        console.log(`IPAddress: ${IPAddress.value}`);
+        console.log(`IPCountry: ${countryName.value}`);
+
+        // router.push({ name: "ThankYou", params: { lang: route.params.lang } });
+        setTimeout(() => {
+          validate.value = false;
+          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
+            lastNameValue.value
+          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+          // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
+        }, 7000);
+      }
+    };
+
     return {
-      layout,
+      registerForm,
+      formClass,
+      refLabelFName,
+      refFName,
+      refLabelLName,
+      refLName,
+      refLabelEmail,
+      refEmail,
+      refLabelCountry,
+      refCountry,
+      refLabelPhone,
+      refPhone,
+      refLabelAgreement,
+      refAgreement,
       firstName,
       lastName,
       email,
@@ -118,7 +442,7 @@ export default {
 </script>
 
 <template>
-  <form @submit.prevent="validateForm" novalidate class="registerForm" :id="`${formDetails.formID}-form`">
+  <form ref="registerForm" @submit.prevent="validateForm" novalidate :class="formClass">
     <div class="row">
       <div
         :class="{
@@ -133,13 +457,8 @@ export default {
         <div class="row">
           <div class="col-12">
             <div class="form-control">
-              <label :for="`${formDetails.formID}-firstName`">{{ firstName[lang] }}</label>
-              <input
-                v-model="firstNameValue"
-                type="text"
-                :id="`${formDetails.formID}-firstName`"
-                :placeholder="firstName[lang]"
-              />
+              <label ref="refLabelFName">{{ firstName[lang] }}</label>
+              <input ref="refFName" v-model="firstNameValue" type="text" :placeholder="firstName[lang]" />
             </div>
           </div>
           <div v-if="firstNameError[lang]" class="col-12 error">
@@ -160,13 +479,8 @@ export default {
         <div class="row">
           <div class="col-12">
             <div class="form-control">
-              <label :for="`${formDetails.formID}-lastName`">{{ lastName[lang] }}</label>
-              <input
-                v-model="lastNameValue"
-                type="text"
-                :id="`${formDetails.formID}-lastName`"
-                :placeholder="lastName[lang]"
-              />
+              <label ref="refLabelLName">{{ lastName[lang] }}</label>
+              <input ref="refLName" v-model="lastNameValue" type="text" :placeholder="lastName[lang]" />
             </div>
           </div>
           <div v-if="lastNameError[lang]" class="col-12 error">
@@ -186,8 +500,8 @@ export default {
         <div class="row">
           <div class="col-12">
             <div class="form-control">
-              <label :for="`${formDetails.formID}-email`">{{ email[lang] }}</label>
-              <input v-model="emailValue" type="email" :id="`${formDetails.formID}-email`" :placeholder="email[lang]" />
+              <label ref="refLabelEmail">{{ email[lang] }}</label>
+              <input ref="refEmail" v-model="emailValue" type="email" :placeholder="email[lang]" />
             </div>
           </div>
           <div v-if="emailError[lang]" class="col-12 error">
@@ -206,9 +520,9 @@ export default {
       >
         <div class="row">
           <div class="col-12">
-            <div class="form-control country">
-              <label :for="`${formDetails.formID}-country`">{{ country[lang] }}</label>
-              <select v-model="countryValue" :id="`${formDetails.formID}-country`">
+            <div class="form-control">
+              <label ref="refLabelCountry">{{ country[lang] }}</label>
+              <select ref="refCountry" v-model="countryValue">
                 <option
                   v-for="(country, index) in countries"
                   :key="index"
@@ -237,10 +551,10 @@ export default {
         <div class="row">
           <div class="col-12">
             <div class="form-control">
-              <label :for="`${formDetails.formID}-phone`">{{ phone[lang] }}</label>
+              <label ref="refLabelPhone">{{ phone[lang] }}</label>
               <div class="phone">
                 <input v-model="prefixValue" type="text" placeholder="prefix" tabindex="0" disabled />
-                <input v-model="phoneValue" type="tel" :id="`${formDetails.formID}-phone`" :placeholder="phone[lang]" />
+                <input ref="refPhone" v-model="phoneValue" type="tel" :placeholder="phone[lang]" />
               </div>
             </div>
           </div>
@@ -264,15 +578,9 @@ export default {
             <div class="row">
               <div class="col-12">
                 <div class="form-control">
-                  <input v-model="agreementValue" type="checkbox" :id="`${formDetails.formID}-agreement`" />
-                  <label class="agreement" :for="`${formDetails.formID}-agreement`">
-                    {{
-                      formDetails.agreemenType === undefined ||
-                      formDetails.agreemenType === "" ||
-                      formDetails.agreemenType != "woBrandName"
-                        ? agreement.wBrandName[lang]
-                        : agreement.woBrandName[lang]
-                    }}
+                  <input ref="refAgreement" v-model="agreementValue" type="checkbox" />
+                  <label ref="refLabelAgreement" class="agreement">
+                    {{ agreement[agreementType][lang] }}
                   </label>
                 </div>
               </div>
@@ -295,7 +603,7 @@ export default {
       >
         <div class="form-control">
           <button class="scssecoBtn" type="submit">
-            {{ typeof formDetails.button != "undefined" ? formDetails.button[lang] : "" }}
+            {{ buttonText }}
           </button>
         </div>
       </div>
@@ -310,13 +618,20 @@ export default {
 </template>
 
 <style lang="scss">
-form.registerForm {
+:where(form.registerForm) {
   position: relative;
-  padding-bottom: 1rem;
+  // padding-bottom: 1rem;
+  > .row {
+    row-gap: 1rem;
+    // margin: 0;
+    > div {
+      // padding: 0;
+    }
+  }
   .error {
     color: var(--clr-danger);
     font-size: 80%;
-    padding-bottom: 3px;
+    // padding-bottom: 3px;
     padding-top: 1px;
   }
 
@@ -325,7 +640,7 @@ form.registerForm {
   }
 
   .form-control {
-    padding-top: 1rem;
+    // padding-top: 1rem;
     position: relative;
     label {
       font-size: 1rem;

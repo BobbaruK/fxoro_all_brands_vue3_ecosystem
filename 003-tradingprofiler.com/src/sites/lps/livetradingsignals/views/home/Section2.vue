@@ -13,13 +13,9 @@ export default {
     // Translations
     const { bullets, formTitle } = livetradingsignalsSection2Transl();
 
-    const formDetails = {
-      formID: "livetradingsignals-section1",
-      layout: 1,
-      button: { en: "Open an account now" },
-    };
+    const formBtn = { en: "Open an account now" };
 
-    return { bullets, formTitle, formDetails };
+    return { bullets, formTitle, formBtn };
   },
 };
 </script>
@@ -42,7 +38,13 @@ export default {
         <div class="col-12 col-lg-6 order-1 order-lg-2">
           <div class="formWrapper">
             <h3>{{ formTitle[lang] }}</h3>
-            <Form :lang="lang" :formDetails="formDetails" />
+            <Form
+              :agreementType="'wBrandName'"
+              :buttonText="formBtn[lang]"
+              :lang="lang"
+              :layout="1"
+              :test="false"
+            />
           </div>
         </div>
       </div>
@@ -161,95 +163,6 @@ section#section2.formAndBullets {
     }
     @include mxns.mediamin(xl) {
       margin: -160px 0 0 -30px;
-    }
-
-    form#livetradingsignals-section1-form {
-      $borderRadius: 5px;
-
-      .form-control {
-      }
-
-      label {
-        font-size: 1rem;
-        &:not(.agreement):not(.gdpr) {
-          bottom: 5px;
-          display: none;
-          left: 0;
-          padding: 5px;
-          // pointer-events: none;
-          // position: absolute;
-        }
-      }
-
-      input[type="text"],
-      input[type="email"],
-      input[type="tel"],
-      select {
-        background-position: 10px center;
-        background-repeat: no-repeat;
-        background-color: #d6d6d7;
-        border-radius: $borderRadius;
-        border: 1px solid var(--clr-white);
-        color: var(--clr-gray-700);
-        display: block;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: normal;
-        margin: 0;
-        padding: 10px;
-        width: 100%;
-        &::placeholder {
-          color: var(--clr-gray-700);
-        }
-      }
-
-      select option {
-        margin: 40px;
-        background: var(--clr-brandPrimaryColor-light);
-        color: #fff;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-      }
-
-      .phone {
-        display: flex;
-        [type="text"] {
-          max-width: 80px;
-          border-radius: $borderRadius 0 0 $borderRadius;
-          border-right: 1px solid var(--clr-gray-100);
-          padding-left: 0;
-          padding-right: 0;
-          text-align: center;
-        }
-        [type="tel"] {
-          border-radius: 0 $borderRadius $borderRadius 0;
-        }
-      }
-
-      input[type="checkbox"] {
-        margin-right: 0.5rem;
-      }
-
-      .error {
-        color: var(--clr-danger);
-        font-size: 80%;
-      }
-
-      button[type="submit"] {
-        background: var(--clr-brandPrimaryColor);
-        border-color: #195e5b;
-        border-radius: $borderRadius;
-        border-style: solid;
-        border-width: 0 2px 2px 0;
-        color: #fff;
-        display: block;
-        float: none;
-        max-width: 230px;
-        margin: 0 auto;
-        padding: 7px 25px;
-        &:hover {
-          background-color: var(--clr-brandSecondaryColor-600);
-        }
-      }
     }
   }
 }

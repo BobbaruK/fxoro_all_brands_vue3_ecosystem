@@ -5,21 +5,17 @@ import lpDemo3Routes from "../LP-demo3/routes/lp-Demo3-Routes";
 
 // Actual LPs
 import lpComeToLearnRoutes from "../cometolearn/routes/lp-ComeToLearn-Routes";
-import lpCryptoUniverseV1Routes from "../crypto-universe-v1/routes/lp-CryptoUniverseV1-Routes";
-import lpCryptoUniverseV2Routes from "../crypto-universe-v2/routes/lp-CryptoUniverseV2-Routes";
+import lpCryptoUniverseRoutes from "../crypto-universe/routes/lp-CryptoUniverse-Routes";
 import lpEducationRoutes from "../education/routes/lp-Education-Routes";
 import lpForexSignalsRoutes from "../forexsignals/routes/lp-ForexSignals-Routes";
-import lpGoldV1Routes from "../gold-v1/routes/lp-GoldV1-Routes";
-import lpGoldV2Routes from "../gold-v2/routes/lp-GoldV2-Routes";
+import lpGoldRoutes from "../gold/routes/lp-Gold-Routes";
 import lpLiveTradingSignalsRoutes from "../livetradingsignals/routes/lp-LiveTradingSignals-Routes";
-import lpOilV1Routes from "../oil-v1/routes/lp-OilV1-Routes";
-import lpOilV2Routes from "../oil-v2/routes/lp-OilV2-Routes";
+import lpOilRoutes from "../oil/routes/lp-Oil-Routes";
 import lpSignalsRoutes from "../signals/routes/lp-Signals-Routes";
 import lpTradingSignals3Routes from "../trading-signals3/routes/lp-TradingSignals3-Routes";
 import lpSignalKit02V2Routes from "../signalkit02_v2/routes/lp-SignalKit02V2-Routes";
 import lpFinancialMarketsRoutes from "../financial-markets/routes/lp-FinancialMarkets-Routes";
 import lpFreedomToTradeRoutes from "../freedom-to-trade/routes/lp-FreedomToTrade-Routes";
-import lpFreedomToTradeTestRoutes from "../freedom-to-trade2/routes/lp-FreedomToTradeTEST-Routes";
 
 const lpsRoutes = [
   {
@@ -34,21 +30,17 @@ const lpsRoutes = [
       ...lpDemo3Routes,
       // Actual LPs
       ...lpComeToLearnRoutes,
-      ...lpCryptoUniverseV1Routes,
-      ...lpCryptoUniverseV2Routes,
+      ...lpCryptoUniverseRoutes,
       ...lpEducationRoutes,
       ...lpForexSignalsRoutes,
-      ...lpGoldV1Routes,
-      ...lpGoldV2Routes,
+      ...lpGoldRoutes,
       ...lpLiveTradingSignalsRoutes,
-      ...lpOilV1Routes,
-      ...lpOilV2Routes,
+      ...lpOilRoutes,
       ...lpSignalsRoutes,
       ...lpTradingSignals3Routes,
       ...lpSignalKit02V2Routes,
       ...lpFinancialMarketsRoutes,
       ...lpFreedomToTradeRoutes,
-      ...lpFreedomToTradeTestRoutes,
     ],
   },
 ];

@@ -62,4 +62,6 @@ export default {
   <Section2 :lang="lang" />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@use "../../assets/scss/abstracts/mixins" as mxns;
+</style>

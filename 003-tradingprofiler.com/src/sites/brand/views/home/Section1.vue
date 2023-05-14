@@ -102,26 +102,21 @@ export default {
       delay: 5000,
     };
 
-    const formDetails = {
-      formID: "brand-home-modal-section1",
-      layout: 1,
-      agreemenType: "woBrandName",
-      button: {
-        en: "Register Now",
-        it: "",
-        tr: "",
-        ro: "",
-        hu: "",
-        ar: "سجل الان",
-        de: "",
-        es: "",
-        sv: "",
-        pt: "",
-        fi: "",
-        pl: "",
-        th: "",
-        ms: "",
-      },
+    const formButton = {
+      en: "Register Now",
+      it: "",
+      tr: "",
+      ro: "",
+      hu: "",
+      ar: "سجل الان",
+      de: "",
+      es: "",
+      sv: "",
+      pt: "",
+      fi: "",
+      pl: "",
+      th: "",
+      ms: "",
     };
 
     return {
@@ -139,7 +134,7 @@ export default {
       // Modal form combo
       showModalForm,
       modalDetailsForm,
-      formDetails,
+      formButton,
     };
   },
 };
@@ -166,7 +161,7 @@ export default {
       </div>
     </div>
     <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
-      <Form :lang="lang" :formDetails="formDetails" />
+      <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="1" :test="false" />
     </Modal>
   </section>
 </template>
@@ -174,8 +169,6 @@ export default {
 <style lang="scss">
 @use "../../assets/scss/abstracts/variables" as vars;
 @use "../../assets/scss/abstracts/mixins" as mxns;
-
-$borderRadius: 10px;
 
 // Section
 section#section1.subHeader {
@@ -214,9 +207,27 @@ section#section1.subHeader {
     position: relative;
     &::before {
       /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1e5799+0,000000+15,000000+85,7db9e8+100&0+0,1+15,1+85,0+100 */
-      background: -moz-linear-gradient(left, rgba(30, 87, 153, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(125, 185, 232, 0) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(left, rgba(30, 87, 153, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(125, 185, 232, 0) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to right, rgba(30, 87, 153, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(125, 185, 232, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      background: -moz-linear-gradient(
+        left,
+        rgba(30, 87, 153, 0) 0%,
+        rgba(0, 0, 0, 1) 15%,
+        rgba(0, 0, 0, 1) 85%,
+        rgba(125, 185, 232, 0) 100%
+      ); /* FF3.6-15 */
+      background: -webkit-linear-gradient(
+        left,
+        rgba(30, 87, 153, 0) 0%,
+        rgba(0, 0, 0, 1) 15%,
+        rgba(0, 0, 0, 1) 85%,
+        rgba(125, 185, 232, 0) 100%
+      ); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(
+        to right,
+        rgba(30, 87, 153, 0) 0%,
+        rgba(0, 0, 0, 1) 15%,
+        rgba(0, 0, 0, 1) 85%,
+        rgba(125, 185, 232, 0) 100%
+      ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e5799', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
       height: 100%;
       inset: 0 auto 0 -180px;
@@ -301,144 +312,6 @@ html[dir="rtl"] {
     .close {
       color: var(--clr-black);
       background: var(--clr-brandSecondaryColor-400);
-    }
-  }
-}
-
-// Form
-#siteWrapper,
-#modals {
-  #brand-home-modal-section1-form,
-  #brand-home-section4-form {
-    // position: relative;
-    margin-top: 1rem;
-    .error {
-      color: var(--clr-danger);
-      font-size: 80%;
-      padding-bottom: 3px;
-      padding-top: 1px;
-    }
-
-    label {
-      cursor: pointer;
-    }
-
-    .form-control {
-      position: relative;
-      label {
-        font-size: 1rem;
-        &:not(.agreement):not(.gdpr) {
-          bottom: 5px;
-          display: none;
-          left: 0;
-          padding: 5px;
-          // pointer-events: none;
-          // position: absolute;
-        }
-      }
-      input[type="text"],
-      input[type="email"],
-      input[type="tel"],
-      select {
-        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#41220b+0,41220b+44,c36522+100 */
-        background: var(--clr-brandPrimaryColor-dark); /* Old browsers */
-        background: -moz-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-        border-radius: $borderRadius;
-        border: 1px solid var(--clr-brandPrimaryColor-dark);
-        color: var(--clr-white);
-        height: 40px;
-        max-width: 100%;
-        padding: 5px 15px;
-        transition: 350ms;
-        width: 100%;
-        &:hover {
-        }
-        &:focus {
-          outline: none;
-          border-bottom: 1px solid var(--clr-brandSecondaryColor);
-        }
-        &::placeholder {
-          color: var(--clr-white);
-        }
-      }
-      select option {
-        margin: 40px;
-        background: var(--clr-brandPrimaryColor-light);
-        color: #fff;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-      }
-      .phone {
-        display: flex;
-        [type="text"] {
-          max-width: 80px;
-          border-radius: $borderRadius 0 0 $borderRadius;
-          border-right: 1px solid var(--clr-gray-100);
-        }
-        [type="tel"] {
-          border-radius: 0 $borderRadius $borderRadius 0;
-        }
-      }
-      input[type="checkbox"] {
-      }
-      button[type="submit"] {
-        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#41220b+0,41220b+44,c36522+100 */
-        background: var(--clr-brandPrimaryColor-dark); /* Old browsers */
-        background: -moz-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, var(--clr-brandPrimaryColor-dark) 0%, var(--clr-brandPrimaryColor-dark) 65%, var(--clr-brandPrimaryColor-light) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        border-radius: $borderRadius;
-        border: 2px solid var(--clr-brandPrimaryColor-light);
-        color: var(--clr-brandSecondaryColor-200);
-        cursor: pointer;
-        display: block;
-        font-weight: bold;
-        // padding: 10px 15px;
-        padding: 0;
-        transition: 350ms;
-        width: 100%;
-        &:hover {
-          background: var(--clr-brandSecondaryColor-light); /* Old browsers */
-          border: 2px solid var(--clr-brandSecondaryColor);
-          color: var(--clr-brandPrimaryColor-dark);
-        }
-      }
-    }
-
-    // Loader
-    .loader {
-      background: rgb(0 0 0 / 0.7);
-      inset: 0;
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      .lds-ring {
-        div {
-          border-color: var(--clr-brandSecondaryColor) transparent transparent transparent;
-        }
-      }
-    }
-  }
-}
-
-html[dir="rtl"] {
-  #brand-home-modal-section1-form,
-  #brand-home-section4-form {
-    .form-control {
-      &.phone {
-        [type="text"] {
-          border-radius: 0 $borderRadius $borderRadius 0;
-          border-left: 1px solid var(--clr-gray-200);
-          border-right: 1px solid var(--clr-brandPrimaryColor-dark);
-        }
-        [type="tel"] {
-          border-radius: $borderRadius 0 0 $borderRadius;
-        }
-      }
-      input[type="checkbox"] {
-      }
     }
   }
 }

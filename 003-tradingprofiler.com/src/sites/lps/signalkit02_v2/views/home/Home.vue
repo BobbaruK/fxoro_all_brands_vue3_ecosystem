@@ -73,36 +73,46 @@ export default {
 form.registerForm {
   padding: 0;
 
-  .firstNameWrapper {
-    @include mxns.mediamin(sm) {
-      padding-inline-end: 0;
+  > .registerFormInner {
+    @include mxns.mediamin(xl) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
     }
-  }
 
-  .lastNameWrapper {
-    @include mxns.mediamin(sm) {
-      padding-inline-start: 0;
-    }
-  }
+    > .form-control {
+      &.emailWrapper {
+        @include mxns.mediamin(xl) {
+          grid-column-start: 3;
+          grid-column-end: 5;
+        }
+      }
 
-  .emailWrapper,
-  .phoneWrapper {
-    @include mxns.mediamin(md) {
-      padding-inline-start: 0;
-    }
-  }
+      &.phoneNumberWrapper {
+        @include mxns.mediamin(xl) {
+          grid-column-start: 3;
+          grid-column-end: 5;
+        }
+      }
 
-  .agreementWrapper {
-    @include mxns.mediamin(lg) {
-      padding-inline-start: 0;
-    }
-  }
+      &.countryWrapper {
+        @include mxns.mediamin(xl) {
+          grid-column-start: 1;
+          grid-column-end: 3;
+        }
+      }
 
-  .agreementWrapper,
-  .submitWrapper {
-    @include mxns.mediamax(lg) {
-      max-width: 100%;
-      flex: 0 0 100%;
+      &.agreementWrapper {
+        @include mxns.mediamin(xl) {
+          grid-column-start: 1;
+          grid-column-end: 5;
+        }
+      }
+
+      &.submitButtonWrapper {
+        @include mxns.mediamin(xl) {
+          grid-column-start: 1;
+          grid-column-end: 5;
+        }
+      }
     }
   }
 

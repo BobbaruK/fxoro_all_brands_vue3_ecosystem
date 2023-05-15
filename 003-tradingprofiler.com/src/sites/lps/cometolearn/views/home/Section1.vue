@@ -138,6 +138,7 @@ section#section1.subHeader {
       position: relative;
       text-align: start;
       z-index: 1;
+      width: 100%;
       @include mxns.mediamin(lg) {
         margin-top: 20px;
         max-width: 75%;

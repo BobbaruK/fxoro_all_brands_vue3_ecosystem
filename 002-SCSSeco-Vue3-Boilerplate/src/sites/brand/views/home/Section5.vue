@@ -37,7 +37,7 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="4" :test="false" />
+          <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :test="false" />
         </div>
       </div>
     </div>

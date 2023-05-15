@@ -10,7 +10,7 @@ export const useFormIDStore = defineStore("FormIDStore", {
       if (!this.alreadyAddIDs) {
         this.alreadyAddIDs = true;
         elements.forEach((element, index) => {
-          element.id = `registerForm-${index + 1}`;
+          element.id = element.id === "" ? `registerForm-${index + 1}` : element.id;
         });
       }
     },

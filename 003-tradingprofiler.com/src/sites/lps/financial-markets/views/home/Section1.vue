@@ -60,16 +60,15 @@ export default {
   <section id="section1" class="subHeader">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-md-6 col-xl-7 title">
+        <div class="col-12 col-md-6 col-xxl-7 title">
           <h1 v-html="title[lang]" />
         </div>
-        <div class="col-12 col-md-6 col-xl-5">
+        <div class="col-12 col-md-6 col-xxl-5">
           <Form
-            class="section3Form-V2"
+            class="section3Form-V2 layout1"
             :agreementType="'wBrandName'"
             :buttonText="formBtn[lang]"
             :lang="lang"
-            :layout="2"
             :test="false"
           />
         </div>

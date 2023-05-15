@@ -47,10 +47,10 @@ export default {
           <div class="formWrapper">
             <h2 v-html="formTitle[lang]" />
             <Form
+              class="layout2"
               :agreementType="'wBrandName'"
               :buttonText="formBtn[lang]"
               :lang="lang"
-              :layout="4"
               :test="false"
             />
           </div>

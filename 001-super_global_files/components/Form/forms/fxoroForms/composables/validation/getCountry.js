@@ -1,4 +1,4 @@
-import dataSite from "../../../../dataSite.json";
+import dataSite from "../../../../../../dataSite.json";
 
 const getCountry = async (countryValue, IPAddress, countryName, validate) => {
   const logs = process.env.VUE_APP_LOG_ERRORS;
@@ -13,14 +13,14 @@ const getCountry = async (countryValue, IPAddress, countryName, validate) => {
     myHeaders.append("DNT", "1");
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     const urlencoded = new URLSearchParams();
-    urlencoded.append("Token", dataSite.Token);
+    urlencoded.append("Token", dataSite.fxoro.getCountry.Token);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
     };
-    const loadDataFXAPI = await fetch(dataSite.fxoroCountryAPI, requestOptions);
+    const loadDataFXAPI = await fetch(dataSite.fxoro.getCountry.fxoroCountryAPI, requestOptions);
 
     if (!loadDataFXAPI.ok) {
       throw Error();

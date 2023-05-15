@@ -6,12 +6,10 @@ import checkLangAndMeta from "../../../../../../001-super_global_files/composabl
 import Section1 from "./Section1.vue";
 import Section2 from "./Section2.vue";
 import Section3 from "./Section3.vue";
-import Section4 from "./Section4.vue";
-import Section5 from "./Section5.vue";
 
 export default {
   name: "Brand~Home",
-  components: { Section1, Section2, Section3, Section4,Section5 },
+  components: { Section1, Section2, Section3 },
   props: {
     lang: String,
   },
@@ -64,10 +62,7 @@ export default {
   <Section1 :lang="lang" />
   <Section2 :lang="lang" />
   <Section3 :lang="lang" />
-  <Section4 :lang="lang" />
-  <Section5 :lang="lang" />
 </template>
-
 
 <style lang="scss">
 form.registerForm {

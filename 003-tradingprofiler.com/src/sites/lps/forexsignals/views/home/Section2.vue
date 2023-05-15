@@ -44,11 +44,10 @@ export default {
           <div class="formWrapper">
             <h3>{{ formTitle[lang] }}</h3>
             <Form
-              class="section3Form-V2"
+              class="layout1"
               :agreementType="'wBrandName'"
               :buttonText="formBtn[lang]"
               :lang="lang"
-              :layout="2"
               :test="false"
             />
           </div>

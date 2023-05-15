@@ -188,6 +188,12 @@ section#section3.form {
   background-size: cover;
   color: var(--clr-white);
   padding: 30px 0;
+  @include mxns.mediaminmax(sm, md) {
+    background-position: 0 -170px;
+  }
+  @include mxns.mediamax(md) {
+    padding-bottom: 0;
+  }
   @include mxns.mediamin(md) {
     background-image: url(../../assets/imgs/section3/bg-desktop.jpg);
     padding: 45px 0;
@@ -245,6 +251,7 @@ form.section3Form-V2 {
   padding: 20px 0;
   position: relative;
   z-index: 1;
+  width: 100%;
   @include mxns.mediamin(sm) {
     margin-top: 6rem;
   }
@@ -260,13 +267,14 @@ form.section3Form-V2 {
     position: absolute;
     inset: 0;
     width: 1000px;
+    z-index: -1;
   }
   &::before {
     left: -1000px;
     right: auto;
     @include mxns.mediamin(md) {
       width: 100%;
-      z-index: 0;
+      // z-index: 0;
       transform: skew(3deg, -4deg);
       inset: 0;
       background: rgb(255 255 255 / 0.4);
@@ -281,7 +289,7 @@ form.section3Form-V2 {
       width: 100%;
       height: 100%;
       inset: 0;
-      z-index: 0;
+      // z-index: 0;
     }
   }
   > .row:first-child {

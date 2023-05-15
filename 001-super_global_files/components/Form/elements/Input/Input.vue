@@ -25,6 +25,7 @@
  */
 export default {
   name: "Input",
+  emits: ["update:modelValue"],
   props: {
     type: {
       type: String, // For all types
@@ -209,6 +210,7 @@ export default {
       default: false,
       required: false,
     },
+    modelValue: String,
   },
   setup() {
     return {};
@@ -217,232 +219,245 @@ export default {
 </script>
 
 <template>
-  <div>
-    <input
-      v-if="type === 'button'"
-      type="button"
-      :value="value"
-      :name="name"
-      :formaction="formaction"
-      :formenctype="formenctype"
-      :formmethod="formmethod"
-      :formnovalidate="formnovalidate"
-      :formtarget="formtarget"
-      :disabled="disabled"
-    />
-    <input
-      v-if="type === 'checkbox'"
-      type="checkbox"
-      :value="value"
-      :name="name"
-      :checked="checked"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input v-if="type === 'color'" type="color" :value="value" :name="name" :disabled="disabled" :required="required" />
-    <input
-      v-if="type === 'date'"
-      type="date"
-      :value="value"
-      :name="name"
-      :min="min"
-      :max="max"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'datetime-local'"
-      type="datetime-local"
-      :value="value"
-      :name="name"
-      :min="min"
-      :max="max"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'email'"
-      type="email"
-      :value="value"
-      :name="name"
-      :list="list"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      :multiple="multiple"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :size="size"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input v-if="type === 'file'" type="file" :name="name" :accept="accept" :capture="capture" />
-    <input v-if="type === 'hidden'" type="hidden" :name="name" :value="value" />
-    <input
-      v-if="type === 'image'"
-      type="image"
-      :name="name"
-      :alt="alt"
-      :height="height"
-      :width="width"
-      :src="src"
-      :formaction="formaction"
-      :formenctype="formenctype"
-      :formmethod="formmethod"
-      :formnovalidate="formnovalidate"
-      :formtarget="formtarget"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'month'"
-      type="month"
-      :name="name"
-      :list="list"
-      :max="max"
-      :min="min"
-      :readonly="readonly"
-      :value="value"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'password'"
-      type="password"
-      :value="value"
-      :name="name"
-      :minlength="minlength"
-      :maxlength="maxlength"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :size="size"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'radio'"
-      type="radio"
-      :name="name"
-      :value="value"
-      :checked="checked"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'range'"
-      type="range"
-      :value="value"
-      :name="name"
-      :min="min"
-      :max="max"
-      :step="step"
-      :list="list"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input v-if="type === 'reset'" type="reset" :name="name" :value="value" :disabled="disabled" />
-    <input
-      v-if="type === 'search'"
-      type="search"
-      :name="name"
-      :value="value"
-      :list="list"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :size="size"
-      :spellcheck="spellcheck"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'submit'"
-      type="submit"
-      :value="value"
-      :name="name"
-      :formaction="formaction"
-      :formenctype="formenctype"
-      :formmethod="formmethod"
-      :formnovalidate="formnovalidate"
-      :formtarget="formtarget"
-      :disabled="disabled"
-    />
-    <input
-      v-if="type === 'tel'"
-      type="tel"
-      :name="name"
-      :value="value"
-      :list="list"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :size="size"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'text'"
-      type="text"
-      :name="name"
-      :value="value"
-      :list="list"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :size="size"
-      :spellcheck="spellcheck"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'time'"
-      type="time"
-      :name="name"
-      :value="value"
-      :list="list"
-      :max="max"
-      :min="min"
-      :readonly="readonly"
-      :step="step"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'url'"
-      type="url"
-      :name="name"
-      :value="value"
-      :list="list"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      :pattern="pattern"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :size="size"
-      :spellcheck="spellcheck"
-      :disabled="disabled"
-      :required="required"
-    />
-    <input
-      v-if="type === 'week'"
-      type="week"
-      :value="value"
-      :name="name"
-      :max="max"
-      :min="min"
-      :readonly="readonly"
-      :step="step"
-      :disabled="disabled"
-      :required="required"
-    />
-  </div>
+  <input
+    v-if="type === 'button'"
+    type="button"
+    :value="value"
+    :name="name"
+    :formaction="formaction"
+    :formenctype="formenctype"
+    :formmethod="formmethod"
+    :formnovalidate="formnovalidate"
+    :formtarget="formtarget"
+    :disabled="disabled"
+  />
+  <input
+    v-if="type === 'checkbox'"
+    type="checkbox"
+    :value="value"
+    :name="name"
+    :checked="checked"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input v-if="type === 'color'" type="color" :value="value" :name="name" :disabled="disabled" :required="required" />
+  <input
+    v-if="type === 'date'"
+    type="date"
+    :value="value"
+    :name="name"
+    :min="min"
+    :max="max"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'datetime-local'"
+    type="datetime-local"
+    :value="value"
+    :name="name"
+    :min="min"
+    :max="max"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'email'"
+    type="email"
+    :value="value"
+    :name="name"
+    :list="list"
+    :maxlength="maxlength"
+    :minlength="minlength"
+    :multiple="multiple"
+    :pattern="pattern"
+    :placeholder="placeholder"
+    :readonly="readonly"
+    :size="size"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input v-if="type === 'file'" type="file" :name="name" :accept="accept" :capture="capture" />
+  <input v-if="type === 'hidden'" type="hidden" :name="name" :value="value" />
+  <input
+    v-if="type === 'image'"
+    type="image"
+    :name="name"
+    :alt="alt"
+    :height="height"
+    :width="width"
+    :src="src"
+    :formaction="formaction"
+    :formenctype="formenctype"
+    :formmethod="formmethod"
+    :formnovalidate="formnovalidate"
+    :formtarget="formtarget"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'month'"
+    type="month"
+    :name="name"
+    :list="list"
+    :max="max"
+    :min="min"
+    :readonly="readonly"
+    :value="value"
+    :disabled="disabled"
+    :required="required"
+  />
+
+  <input
+    v-if="type === 'number'"
+    type="number"
+    :name="name"
+    :list="list"
+    :max="max"
+    :min="min"
+    :step="step"
+    :readonly="readonly"
+    :value="value"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'password'"
+    type="password"
+    :value="value"
+    :name="name"
+    :minlength="minlength"
+    :maxlength="maxlength"
+    :pattern="pattern"
+    :placeholder="placeholder"
+    :readonly="readonly"
+    :size="size"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'radio'"
+    type="radio"
+    :name="name"
+    :value="value"
+    :checked="checked"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'range'"
+    type="range"
+    :value="value"
+    :name="name"
+    :min="min"
+    :max="max"
+    :step="step"
+    :list="list"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input v-if="type === 'reset'" type="reset" :name="name" :value="value" :disabled="disabled" />
+  <input
+    v-if="type === 'search'"
+    type="search"
+    :name="name"
+    :value="value"
+    :list="list"
+    :maxlength="maxlength"
+    :minlength="minlength"
+    :pattern="pattern"
+    :placeholder="placeholder"
+    :readonly="readonly"
+    :size="size"
+    :spellcheck="spellcheck"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'submit'"
+    type="submit"
+    :value="value"
+    :name="name"
+    :formaction="formaction"
+    :formenctype="formenctype"
+    :formmethod="formmethod"
+    :formnovalidate="formnovalidate"
+    :formtarget="formtarget"
+    :disabled="disabled"
+  />
+  <input
+    v-if="type === 'tel'"
+    type="tel"
+    :name="name"
+    :value="value"
+    :list="list"
+    :maxlength="maxlength"
+    :minlength="minlength"
+    :pattern="pattern"
+    :placeholder="placeholder"
+    :readonly="readonly"
+    :size="size"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'text'"
+    type="text"
+    :name="name"
+    :list="list"
+    :maxlength="maxlength"
+    :minlength="minlength"
+    :pattern="pattern"
+    :placeholder="placeholder"
+    :readonly="readonly"
+    :size="size"
+    :spellcheck="spellcheck"
+    :disabled="disabled"
+    :required="required"
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
+  <input
+    v-if="type === 'time'"
+    type="time"
+    :name="name"
+    :value="value"
+    :list="list"
+    :max="max"
+    :min="min"
+    :readonly="readonly"
+    :step="step"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'url'"
+    type="url"
+    :name="name"
+    :value="value"
+    :list="list"
+    :maxlength="maxlength"
+    :minlength="minlength"
+    :pattern="pattern"
+    :placeholder="placeholder"
+    :readonly="readonly"
+    :size="size"
+    :spellcheck="spellcheck"
+    :disabled="disabled"
+    :required="required"
+  />
+  <input
+    v-if="type === 'week'"
+    type="week"
+    :value="value"
+    :name="name"
+    :max="max"
+    :min="min"
+    :readonly="readonly"
+    :step="step"
+    :disabled="disabled"
+    :required="required"
+  />
 </template>
 
 <style lang="scss"></style>

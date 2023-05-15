@@ -42,13 +42,7 @@ export default {
         <div class="col-12 col-md-6 parasWrapper" v-html="paras[lang]" />
         <div class="col-12 col-md-6 col-lg-5 offset-lg-1">
           <h2 v-html="formTitle[lang]" />
-          <Form
-            :agreementType="'wBrandName'"
-            :buttonText="formBtn[lang]"
-            :lang="lang"
-            :layout="2"
-            :test="false"
-          />
+          <Form class="layout1" :agreementType="'wBrandName'" :buttonText="formBtn[lang]" :lang="lang" :test="false" />
         </div>
       </div>
     </div>

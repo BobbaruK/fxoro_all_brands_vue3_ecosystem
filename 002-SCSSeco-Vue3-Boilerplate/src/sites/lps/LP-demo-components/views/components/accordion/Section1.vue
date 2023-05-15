@@ -173,8 +173,10 @@ export default {
               <template #title>3 - Lorem, ipsum dolor.</template>
               <template #content>
                 <Form
+                  :agreementType="'wBrandName'"
+                  :buttonText="translationsGlossary.j.join[lang]"
                   :lang="lang"
-                  :formDetails="{ formID: 'accordionForm', layout: 1, button: translationsGlossary.j.join }"
+                  :test="false"
                 />
               </template>
             </AccordionItem>

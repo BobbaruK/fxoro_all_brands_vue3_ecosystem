@@ -79,7 +79,7 @@ export default {
   </section>
   <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
     <h1>Lorem, ipsum dolor.</h1>
-    <Form :agreementType="'wBrandName'" :buttonText="modalFormButton[lang]" :lang="lang" :layout="2" :test="false" />
+    <Form :agreementType="'wBrandName'" :buttonText="modalFormButton[lang]" :lang="lang" :test="false" />
   </Modal>
   <Modal :lang="lang" :modalDetails="modalDetailsOther" v-model="showModalOther" @closeModal="showModalOther = false">
     <h1>Lorem, ipsum dolor.</h1>
@@ -97,5 +97,4 @@ export default {
   </Modal>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

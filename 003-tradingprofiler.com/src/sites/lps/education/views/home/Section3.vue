@@ -35,7 +35,7 @@ export default {
       <div class="row">
         <div class="col-12">
           <h2>Get your free signals!</h2>
-          <Form :agreementType="'wBrandName'" :buttonText="formBtn[lang]" :lang="lang" :layout="3" :test="false" />
+          <Form class="layout2" :agreementType="'wBrandName'" :buttonText="formBtn[lang]" :lang="lang"  :test="false" />
         </div>
       </div>
     </div>

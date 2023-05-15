@@ -56,7 +56,6 @@ export default {
       :agreementType="'wBrandName'"
       :buttonText="translationsGlossary.j.join[lang]"
       :lang="lang"
-      :layout="1"
       :test="false"
     />
   </Modal>

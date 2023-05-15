@@ -137,17 +137,17 @@ form.registerForm {
     margin-right: 0.5rem;
   }
 
-  #forexsignals-section2-firstName,
-  #forexsignals-section2-lastName {
+  #firstName-registerForm-1,
+  #lastName-registerForm-1 {
     background-image: url(../../assets/imgs/section2/user.png);
   }
-  #forexsignals-section2-email {
+  #email-registerForm-1 {
     background-image: url(../../assets/imgs/section2/mail.png);
   }
-  #forexsignals-section2-country {
+  #country-registerForm-1 {
     background-image: url(../../assets/imgs/section2/country.png);
   }
-  #forexsignals-section2-phone {
+  #phone-registerForm-1 {
     background-image: url(../../assets/imgs/section2/phone.png);
   }
 

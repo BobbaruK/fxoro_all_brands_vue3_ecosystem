@@ -55,10 +55,10 @@ export default {
       <div class="row">
         <div class="col-12">
           <Form
+            class="layout1"
             :agreementType="'wBrandName'"
             :buttonText="modalFormButton[lang]"
             :lang="lang"
-            :layout="1"
             :test="false"
           />
         </div>
@@ -66,7 +66,7 @@ export default {
     </div>
     <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
       <h1>Lorem, ipsum dolor.</h1>
-      <Form :agreementType="'wBrandName'" :buttonText="modalFormButton[lang]" :lang="lang" :layout="2" :test="false" />
+      <Form :agreementType="'wBrandName'" :buttonText="modalFormButton[lang]" :lang="lang" :test="false" />
     </Modal>
   </section>
 </template>

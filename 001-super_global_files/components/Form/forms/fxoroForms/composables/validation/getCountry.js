@@ -20,7 +20,7 @@ const getCountry = async (countryValue, IPAddress, countryName, validate) => {
       body: urlencoded,
       redirect: "follow",
     };
-    const loadDataFXAPI = await fetch(dataSite.fxoro.getCountry.fxoroCountryAPI, requestOptions);
+    const loadDataFXAPI = await fetch(dataSite.fxoro.getCountry.countryAPI, requestOptions);
 
     if (!loadDataFXAPI.ok) {
       throw Error();

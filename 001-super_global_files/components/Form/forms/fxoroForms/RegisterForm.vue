@@ -20,6 +20,7 @@ import getCountry from "./composables/validation/getCountry";
 import formErrors from "./composables/translations/formErrors";
 import formTranslations from "./composables/translations/formTranslations";
 import agreementTypePropValidation from "./composables/validation/props/agreementTypePropValidation";
+import registerTypePropValidation from "./composables/validation/props/registerTypePropValidation";
 
 import Loader from "../../../Loader/Loader.vue";
 
@@ -41,6 +42,11 @@ export default {
       type: String,
       default: "en",
       required: true,
+    },
+    registerType: {
+      type: String,
+      required: false,
+      ...registerTypePropValidation(),
     },
     test: {
       type: Boolean,
@@ -157,17 +163,7 @@ export default {
     const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 
     // Errors
-    const {
-      firstNameErr,
-      lastNameErr,
-      emailEmptyErr,
-      invalidEmailErr,
-      phoneEmptyErr,
-      invalidPhoneErr,
-      countryErr,
-      agreementErr,
-      captchaErr,
-    } = formErrors();
+    const { firstNameErr, lastNameErr, emailEmptyErr, invalidEmailErr, phoneEmptyErr, invalidPhoneErr, countryErr, agreementErr, captchaErr } = formErrors();
 
     getCountry(countryValue, IPAddress, countryName, validate);
 
@@ -253,6 +249,140 @@ export default {
 
       validate.value = true;
 
+      // Classic register
+
+      const registerType = async (lang, firstNameValue, lastNameValue, emailValue, countryValue, prefixValue, phoneValue, agreementValue, IPAddress, countryName) => {
+        if (props.registerType === "clasic") {
+          try {
+            const myHeaders = new Headers();
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("DNT", "1");
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            const urlencoded = new URLSearchParams();
+            urlencoded.append("FirstName", firstNameValue);
+            urlencoded.append("LastName", lastNameValue);
+            urlencoded.append("EMail", emailValue);
+            urlencoded.append("Country", countryValue);
+            urlencoded.append("PhoneCountryCode", prefixValue);
+            urlencoded.append("PhoneNumber", phoneValue);
+            urlencoded.append("Language", lang.toUpperCase());
+            urlencoded.append("CampaignName", `${process.env.VUE_APP_BRAND_TITLE} - ${lang.toUpperCase()}`);
+            urlencoded.append("Advertiser", "");
+            urlencoded.append("Referrer", document.referrer === "" ? window.location.href : document.referrer);
+            urlencoded.append("Cookie", `${window.location.origin}/${lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue}&email=${emailValue}&phone=${phoneValue.replace(/\s/g, "")}&country=${countryValue}`);
+            urlencoded.append("CustomField", "");
+            urlencoded.append("AcceptTermsAndConditions", agreementValue);
+            urlencoded.append("ApproveReceiveCommercial", true);
+            urlencoded.append("IPAddress", IPAddress);
+            urlencoded.append("IPCountry", countryName);
+            const requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: urlencoded,
+              redirect: "follow",
+            };
+            const loadDataFXAPI = await fetch(dataSite.fxoro.registerUser, requestOptions);
+
+            if (!loadDataFXAPI.ok) {
+              throw new Error("Looks like there was a problem with the Register API(s)");
+            }
+
+            // data = await loadDataFXAPI.json();
+
+            validate.value = false;
+
+            // router.push({ name: "ThankYou", params: { lang: route.params.lang } }); // go to thank you page
+            // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
+            window.location.href = `/${lang}/thank-you?fname=${firstNameValue}&refLName=${lastNameValue}&email=${emailValue}&phone=${phoneValue.replace(/\s/g, "")}&country=${countryValue}`; // go to thank you page
+          } catch (err) {
+            console.log(err.message);
+          }
+
+          return;
+        }
+
+        if (props.registerType === "sms") {
+          try {
+            const customerData = {
+              EMail: emailValue,
+              FirstName: firstNameValue,
+              LastName: lastNameValue,
+              Language: lang,
+              Country: countryValue,
+              PhoneCountryCode: prefixValue,
+              PhoneNumber: phoneValue,
+              CampaignName: `${process.env.VUE_APP_BRAND_TITLE} - ${lang.toUpperCase()}`,
+              Advertiser: "",
+              Referrer: document.referrer === "" ? window.location.href : document.referrer,
+              CustomField: "",
+              AcceptTermsAndConditions: agreementValue,
+              ApproveReceiveCommercial: true,
+              IPAddress: IPAddress,
+              IPCountry: countryName,
+              License: 2,
+              SmsCode: null,
+              Broker: "Fxoro",
+              Company: "OroFintech",
+            };
+            console.log(customerData);
+            console.log("incepe sms");
+
+            const myHeaders = new Headers();
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("DNT", "1");
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            // myHeaders.append("Content-Type", "application/json");
+            const urlencoded = new URLSearchParams();
+            urlencoded.append("FirstName", firstNameValue);
+            urlencoded.append("LastName", lastNameValue);
+            urlencoded.append("EMail", emailValue);
+            urlencoded.append("Country", countryValue);
+            urlencoded.append("PhoneCountryCode", prefixValue);
+            urlencoded.append("PhoneNumber", phoneValue);
+            urlencoded.append("Language", lang.toUpperCase());
+            urlencoded.append("CampaignName", `${process.env.VUE_APP_BRAND_TITLE} - ${lang.toUpperCase()}`);
+            urlencoded.append("Advertiser", "");
+            urlencoded.append("Referrer", document.referrer === "" ? window.location.href : document.referrer);
+            urlencoded.append("Cookie", `${window.location.origin}/${lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue}&email=${emailValue}&phone=${phoneValue.replace(/\s/g, "")}&country=${countryValue}`);
+            urlencoded.append("CustomField", "");
+            urlencoded.append("AcceptTermsAndConditions", agreementValue);
+            urlencoded.append("ApproveReceiveCommercial", true);
+            urlencoded.append("IPAddress", IPAddress);
+            urlencoded.append("IPCountry", countryName);
+            // SMS stuff
+            urlencoded.append("License", 2);
+            urlencoded.append("SmsCode", null);
+            urlencoded.append("Broker", "FXORO");
+            urlencoded.append("Company", "OroFintech");
+            const requestOptions = {
+              method: "POST",
+              mode: "cors",
+              headers: myHeaders,
+              body: customerData,
+              redirect: "follow",
+            };
+
+            console.log("fetch sms");
+
+            const loadData_FXORO_SMS_API = await fetch(dataSite.fxoro.smsregister, requestOptions);
+
+            if (!loadData_FXORO_SMS_API.ok) {
+              throw new Error("Looks like there was a problem with the SMS Register API(s)");
+            }
+
+            // let data = await loadData_FXORO_SMS_API.json()
+
+            console.log(loadData_FXORO_SMS_API);
+
+            // aici tre sa pri
+          } catch (err) {
+            console.log(err.message);
+          }
+
+          return;
+        }
+      };
+
       // Send to CRM
       const sendToCRM = async () => {
         const logs = process.env.VUE_APP_LOG_ERRORS;
@@ -280,12 +410,7 @@ export default {
           urlencoded.append("CampaignName", `${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`);
           urlencoded.append("Advertiser", "");
           urlencoded.append("Referrer", document.referrer === "" ? window.location.href : document.referrer);
-          urlencoded.append(
-            "Cookie",
-            `${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-              lastNameValue.value
-            }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
-          );
+          urlencoded.append("Cookie", `${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`);
           urlencoded.append("CustomField", "");
           urlencoded.append("AcceptTermsAndConditions", agreementValue.value);
           urlencoded.append("ApproveReceiveCommercial", true);
@@ -297,7 +422,7 @@ export default {
             body: urlencoded,
             redirect: "follow",
           };
-          const loadDataFXAPI = await fetch(dataSite.fxoro.fxoroRegisterUser, requestOptions);
+          const loadDataFXAPI = await fetch(dataSite.fxoro.registerUser, requestOptions);
 
           if (!loadDataFXAPI.ok) {
             throw Error();
@@ -309,9 +434,7 @@ export default {
 
           // router.push({ name: "ThankYou", params: { lang: route.params.lang } }); // go to thank you page
           // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
-          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-            lastNameValue.value
-          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
         } catch (err) {
           if (logs === "true") {
             console.log(`%cLooks like there was a problem with the register API(s):`, logStylesAPI, err);
@@ -366,6 +489,9 @@ export default {
       if (!props.test) {
         recaptcha();
       } else {
+        registerType(props.lang, firstNameValue.value, lastNameValue.value, emailValue.value, countryValue.value, prefixValue.value, phoneValue.value, agreementValue.value, IPAddress.value, countryName.value);
+
+        return;
         console.log(`FirstName: ${firstNameValue.value}`);
         console.log(`LastName: ${lastNameValue.value}`);
         console.log(`EMail: ${emailValue.value}`);
@@ -376,11 +502,7 @@ export default {
         console.log(`CampaignName: ${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`);
         console.log(`Advertiser: `);
         console.log(`Referrer: ${document.referrer === "" ? window.location.href : document.referrer}`);
-        console.log(
-          `Cookie: ${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-            lastNameValue.value
-          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
-        );
+        console.log(`Cookie: ${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`);
         console.log(`CustomField: `);
         console.log(`AcceptTermsAndConditions: ${agreementValue.value}`);
         console.log(`ApproveReceiveCommercial: ${true}`);
@@ -390,9 +512,7 @@ export default {
         // router.push({ name: "ThankYou", params: { lang: route.params.lang } });
         setTimeout(() => {
           validate.value = false;
-          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-            lastNameValue.value
-          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
           // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
         }, 7000);
       }
@@ -446,6 +566,23 @@ export default {
 </script>
 
 <template>
+  <div v-if="test" class="devOpts">
+    <p>
+      agreementType: <strong>{{ agreementType }}</strong>
+    </p>
+    <p>
+      buttonText: <strong>{{ buttonText }}</strong>
+    </p>
+    <p>
+      lang: <strong>{{ lang }}</strong>
+    </p>
+    <p>
+      registerType: <strong>{{ registerType }}</strong>
+    </p>
+    <p>
+      test: <strong>{{ test }}</strong>
+    </p>
+  </div>
   <form ref="registerForm" @submit.prevent="validateForm" novalidate :class="formClass">
     <div class="registerFormInner">
       <div class="form-control firstNameWrapper">
@@ -482,14 +619,7 @@ export default {
         <div class="field">
           <label ref="refLabelCountry">{{ country[lang] }}</label>
           <select ref="refCountry" v-model="countryValue">
-            <option
-              v-for="(country, index) in countries"
-              :key="index"
-              :value="country.code"
-              :data-dial-code="country.dial_code"
-            >
-              {{ country.name }} ({{ country.code }})
-            </option>
+            <option v-for="(country, index) in countries" :key="index" :value="country.code" :data-dial-code="country.dial_code">{{ country.name }} ({{ country.code }})</option>
           </select>
         </div>
         <div v-if="countryError[lang]" class="error">
@@ -540,6 +670,21 @@ export default {
 
 <style lang="scss">
 @use "../../../../assets/scss/abstracts/mixins" as mxns;
+
+.devOpts {
+  align-items: stretch;
+  border-radius: 10px 10px 0 0;
+  border: 2px solid var(--clr-brandPrimaryColor);
+  direction: ltr;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 1rem;
+  p {
+    margin: 0;
+  }
+}
 
 :where(form.registerForm) {
   --formGap: 1rem;

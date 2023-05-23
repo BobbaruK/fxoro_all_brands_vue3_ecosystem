@@ -5,7 +5,6 @@
 
 import { ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
-// import { useRoute } from "vue-router";
 import { onMounted } from "@vue/runtime-core";
 import { isValidNumberForRegion, AsYouType } from "libphonenumber-js";
 import {
@@ -20,7 +19,6 @@ import countryList from "./composables/validation/countryList";
 import getCountry from "./composables/validation/getCountry";
 import formErrors from "./composables/translations/formErrors";
 import formTranslations from "./composables/translations/formTranslations";
-import layoutPropValidation from "./composables/validation/props/layoutPropValidation";
 import agreementTypePropValidation from "./composables/validation/props/agreementTypePropValidation";
 
 import Loader from "../../../Loader/Loader.vue";
@@ -36,17 +34,13 @@ export default {
     },
     buttonText: {
       type: String,
-      // required: true
-      required: false,
+      default: "Form Button",
+      required: true,
     },
     lang: {
       type: String,
+      default: "en",
       required: true,
-    },
-    layout: {
-      type: Number,
-      required: false,
-      ...layoutPropValidation(),
     },
     test: {
       type: Boolean,
@@ -87,6 +81,7 @@ export default {
      *
      */
 
+    //  Get the HTML ref elements
     const registerForm = ref(null);
     const formClass = "registerForm";
     const formID = useFormIDStore();
@@ -104,6 +99,7 @@ export default {
     const refAgreement = ref(null);
 
     onMounted(() => {
+      // Set the classes and ids
       const forms = Array.from(document.querySelectorAll(`.${formClass}`));
       formID.addIDs(forms);
 
@@ -135,7 +131,7 @@ export default {
     // translate form
     const { firstName, lastName, email, country, phone, agreement } = formTranslations();
 
-    // Form validation
+    // Values and errors refs
     const firstNameValue = ref(null); // FirstName
     const firstNameError = ref({}); // First Name Error
     const lastNameValue = ref(null); // LastName
@@ -161,17 +157,7 @@ export default {
     const { executeRecaptcha, recaptchaLoaded } = useReCaptcha();
 
     // Errors
-    const {
-      firstNameErr,
-      lastNameErr,
-      emailEmptyErr,
-      invalidEmailErr,
-      phoneEmptyErr,
-      invalidPhoneErr,
-      countryErr,
-      agreementErr,
-      captchaErr,
-    } = formErrors();
+    const { firstNameErr, lastNameErr, emailEmptyErr, invalidEmailErr, phoneEmptyErr, invalidPhoneErr, countryErr, agreementErr, captchaErr } = formErrors();
 
     getCountry(countryValue, IPAddress, countryName, validate);
 
@@ -268,7 +254,6 @@ export default {
         }
 
         try {
-          //* Main country API
           let data = "";
           const myHeaders = new Headers();
           myHeaders.append("Accept", "application/json");
@@ -285,12 +270,7 @@ export default {
           urlencoded.append("CampaignName", `${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`);
           urlencoded.append("Advertiser", "");
           urlencoded.append("Referrer", document.referrer === "" ? window.location.href : document.referrer);
-          urlencoded.append(
-            "Cookie",
-            `${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-              lastNameValue.value
-            }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
-          );
+          urlencoded.append("Cookie", `${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`);
           urlencoded.append("CustomField", "");
           urlencoded.append("AcceptTermsAndConditions", agreementValue.value);
           urlencoded.append("ApproveReceiveCommercial", true);
@@ -302,7 +282,7 @@ export default {
             body: urlencoded,
             redirect: "follow",
           };
-          const loadDataFXAPI = await fetch(dataSite.fxoroRegisterUser, requestOptions);
+          const loadDataFXAPI = await fetch(dataSite.fxoro.registerUser, requestOptions);
 
           if (!loadDataFXAPI.ok) {
             throw Error();
@@ -314,9 +294,7 @@ export default {
 
           // router.push({ name: "ThankYou", params: { lang: route.params.lang } }); // go to thank you page
           // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
-          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-            lastNameValue.value
-          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
         } catch (err) {
           if (logs === "true") {
             console.log(`%cLooks like there was a problem with the register API(s):`, logStylesAPI, err);
@@ -326,7 +304,8 @@ export default {
 
       // Recaptcha
       const recaptcha = async () => {
-        // (optional) Wait until recaptcha has been loaded.
+        const goodScore = 0.6;
+
         await recaptchaLoaded();
 
         const token = await executeRecaptcha("submit");
@@ -338,7 +317,7 @@ export default {
         try {
           let data = "";
 
-          const checkCaptcha = await fetch("https://piutrading.com/recaptcha-verify/", {
+          const checkCaptcha = await fetch(dataSite.fxoro.recaptchaVerify, {
             method: "POST",
             body: captchaData, // Send the form data
           });
@@ -349,7 +328,7 @@ export default {
 
           data = await checkCaptcha.json();
 
-          if (data.success === true && data.score > 0.6) {
+          if (data.success === true && data.score > goodScore) {
             if (!props.test) {
               sendToCRM();
               return;
@@ -380,11 +359,7 @@ export default {
         console.log(`CampaignName: ${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`);
         console.log(`Advertiser: `);
         console.log(`Referrer: ${document.referrer === "" ? window.location.href : document.referrer}`);
-        console.log(
-          `Cookie: ${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-            lastNameValue.value
-          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`
-        );
+        console.log(`Cookie: ${window.location.origin}/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`);
         console.log(`CustomField: `);
         console.log(`AcceptTermsAndConditions: ${agreementValue.value}`);
         console.log(`ApproveReceiveCommercial: ${true}`);
@@ -394,15 +369,14 @@ export default {
         // router.push({ name: "ThankYou", params: { lang: route.params.lang } });
         setTimeout(() => {
           validate.value = false;
-          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${
-            lastNameValue.value
-          }&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
+          window.location.href = `/${props.lang}/thank-you?fname=${firstNameValue.value}&refLName=${lastNameValue.value}&email=${emailValue.value}&phone=${phoneValue.value.replace(/\s/g, "")}&country=${countryValue.value}`; // go to thank you page
           // window.location.href = `/${route.params.lang}/thank-you`; // go to thank you page
         }, 7000);
       }
     };
 
     return {
+      // HTML ref elements
       registerForm,
       formClass,
       refLabelFName,
@@ -417,12 +391,14 @@ export default {
       refPhone,
       refLabelAgreement,
       refAgreement,
+      // Form Translations
       firstName,
       lastName,
       email,
       country,
       phone,
       agreement,
+      // Values and errors refs
       firstNameValue,
       firstNameError,
       lastNameValue,
@@ -439,6 +415,7 @@ export default {
       agreementError,
       captchaError,
       validate,
+      // Submit validation
       validateForm,
     };
   },
@@ -447,191 +424,210 @@ export default {
 
 <template>
   <form ref="registerForm" @submit.prevent="validateForm" novalidate :class="formClass">
-    <div class="row">
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-sm-6': layout === 2 || layout === 4,
-          'col-md-3': layout === 4,
-          'col-sm-6 col-md-4': layout === 3,
-          'order-1': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          firstNameWrapper: true,
-        }"
-      >
-        <div class="row">
-          <div class="col-12">
-            <div class="form-control">
-              <label ref="refLabelFName">{{ firstName[lang] }}</label>
-              <input ref="refFName" v-model="firstNameValue" type="text" :placeholder="firstName[lang]" />
-            </div>
-          </div>
-          <div v-if="firstNameError[lang]" class="col-12 error">
-            {{ firstNameError[lang] }}
-          </div>
+    <div class="registerFormInner">
+      <div class="form-control firstNameWrapper">
+        <div class="field">
+          <label ref="refLabelFName">{{ firstName[lang] }}</label>
+          <input ref="refFName" v-model="firstNameValue" type="text" :placeholder="firstName[lang]" />
+        </div>
+        <div v-if="firstNameError[lang]" class="error">
+          {{ firstNameError[lang] }}
         </div>
       </div>
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-sm-6': layout === 2 || layout === 4,
-          'col-md-3': layout === 4,
-          'col-sm-6 col-md-4': layout === 3,
-          'order-2': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          lastNameWrapper: true,
-        }"
-      >
-        <div class="row">
-          <div class="col-12">
-            <div class="form-control">
-              <label ref="refLabelLName">{{ lastName[lang] }}</label>
-              <input ref="refLName" v-model="lastNameValue" type="text" :placeholder="lastName[lang]" />
-            </div>
-          </div>
-          <div v-if="lastNameError[lang]" class="col-12 error">
-            {{ lastNameError[lang] }}
-          </div>
+
+      <div class="form-control lastNameWrapper">
+        <div class="field">
+          <label ref="refLabelLName">{{ lastName[lang] }}</label>
+          <input ref="refLName" v-model="lastNameValue" type="text" :placeholder="lastName[lang]" />
+        </div>
+        <div v-if="lastNameError[lang]" class="error">
+          {{ lastNameError[lang] }}
         </div>
       </div>
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-md-6': layout === 4,
-          'col-md-4': layout === 3,
-          'order-3': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          emailWrapper: true,
-        }"
-      >
-        <div class="row">
-          <div class="col-12">
-            <div class="form-control">
-              <label ref="refLabelEmail">{{ email[lang] }}</label>
-              <input ref="refEmail" v-model="emailValue" type="email" :placeholder="email[lang]" />
-            </div>
-          </div>
-          <div v-if="emailError[lang]" class="col-12 error">
-            {{ emailError[lang] }}
-          </div>
+
+      <div class="form-control emailWrapper">
+        <div class="field">
+          <label ref="refLabelEmail">{{ email[lang] }}</label>
+          <input ref="refEmail" v-model="emailValue" type="email" :placeholder="email[lang]" />
+        </div>
+        <div v-if="emailError[lang]" class="error">
+          {{ emailError[lang] }}
         </div>
       </div>
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-md-6': layout === 4,
-          'col-md-4': layout === 3,
-          'order-4': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          countryWrapper: true,
-        }"
-      >
-        <div class="row">
-          <div class="col-12">
-            <div class="form-control">
-              <label ref="refLabelCountry">{{ country[lang] }}</label>
-              <select ref="refCountry" v-model="countryValue">
-                <option
-                  v-for="(country, index) in countries"
-                  :key="index"
-                  :value="country.code"
-                  :data-dial-code="country.dial_code"
-                >
-                  {{ country.name }} ({{ country.code }})
-                </option>
-              </select>
-            </div>
-          </div>
-          <div v-if="countryError[lang]" class="col-12 error">
-            {{ countryError[lang] }}
-          </div>
+
+      <div class="form-control countryWrapper">
+        <div class="field">
+          <label ref="refLabelCountry">{{ country[lang] }}</label>
+          <select ref="refCountry" v-model="countryValue">
+            <option v-for="(country, index) in countries" :key="index" :value="country.code" :data-dial-code="country.dial_code">{{ country.name }} ({{ country.code }})</option>
+          </select>
+        </div>
+        <div v-if="countryError[lang]" class="error">
+          {{ countryError[lang] }}
         </div>
       </div>
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-md-6': layout === 4,
-          'col-md-4': layout === 3,
-          'order-5': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          phoneWrapper: true,
-        }"
-      >
-        <div class="row">
-          <div class="col-12">
-            <div class="form-control">
-              <label ref="refLabelPhone">{{ phone[lang] }}</label>
-              <div class="phone">
-                <input v-model="prefixValue" type="text" placeholder="prefix" tabindex="0" disabled />
-                <input ref="refPhone" v-model="phoneValue" type="tel" :placeholder="phone[lang]" />
-              </div>
-            </div>
-          </div>
-          <div v-if="phoneError[lang]" class="col-12 error">
-            {{ phoneError[lang] }}
+
+      <div class="form-control phoneNumberWrapper">
+        <div class="field">
+          <label ref="refLabelPhone">{{ phone[lang] }}</label>
+          <div class="phone">
+            <input v-model="prefixValue" type="text" placeholder="prefix" tabindex="0" disabled />
+            <input ref="refPhone" v-model="phoneValue" type="tel" :placeholder="phone[lang]" />
           </div>
         </div>
-      </div>
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-md-12': layout === 3,
-          'col-md-6': layout === 4,
-          'order-6': layout === 1 || layout === 2 || layout === 4,
-          'order-6 order-md-7': layout === 3 || layout === 4,
-          agreementWrapper: true,
-        }"
-      >
-        <div class="row">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-control">
-                  <input ref="refAgreement" v-model="agreementValue" type="checkbox" />
-                  <label ref="refLabelAgreement" class="agreement">
-                    {{ agreement[agreementType][lang] }}
-                  </label>
-                </div>
-              </div>
-              <div v-if="agreementError[lang]" class="col-12 error">
-                {{ agreementError[lang] }}
-              </div>
-            </div>
-          </div>
+        <div v-if="phoneError[lang]" class="error">
+          {{ phoneError[lang] }}
         </div>
       </div>
-      <div
-        :class="{
-          'col-12': layout === 1 || layout === 2 || layout === 3 || layout === 4,
-          'col-md-4': layout === 3,
-          'col-md-6': layout === 4,
-          'order-7': layout === 1 || layout === 2 || layout === 4,
-          'order-7 order-md-6': layout === 3 || layout === 4,
-          submitWrapper: true,
-        }"
-      >
-        <div class="form-control">
-          <button class="scssecoBtn" type="submit">
-            {{ buttonText }}
-          </button>
+
+      <div class="form-control agreementWrapper">
+        <div class="field">
+          <input ref="refAgreement" v-model="agreementValue" type="checkbox" />
+          <label ref="refLabelAgreement" class="agreement">
+            {{ agreement[agreementType][lang] }}
+          </label>
+        </div>
+        <div v-if="agreementError[lang]" class="error">
+          {{ agreementError[lang] }}
         </div>
       </div>
-      <div v-if="captchaError[lang]" class="col-12 error">
-        {{ captchaError[lang] }}
+
+      <div class="form-control submitButtonWrapper">
+        <button class="scssecoBtn" type="submit">
+          {{ buttonText }}
+        </button>
+        <div v-if="captchaError[lang]" class="error">
+          {{ captchaError[lang] }}
+        </div>
       </div>
-    </div>
-    <div class="formLoader" v-if="validate">
-      <Loader />
+
+      <div class="form-loader" v-if="validate">
+        <Loader />
+      </div>
     </div>
   </form>
 </template>
 
 <style lang="scss">
+@use "../../../../assets/scss/abstracts/mixins" as mxns;
+
 :where(form.registerForm) {
+  --formGap: 1rem;
+  --containerWidthSM: 420px;
+
+  container-type: inline-size; // https://www.youtube.com/watch?v=3_-Je5XpbqY&t=351s
   position: relative;
-  // padding-bottom: 1rem;
-  > .row {
-    row-gap: 1rem;
-    // margin: 0;
-    > div {
-      // padding: 0;
+
+  // grid
+  .registerFormInner {
+    display: grid;
+    gap: var(--formGap);
+    > .form-control {
+      flex: 0 0 100%;
+      max-width: 100%;
+      &.firstNameWrapper {
+        order: 1;
+      }
+      &.lastNameWrapper {
+        order: 2;
+      }
+      &.emailWrapper {
+        order: 3;
+      }
+      &.countryWrapper {
+        order: 4;
+      }
+      &.phoneNumberWrapper {
+        order: 5;
+      }
+      &.agreementWrapper {
+        order: 6;
+      }
+      &.submitButtonWrapper {
+        order: 7;
+      }
     }
   }
+  &.layout1 {
+    .registerFormInner {
+      grid-template-columns: 1fr 1fr;
+      > .form-control {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        &.firstNameWrapper {
+          @container (min-width: 430px) {
+            grid-column-start: 1;
+            grid-column-end: 2;
+          }
+        }
+        &.lastNameWrapper {
+          @container (min-width: 430px) {
+            grid-column-start: 2;
+            grid-column-end: 3;
+          }
+        }
+      }
+    }
+  }
+  &.layout2 {
+    .registerFormInner {
+      grid-template-columns: 1fr 1fr;
+      @container (min-width: 750px) {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      > .form-control {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        @container (min-width: 750px) {
+          grid-column-start: 1;
+          grid-column-end: 3;
+        }
+        &.firstNameWrapper {
+          @container (min-width: 430px) {
+            grid-column-start: 1;
+            grid-column-end: 2;
+          }
+        }
+        &.lastNameWrapper {
+          @container (min-width: 430px) {
+            grid-column-start: 2;
+            grid-column-end: 3;
+          }
+        }
+        &.emailWrapper {
+          @container (min-width: 750px) {
+            grid-column-start: 3;
+            grid-column-end: 4;
+          }
+        }
+        &.countryWrapper {
+          @container (min-width: 750px) {
+            grid-column-start: 1;
+            grid-column-end: 2;
+          }
+        }
+        &.phoneNumberWrapper {
+          @container (min-width: 750px) {
+            grid-column-start: 2;
+            grid-column-end: 3;
+          }
+        }
+        &.agreementWrapper {
+          @container (min-width: 750px) {
+            grid-column-start: 1;
+            grid-column-end: 4;
+          }
+        }
+        &.submitButtonWrapper {
+          @container (min-width: 750px) {
+            grid-column-start: 3;
+            grid-column-end: 4;
+          }
+        }
+      }
+    }
+  }
+
   .error {
     color: var(--clr-danger);
     font-size: 80%;
@@ -699,7 +695,7 @@ export default {
     }
   }
 
-  .formLoader {
+  .form-loader {
     color: var(--clr-brandSecondaryColor);
     inset: 0;
     margin: 0;
@@ -710,10 +706,6 @@ export default {
       margin: 0;
       padding: 0;
       position: absolute;
-      svg {
-        height: 40px;
-        width: 40px;
-      }
     }
   }
 }

@@ -66,7 +66,7 @@ export default {
           body: urlencoded,
           redirect: "follow",
         };
-        const loadDataFXAPI = await fetch(dataSite.fxoroCountryAPI, requestOptions);
+        const loadDataFXAPI = await fetch(dataSite.countryAPI, requestOptions);
 
         if (!loadDataFXAPI.ok) {
           throw Error();

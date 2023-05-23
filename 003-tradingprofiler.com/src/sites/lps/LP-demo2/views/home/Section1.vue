@@ -32,6 +32,7 @@ export default {
             :agreementType="'wBrandName'"
             :buttonText="translationsGlossary.j.join[lang]"
             :lang="lang"
+            :registerType="'clasic'"
             :test="false"
           />
         </div>

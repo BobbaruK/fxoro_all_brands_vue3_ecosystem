@@ -9,12 +9,25 @@ import translationsGlossary from "../../composables/translationsGlossary";
 
 export default {
   name: "Modal",
+  emits: ["closeModal"],
   props: {
+    delay: {
+      type: Number,
+      required: false,
+      default: -1,
+    },
     lang: {
       type: String,
+      default: "en",
+      required: true,
     },
+    modalID: {
+      type: String,
+      required: true,
+    },
+    modelValue: Boolean,
   },
-  setup() {
+  setup(props, ctx) {
     const modalStore = useModalStore();
 
     const modalTl = gsap.timeline({
@@ -28,11 +41,11 @@ export default {
       },
       onComplete: () => {},
       onReverseComplete: () => {
-        // ctx.emit("closeModal");
+        ctx.emit("closeModal");
       },
     });
 
-    const onBeforeModalLoad = (e) => {
+    const onBeforeEnterModal = (e) => {
       gsap.set(e, {
         autoAlpha: 0,
       });
@@ -40,7 +53,9 @@ export default {
         yPercent: -150,
         scale: 0,
       });
+    };
 
+    const onEnterModal = (e) => {
       modalTl
         .to(e, {
           autoAlpha: 1,
@@ -72,17 +87,43 @@ export default {
       });
     });
 
-    modalTl.play();
+    const showModalAnimPlay = () => {
+      if (props.modelValue) {
+        modalTl.play();
+      } else {
+        modalTl.reverse();
+      }
+    };
 
-    return { onBeforeModalLoad, closeModal, modal, translationsGlossary };
+    let timeOut;
+    const fireOnDelay = () => {
+      if (props.delay) {
+        timeOut = setTimeout(() => {
+          if (modalStore.cancelModalFirstShow) return;
+
+          modalTl.play();
+        }, props.delay);
+      }
+    };
+
+    watchEffect(() => {
+      showModalAnimPlay();
+      fireOnDelay();
+    });
+
+    onUnmounted(() => {
+      clearTimeout(timeOut);
+    });
+
+    return { onBeforeEnterModal, onEnterModal, closeModal, modal, translationsGlossary };
   },
 };
 </script>
 
 <template>
   <Teleport to="#modals">
-    <div>
-      <transition appear @before-enter="onBeforeModalLoad" :css="false">
+    <div :id="modalID">
+      <transition appear @before-enter="onBeforeEnterModal" @enter="onEnterModal" :css="false">
         <div class="modalOverlay">
           <div ref="modal" class="modal">
             <div class="close" @click="closeModal">&#215; {{ translationsGlossary.c.close[lang] }}</div>

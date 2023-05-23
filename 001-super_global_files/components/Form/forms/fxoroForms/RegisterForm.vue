@@ -5,7 +5,6 @@
 
 import { ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
-// import { useRoute } from "vue-router";
 import { onMounted } from "@vue/runtime-core";
 import { isValidNumberForRegion, AsYouType } from "libphonenumber-js";
 import {

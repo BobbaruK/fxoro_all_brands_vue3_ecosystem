@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { gsap } from "gsap";
 import { onClickOutside } from "@vueuse/core";
 import { onMounted, onUnmounted, ref, watchEffect } from "@vue/runtime-core";
@@ -7,126 +7,127 @@ import { useModalStore } from "./stores/ModalStore";
 
 import translationsGlossary from "../../composables/translationsGlossary";
 
-export default {
-  name: "Modal",
-  emits: ["closeModal"],
-  props: {
-    delay: {
-      type: Number,
-      required: false,
-      default: -1,
-    },
-    lang: {
-      type: String,
-      default: "en",
-      required: true,
-    },
-    modalID: {
-      type: String,
-      required: true,
-    },
-    modelValue: Boolean,
+const props = defineProps({
+  delay: {
+    type: Number,
+    required: false,
+    default: 0,
   },
-  setup(props, ctx) {
-    const modalStore = useModalStore();
-
-    const modalTl = gsap.timeline({
-      paused: true,
-      defaults: {
-        duration: 0.35,
-        ease: "none",
-      },
-      onStart: () => {
-        modalStore.cancelModal();
-      },
-      onComplete: () => {},
-      onReverseComplete: () => {
-        ctx.emit("closeModal");
-      },
-    });
-
-    const onBeforeEnterModal = (e) => {
-      gsap.set(e, {
-        autoAlpha: 0,
-      });
-      gsap.set(e.querySelector(".modal"), {
-        yPercent: -150,
-        scale: 0,
-      });
-    };
-
-    const onEnterModal = (e) => {
-      modalTl
-        .to(e, {
-          autoAlpha: 1,
-          onStart: () => {
-            document.body.style.overflow = "hidden";
-          },
-        })
-        .to(
-          e.querySelector(".modal"),
-          {
-            yPercent: 0,
-            scale: 1,
-          },
-          "<"
-        );
-    };
-
-    const closeModal = () => {
-      document.body.style.overflow = "auto";
-      modalTl.reverse();
-    };
-
-    // click on the form overlay
-    const modal = ref(null);
-    onMounted(() => {
-      onClickOutside(modal, () => {
-        document.body.style.overflow = "auto";
-        modalTl.reverse();
-      });
-    });
-
-    const showModalAnimPlay = () => {
-      if (props.modelValue) {
-        modalTl.play();
-      } else {
-        modalTl.reverse();
-      }
-    };
-
-    let timeOut;
-    const fireOnDelay = () => {
-      if (props.delay) {
-        timeOut = setTimeout(() => {
-          if (modalStore.cancelModalFirstShow) return;
-
-          modalTl.play();
-        }, props.delay);
-      }
-    };
-
-    watchEffect(() => {
-      showModalAnimPlay();
-      fireOnDelay();
-    });
-
-    onUnmounted(() => {
-      clearTimeout(timeOut);
-    });
-
-    return { onBeforeEnterModal, onEnterModal, closeModal, modal, translationsGlossary };
+  lang: {
+    type: String,
+    required: true,
   },
+  modalID: {
+    type: String,
+    required: true,
+  },
+  modelValue: Boolean,
+});
+
+const emit = defineEmits(["closeModal"]);
+
+const modalStore = useModalStore();
+
+const modalTl = gsap.timeline({
+  paused: true,
+  defaults: {
+    duration: 0.35,
+    ease: "none",
+  },
+  onStart: () => {
+    modalStore.cancelModal();
+  },
+  onComplete: () => {},
+  onReverseComplete: () => {
+    emit("closeModal");
+  },
+});
+
+const onBeforeEnterModal = (e) => {
+  gsap.set(e, {
+    autoAlpha: 0,
+  });
+  gsap.set(e.querySelector(".modal"), {
+    yPercent: -150,
+    scale: 0,
+  });
 };
+
+const onEnterModal = (e) => {
+  modalTl
+    .to(e, {
+      autoAlpha: 1,
+      onStart: () => {
+        document.body.style.overflow = "hidden";
+      },
+    })
+    .to(
+      e.querySelector(".modal"),
+      {
+        yPercent: 0,
+        scale: 1,
+      },
+      "<"
+    );
+};
+
+const closeModal = () => {
+  document.body.style.overflow = "auto";
+  modalTl.reverse();
+};
+
+// click on the form overlay
+const modal = ref(null);
+onMounted(() => {
+  onClickOutside(modal, () => {
+    document.body.style.overflow = "auto";
+    modalTl.reverse();
+  });
+});
+
+const showModalAnimPlay = () => {
+  if (props.modelValue) {
+    modalTl.play();
+  } else {
+    modalTl.reverse();
+  }
+};
+
+let timeOut;
+const fireOnDelay = () => {
+  if (props.delay && props.delay >= 0) {
+    timeOut = setTimeout(() => {
+      if (modalStore.cancelModalFirstShow) return;
+
+      modalTl.play();
+    }, props.delay);
+  }
+};
+
+watchEffect(() => {
+  showModalAnimPlay();
+  fireOnDelay();
+});
+
+onUnmounted(() => {
+  clearTimeout(timeOut);
+});
 </script>
 
 <template>
   <Teleport to="#modals">
     <div :id="modalID">
-      <transition appear @before-enter="onBeforeEnterModal" @enter="onEnterModal" :css="false">
+      <transition
+        appear
+        @before-enter="onBeforeEnterModal"
+        @enter="onEnterModal"
+        :css="false"
+      >
         <div class="modalOverlay">
           <div ref="modal" class="modal">
-            <div class="close" @click="closeModal">&#215; {{ translationsGlossary.c.close[lang] }}</div>
+            <div class="close" @click="closeModal">
+              &#215; {{ translationsGlossary.c.close[lang] }}
+            </div>
             <slot></slot>
           </div>
         </div>

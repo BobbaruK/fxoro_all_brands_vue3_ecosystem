@@ -6,7 +6,7 @@ import demoSection1Transl from "../../composables/translations/pages/home/demoSe
 import translationsGlossary from "../../../../../../../001-super_global_files/composables/translationsGlossary";
 
 // import Modal from "../../../../../../../001-super_global_files/components/Modal/Modal3.vue";
-import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm.vue";
+import Form from "../../../../../../../001-super_global_files/components/Form/forms/fxoroForms/RegisterForm-test.vue";
 
 const props = defineProps({
   lang: String,
@@ -26,9 +26,8 @@ const { title, content, formBtn } = demoSection1Transl();
 const showModalForm = ref(false);
 
 setTimeout(() => {
-  showModalForm.value = true;
+  // showModalForm.value = true;
 }, 5500);
-
 </script>
 
 <template>
@@ -43,8 +42,8 @@ setTimeout(() => {
           <button class="scssecoBtn" @click="showModalForm = !showModalForm">
             {{ formBtn[lang] }}
           </button>
+          <!-- v-if="showModalForm" -->
           <Modal
-            v-if="showModalForm"
             :lang="lang"
             :modalID="'brand-home-modal-form'"
             :delay="1500"
@@ -57,6 +56,7 @@ setTimeout(() => {
               :buttonText="translationsGlossary.j.join[lang]"
               :lang="lang"
               :test="false"
+              @submitForm="showModalForm = false"
             />
           </Modal>
         </div>

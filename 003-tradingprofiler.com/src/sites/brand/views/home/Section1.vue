@@ -161,7 +161,7 @@ export default {
       </div>
     </div>
     <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
-      <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="1" :test="false" />
+      <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :test="false" />
     </Modal>
   </section>
 </template>
@@ -207,27 +207,9 @@ section#section1.subHeader {
     position: relative;
     &::before {
       /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1e5799+0,000000+15,000000+85,7db9e8+100&0+0,1+15,1+85,0+100 */
-      background: -moz-linear-gradient(
-        left,
-        rgba(30, 87, 153, 0) 0%,
-        rgba(0, 0, 0, 1) 15%,
-        rgba(0, 0, 0, 1) 85%,
-        rgba(125, 185, 232, 0) 100%
-      ); /* FF3.6-15 */
-      background: -webkit-linear-gradient(
-        left,
-        rgba(30, 87, 153, 0) 0%,
-        rgba(0, 0, 0, 1) 15%,
-        rgba(0, 0, 0, 1) 85%,
-        rgba(125, 185, 232, 0) 100%
-      ); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(
-        to right,
-        rgba(30, 87, 153, 0) 0%,
-        rgba(0, 0, 0, 1) 15%,
-        rgba(0, 0, 0, 1) 85%,
-        rgba(125, 185, 232, 0) 100%
-      ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      background: -moz-linear-gradient(left, rgba(30, 87, 153, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(125, 185, 232, 0) 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(left, rgba(30, 87, 153, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(125, 185, 232, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to right, rgba(30, 87, 153, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(125, 185, 232, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e5799', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
       height: 100%;
       inset: 0 auto 0 -180px;

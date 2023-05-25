@@ -147,7 +147,7 @@ export default {
       </div>
     </div>
     <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
-      <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="1" :test="false" />
+      <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :test="false" />
     </Modal>
   </section>
 </template>

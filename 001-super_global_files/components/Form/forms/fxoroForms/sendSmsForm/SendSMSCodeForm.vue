@@ -1,7 +1,21 @@
 <script setup>
 import { ref } from "@vue/reactivity";
+import { defineAsyncComponent } from "vue";
+
+import dataSite from "../../../../../dataSite.json";
 
 import sendSmsCodeTranslations from "./composables/translation/sendSmsCodeTranslations";
+
+import Modal from "../../../../Modal/Modal3.vue";
+import PrivateForm from "../privateForm/PrivateForm.vue";
+
+// const Modal = defineAsyncComponent({
+//   loader: () => import("../../../../Modal/Modal3.vue"),
+// });
+
+// const PrivateForm = defineAsyncComponent({
+//   loader: () => import("../privateForm/PrivateForm.vue"),
+// });
 
 const props = defineProps({
   lang: {
@@ -9,11 +23,20 @@ const props = defineProps({
     default: "en",
     required: true,
   },
+  userDetails: {
+    type: Object,
+    required: true,
+  },
 });
 
-const { inputLabel } = sendSmsCodeTranslations();
+const emit = defineEmits(["submitSMSForm"]);
 
-const smsCodeValue = ref(null); // FirstName
+const { inputLabel } = sendSmsCodeTranslations();
+const smsCode = ref(null);
+const errMsg = ref("");
+
+const smsCodeValue = ref(null);
+const showPrivateModal = ref(false);
 
 const buttonText = {
   en: "Join",
@@ -32,8 +55,124 @@ const buttonText = {
   ms: "Sertai",
 };
 
-const validateSmsForm = () => {
-  console.log("me");
+const privateDetails = ref({});
+
+const validateSmsForm = async () => {
+  if (smsCode.value.value == null || smsCode.value.value.length == 0) {
+    errMsg.value = "This field must not be empty";
+  }
+  try {
+    console.log("incepe sms");
+
+    console.log(props.userDetails);
+
+    const myHeaders = new Headers();
+    // myHeaders.append("Accept", "application/json");
+    // myHeaders.append("DNT", "1");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    // myHeaders.append("Content-Type", "application/json");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("FirstName", props.userDetails.FirstName);
+    urlencoded.append("LastName", props.userDetails.LastName);
+    urlencoded.append("EMail", props.userDetails.EMail);
+    urlencoded.append("Country", props.userDetails.Country);
+    urlencoded.append("PhoneCountryCode", props.userDetails.PhoneCountryCode);
+    urlencoded.append("PhoneNumber", props.userDetails.PhoneNumber);
+    urlencoded.append("Language", props.lang.toUpperCase());
+    urlencoded.append(
+      "CampaignName",
+      `${process.env.VUE_APP_BRAND_TITLE} - ${props.lang.toUpperCase()}`
+    );
+    urlencoded.append("Advertiser", "");
+    urlencoded.append(
+      "Referrer",
+      document.referrer === "" ? window.location.href : document.referrer
+    );
+    urlencoded.append(
+      "Cookie",
+      `${window.location.origin}/${props.lang}/thank-you?fname=${
+        props.userDetails.FirstName
+      }&refLName=${props.userDetails.LastName}&email=${
+        props.userDetails.EMail
+      }&phone=${props.userDetails.PhoneNumber.replace(/\s/g, "")}&country=${
+        props.userDetails.Country
+      }`
+    );
+    urlencoded.append("CustomField", "");
+    urlencoded.append("AcceptTermsAndConditions", true);
+    urlencoded.append("ApproveReceiveCommercial", true);
+    urlencoded.append("IPAddress", props.userDetails.IPAddress);
+    urlencoded.append("IPCountry", props.userDetails.IPCountry);
+    // SMS stuff
+    urlencoded.append("License", 2);
+    urlencoded.append("SmsCode", smsCodeValue.value);
+    urlencoded.append("Broker", "FXORO");
+    urlencoded.append("Company", "OroFintech");
+
+    const requestOptions = {
+      method: "POST",
+      mode: "cors",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    const loadData_FXORO_SMS_API = await fetch(
+      dataSite.fxoro.smsregister,
+      requestOptions
+    );
+    console.log("fetch sms");
+
+    if (!loadData_FXORO_SMS_API.ok) {
+      const resp = await loadData_FXORO_SMS_API.json();
+
+      if (resp.Message === "1000") {
+        throw new Error("Incorrect code");
+      }
+
+      if (resp.Message === "1001") {
+        throw new Error("Please enter your valid number");
+      }
+
+      if (resp.Message === "1002" || resp.Message === "1003") {
+        throw new Error("User already exist");
+      }
+
+      if (resp.Message === "1004") {
+        throw new Error("Lead already exist");
+      }
+
+      // throw new Error({ name: "dsadsa", message: resp });
+      throw new Error(
+        // "Looks like there was a problem with the SMS Register API(s)"
+            "We are sorry, there was an error. Please try again later."
+      );
+    }
+
+    let data = await loadData_FXORO_SMS_API.json();
+
+    data = JSON.parse(data);
+
+    privateDetails.value = {
+      username: data.username,
+      password: data.password,
+      metaUsername: data.metaUsername,
+      metaPassword: data.metaPassword,
+    };
+
+    emit("submitSMSForm"); // emit close modal event (if form in modal)
+    showPrivateModal.value = true; // show private form in modal
+
+    // Sms code form
+
+    console.log(loadData_FXORO_SMS_API);
+
+    // aici tre sa pri
+  } catch (err) {
+    errMsg.value = err.message;
+    // console.log(err.message);
+  }
 };
 </script>
 
@@ -57,9 +196,9 @@ const validateSmsForm = () => {
           :placeholder="inputLabel[lang]"
         />
       </div>
-      <!-- <div v-if="firstNameError[lang]" class="error">
-        {{ firstNameError[lang] }}
-      </div> -->
+      <div v-if="errMsg" class="error">
+        {{ errMsg }}
+      </div>
     </div>
 
     <div class="form-control submitButtonWrapper">
@@ -68,6 +207,17 @@ const validateSmsForm = () => {
       </button>
     </div>
   </form>
+
+  <Modal
+    ref="privateModal"
+    v-if="showPrivateModal"
+    :lang="lang"
+    :modalID="'privateModal'"
+    v-model="showPrivateModal"
+    @closeModal="showPrivateModal = false"
+  >
+    <PrivateForm :lang="lang" :privateDetails="privateDetails" />
+  </Modal>
 </template>
 
 <style lang="scss">

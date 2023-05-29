@@ -13,10 +13,7 @@ const props = defineProps({
 });
 
 const Modal = defineAsyncComponent({
-  loader: () =>
-    import(
-      "../../../../../../../001-super_global_files/components/Modal/Modal3.vue"
-    ),
+  loader: () => import("../../../../../../../001-super_global_files/components/Modal/Modal3.vue"),
 });
 
 // Translations
@@ -43,31 +40,13 @@ setTimeout(() => {
             {{ formBtn[lang] }}
           </button>
           <!-- v-if="showModalForm" -->
-          <Modal
-            :lang="lang"
-            :modalID="'brand-home-modal-form'"
-            :delay="1500"
-            v-model="showModalForm"
-            @closeModal="showModalForm = false"
-          >
+          <Modal :lang="lang" :modalID="'brand-home-modal-form'" :delay="1500" v-model="showModalForm" @closeModal="showModalForm = false">
             <h1>Lorem, ipsum dolor.</h1>
-            <Form
-              :agreementType="'wBrandName'"
-              :buttonText="translationsGlossary.j.join[lang]"
-              :lang="lang"
-              :test="false"
-              @submitForm="showModalForm = false"
-            />
+            <Form :agreementType="'wBrandName'" :buttonText="translationsGlossary.j.join[lang]" :lang="lang" :test="true" :registerType="'sms'" @submitForm="showModalForm = false" />
           </Modal>
         </div>
         <div class="col-12">
-          <Form
-            :agreementType="'wBrandName'"
-            :buttonText="translationsGlossary.j.join[lang]"
-            :lang="lang"
-            :registerType="'sms'"
-            :test="true"
-          />
+          <Form :agreementType="'wBrandName'" :buttonText="translationsGlossary.j.join[lang]" :lang="lang" :registerType="'sms'" :test="true" />
         </div>
       </div>
     </div>

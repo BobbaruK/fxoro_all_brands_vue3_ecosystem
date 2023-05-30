@@ -5,10 +5,10 @@
 // Theme Colors
 $degree: 15;
 
-// #1b2955
-$brandPrimaryColor-h: 226; // Hue
-$brandPrimaryColor-s: 51%; // Saturation
-$brandPrimaryColor-l: 22%; // Lightness
+// #000000
+$brandPrimaryColor-h: 0; // Hue
+$brandPrimaryColor-s: 0%; // Saturation
+$brandPrimaryColor-l: 0%; // Lightness
 
 // #ffb300
 $brandSecondaryColor-h: 42; // Hue
@@ -50,68 +50,160 @@ $brandColors: (
     "black": hsl(0, 0%, 0%),
   ),
   "primary": (
-    "brandPrimaryColor": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, $brandPrimaryColor-l),
+    "brandPrimaryColor":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, $brandPrimaryColor-l),
   ),
   "primary_monocromatic": (
-    "brandPrimaryColor-100": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 90%),
-    "brandPrimaryColor-200": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 80%),
-    "brandPrimaryColor-300": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 70%),
-    "brandPrimaryColor-400": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 60%),
-    "brandPrimaryColor-500": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 50%),
-    "brandPrimaryColor-600": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 40%),
-    "brandPrimaryColor-700": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 30%),
-    "brandPrimaryColor-800": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 20%),
-    "brandPrimaryColor-900": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 10%),
+    "brandPrimaryColor-100":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 90%),
+    "brandPrimaryColor-200":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 80%),
+    "brandPrimaryColor-300":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 70%),
+    "brandPrimaryColor-400":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 60%),
+    "brandPrimaryColor-500":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 50%),
+    "brandPrimaryColor-600":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 40%),
+    "brandPrimaryColor-700":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 30%),
+    "brandPrimaryColor-800":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 20%),
+    "brandPrimaryColor-900":
+      hsl($brandPrimaryColor-h, $brandPrimaryColor-s, 10%),
   ),
   "primary_lighten": (
-    "brandPrimaryColor-light": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, $brandPrimaryColor-l + 15%),
+    "brandPrimaryColor-light":
+      hsl(
+        $brandPrimaryColor-h,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l + 15%
+      ),
   ),
   "primary_darken": (
-    "brandPrimaryColor-dark": hsl($brandPrimaryColor-h, $brandPrimaryColor-s, $brandPrimaryColor-l - 15%),
+    "brandPrimaryColor-dark":
+      hsl(
+        $brandPrimaryColor-h,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l - 15%
+      ),
   ),
   "primary_complement": (
-    "brandPrimaryColor-complement": hsl($brandPrimaryColor-h + 180, $brandPrimaryColor-s, $brandPrimaryColor-l),
+    "brandPrimaryColor-complement":
+      hsl(
+        $brandPrimaryColor-h + 180,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l
+      ),
   ),
   "primary_triad": (
-    "brandPrimaryColor-triada-1": hsl($brandPrimaryColor-h + 120, $brandPrimaryColor-s, $brandPrimaryColor-l),
-    "brandPrimaryColor-triada-2": hsl($brandPrimaryColor-h + 240, $brandPrimaryColor-s, $brandPrimaryColor-l),
+    "brandPrimaryColor-triada-1":
+      hsl(
+        $brandPrimaryColor-h + 120,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l
+      ),
+    "brandPrimaryColor-triada-2":
+      hsl(
+        $brandPrimaryColor-h + 240,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l
+      ),
   ),
   "primary_analogus": (
-    "brandPrimaryColor-analogous-1": hsl($brandPrimaryColor-h + $degree, $brandPrimaryColor-s, $brandPrimaryColor-l),
-    "brandPrimaryColor-analogous-2": hsl($brandPrimaryColor-h - $degree, $brandPrimaryColor-s, $brandPrimaryColor-l),
+    "brandPrimaryColor-analogous-1":
+      hsl(
+        $brandPrimaryColor-h + $degree,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l
+      ),
+    "brandPrimaryColor-analogous-2":
+      hsl(
+        $brandPrimaryColor-h - $degree,
+        $brandPrimaryColor-s,
+        $brandPrimaryColor-l
+      ),
   ),
   "secondary": (
-    "brandSecondaryColor": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, $brandSecondaryColor-l),
+    "brandSecondaryColor":
+      hsl(
+        $brandSecondaryColor-h,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l
+      ),
   ),
   "secondary_monocromatic": (
-    "brandSecondaryColor-100": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 90%),
-    "brandSecondaryColor-200": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 80%),
-    "brandSecondaryColor-300": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 70%),
-    "brandSecondaryColor-400": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 60%),
-    "brandSecondaryColor-500": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 50%),
-    "brandSecondaryColor-600": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 40%),
-    "brandSecondaryColor-700": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 30%),
-    "brandSecondaryColor-800": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 20%),
-    "brandSecondaryColor-900": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 10%),
+    "brandSecondaryColor-100":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 90%),
+    "brandSecondaryColor-200":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 80%),
+    "brandSecondaryColor-300":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 70%),
+    "brandSecondaryColor-400":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 60%),
+    "brandSecondaryColor-500":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 50%),
+    "brandSecondaryColor-600":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 40%),
+    "brandSecondaryColor-700":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 30%),
+    "brandSecondaryColor-800":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 20%),
+    "brandSecondaryColor-900":
+      hsl($brandSecondaryColor-h, $brandSecondaryColor-s, 10%),
   ),
   "secondary_lighten": (
-    "brandSecondaryColor-light": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, $brandSecondaryColor-l + 15%),
+    "brandSecondaryColor-light":
+      hsl(
+        $brandSecondaryColor-h,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l + 15%
+      ),
   ),
   "secondary_darken": (
-    "brandSecondaryColor-dark": hsl($brandSecondaryColor-h, $brandSecondaryColor-s, $brandSecondaryColor-l - 15%),
+    "brandSecondaryColor-dark":
+      hsl(
+        $brandSecondaryColor-h,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l - 15%
+      ),
   ),
   "secondary_complement": (
-    "brandSecondaryColor-complement": hsl($brandSecondaryColor-h + 180, $brandSecondaryColor-s, $brandSecondaryColor-l),
+    "brandSecondaryColor-complement":
+      hsl(
+        $brandSecondaryColor-h + 180,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l
+      ),
   ),
   "secondary_triad": (
-    "brandSecondaryColor-triada-1": hsl($brandSecondaryColor-h + 120, $brandSecondaryColor-s, $brandSecondaryColor-l),
-    "brandSecondaryColor-triada-2": hsl($brandSecondaryColor-h + 240, $brandSecondaryColor-s, $brandSecondaryColor-l),
+    "brandSecondaryColor-triada-1":
+      hsl(
+        $brandSecondaryColor-h + 120,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l
+      ),
+    "brandSecondaryColor-triada-2":
+      hsl(
+        $brandSecondaryColor-h + 240,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l
+      ),
   ),
   "secondary_analogus": (
     "brandSecondaryColor-analogous-1":
-      hsl($brandSecondaryColor-h + $degree, $brandSecondaryColor-s, $brandSecondaryColor-l),
+      hsl(
+        $brandSecondaryColor-h + $degree,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l
+      ),
     "brandSecondaryColor-analogous-2":
-      hsl($brandSecondaryColor-h - $degree, $brandSecondaryColor-s, $brandSecondaryColor-l),
+      hsl(
+        $brandSecondaryColor-h - $degree,
+        $brandSecondaryColor-s,
+        $brandSecondaryColor-l
+      ),
   ),
   "alerts": (
     "danger": hsl($dangerColor-h, $dangerColor-s, $dangerColor-l),
@@ -153,9 +245,11 @@ $fontSize-h5: $fontSize * 1.25;
 $fontSize-h6: $fontSize;
 
 // Font family
-$fontFamily-sansSerif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-  "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$fontFamily-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$fontFamily-sansSerif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$fontFamily-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace;
 $fontFamily: $fontFamily-sansSerif;
 
 // Grid system

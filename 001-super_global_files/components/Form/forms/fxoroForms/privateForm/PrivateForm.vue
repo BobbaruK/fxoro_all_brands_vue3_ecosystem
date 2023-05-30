@@ -26,7 +26,8 @@ const privatePassword = ref(props.privateDetails.password);
 const privateMetaUserName = ref(props.privateDetails.metaUsername);
 const privateMetaPassword = ref(props.privateDetails.metaPassword);
 
-const { para, privateArea, metaTrader, userName, password } = privateFormTranslations();
+const { para, privateArea, metaTrader, userName, password } =
+  privateFormTranslations();
 
 const smsCodeValue = ref(null); // FirstName
 
@@ -47,25 +48,43 @@ const buttonText = {
   ms: "Continue",
 };
 
+const privateValidation = () => {};
 </script>
 <template>
   {{ privateUserName }}
   <p v-html="para[lang]" />
-  <form class="privateForm" action="https://my.global.fxoro.com/login" method="post" enctype="multipart/form-data">
+  <!-- <form class="privateForm" action="https://my.global.fxoro.com/login" method="post" enctype="multipart/form-data"> -->
+  <form class="privateForm" @submit.prevent="privateValidation">
     <div class="private">
       <p v-html="privateArea[lang]" />
       <div class="form-control firstNameWrapper">
         <div class="field">
           <label for="username">{{ userName[lang] }}</label>
-          <input id="username" name="username" type="text" v-model="privateUserName" :placeholder="userName[lang]" />
+          <input
+            id="username"
+            name="username"
+            type="text"
+            v-model="privateUserName"
+            :placeholder="userName[lang]"
+          />
         </div>
       </div>
 
       <div class="form-control firstNameWrapper">
         <div class="field">
           <label for="password">{{ password[lang] }}</label>
-          <input id="password" name="password" type="text" v-model="privatePassword" :placeholder="password[lang]" />
-          <input name="ufprt" type="hidden" value="65F7FB295112B526C9CC5D67697C8B68DB88A031D0B1D748769D9B3F3410F1C8429F2556B785989F5560BD6AF5FFDEA1604E536E5E155DB93BAF9CEB19A15A19603BBD2583C3EA71F230F9B7C2D5B3D678693525FED197AEEF7272E35B64E2DBB0B288B519BDC8803708F7392673A1ABD34C66DFB2EDB8C904D2C1186BE0BF61739CB5054C9A07BF7884798642F9FB79" />
+          <input
+            id="password"
+            name="password"
+            type="text"
+            v-model="privatePassword"
+            :placeholder="password[lang]"
+          />
+          <input
+            name="ufprt"
+            type="hidden"
+            value="65F7FB295112B526C9CC5D67697C8B68DB88A031D0B1D748769D9B3F3410F1C8429F2556B785989F5560BD6AF5FFDEA1604E536E5E155DB93BAF9CEB19A15A19603BBD2583C3EA71F230F9B7C2D5B3D678693525FED197AEEF7272E35B64E2DBB0B288B519BDC8803708F7392673A1ABD34C66DFB2EDB8C904D2C1186BE0BF61739CB5054C9A07BF7884798642F9FB79"
+          />
         </div>
       </div>
     </div>
@@ -74,14 +93,24 @@ const buttonText = {
       <div class="form-control firstNameWrapper">
         <div class="field">
           <label for="metaUserName">{{ userName[lang] }}</label>
-          <input id="metaUserName" type="text" v-model="privateMetaUserName" :placeholder="userName[lang]" />
+          <input
+            id="metaUserName"
+            type="text"
+            v-model="privateMetaUserName"
+            :placeholder="userName[lang]"
+          />
         </div>
       </div>
 
       <div class="form-control firstNameWrapper">
         <div class="field">
           <label for="metaPassword">{{ password[lang] }}</label>
-          <input id="metaPassword" type="text" v-model="privateMetaPassword" :placeholder="password[lang]" />
+          <input
+            id="metaPassword"
+            type="text"
+            v-model="privateMetaPassword"
+            :placeholder="password[lang]"
+          />
         </div>
       </div>
     </div>

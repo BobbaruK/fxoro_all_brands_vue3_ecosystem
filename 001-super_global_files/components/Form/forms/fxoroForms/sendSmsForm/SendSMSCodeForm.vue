@@ -167,6 +167,13 @@ const validateSmsForm = async () => {
     // console.log(err.message);
   }
 };
+
+// test stuff
+const privateFormModalAction = () => {
+  showPrivateModal.value = !showPrivateModal.value;
+
+  emit("submitSMSForm"); // emit close modal event (if form in modal)
+};
 </script>
 
 <template>
@@ -176,6 +183,9 @@ const validateSmsForm = async () => {
     novalidate
     class="sendSmsCodeForm"
   >
+    <button class="scssecoBtn" @click="privateFormModalAction">
+      sendSmsCodeModal
+    </button>
     <div class="form-control firstNameWrapper">
       <div class="field">
         <label ref="refLabelFName" for="smsCodeValue">{{

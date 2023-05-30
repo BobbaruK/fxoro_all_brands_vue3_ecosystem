@@ -412,7 +412,6 @@ const validateForm = (e) => {
           dataSite.fxoro.smsregister,
           requestOptions
         );
-        console.log("fetch sms");
 
         if (!loadData_FXORO_SMS_API.ok) {
           const resp = await loadData_FXORO_SMS_API.json();
@@ -484,7 +483,6 @@ const validateForm = (e) => {
         };
 
         // Lead is processing
-        console.log(data);
 
         if (data.indexOf("ok") != -1) {
           emit("submitForm"); // emit close modal event (if form in modal)
@@ -492,8 +490,6 @@ const validateForm = (e) => {
         }
 
         // Sms code form
-
-        console.log(loadData_FXORO_SMS_API);
 
         // aici tre sa pri
       } catch (err) {
@@ -630,7 +626,6 @@ const validateForm = (e) => {
 };
 
 // test stuff
-
 const processingsameleadAction = () => {
   showErrorModal.value = !showErrorModal.value;
 
@@ -644,20 +639,19 @@ const sendSmsCodeModalAction = () => {
 };
 </script>
 
-<template>as
-  <!-- <button class="scssecoBtn" @click="processingsameleadAction">
-    processingsamelead
-  </button>
-  <button class="scssecoBtn" @click="sendSmsCodeModalAction">
-    sendSmsCodeModal
-  </button> -->
-
+<template>
   <form
     ref="registerForm"
     @submit.prevent="validateForm"
     novalidate
     :class="formClass"
   >
+    <button class="scssecoBtn" @click="processingsameleadAction">
+      processingsamelead
+    </button>
+    <button class="scssecoBtn" @click="sendSmsCodeModalAction">
+      sendSmsCodeModal
+    </button>
     <Modal
       ref="errorModal"
       :lang="lang"

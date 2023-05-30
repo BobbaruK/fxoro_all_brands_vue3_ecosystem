@@ -70,15 +70,32 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col-12 btnSectionInner">
-          <transition appear @before-enter="onBeforeEnterBtn" @enter="onEnterBtn">
-            <button class="scssecoBtn" @click="showModalForm = !showModalForm">{{ button[lang] }}</button>
+          <transition
+            appear
+            @before-enter="onBeforeEnterBtn"
+            @enter="onEnterBtn"
+          >
+            <button class="scssecoBtn" @click="showModalForm = !showModalForm">
+              {{ button[lang] }}
+            </button>
           </transition>
         </div>
       </div>
     </div>
   </section>
-  <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
-    <Form :agreementType="'wBrandName'" :buttonText="button[lang]" :lang="lang" :layout="1" :test="false" />
+  <Modal
+    :lang="lang"
+    :modalDetails="modalDetailsForm"
+    v-model="showModalForm"
+    @closeModal="showModalForm = false"
+  >
+    <Form
+      :agreementType="'wBrandName'"
+      :buttonText="button[lang]"
+      :lang="lang"
+      :registerType="lang === 'en' ? 'sms' : 'clasic'"
+      :test="false"
+    />
   </Modal>
 </template>
 

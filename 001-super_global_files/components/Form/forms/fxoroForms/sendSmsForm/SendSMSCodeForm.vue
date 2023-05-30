@@ -62,10 +62,6 @@ const validateSmsForm = async () => {
     errMsg.value = "This field must not be empty";
   }
   try {
-    console.log("incepe sms");
-
-    console.log(props.userDetails);
-
     const myHeaders = new Headers();
     // myHeaders.append("Accept", "application/json");
     // myHeaders.append("DNT", "1");
@@ -122,7 +118,6 @@ const validateSmsForm = async () => {
       dataSite.fxoro.smsregister,
       requestOptions
     );
-    console.log("fetch sms");
 
     if (!loadData_FXORO_SMS_API.ok) {
       const resp = await loadData_FXORO_SMS_API.json();
@@ -146,7 +141,7 @@ const validateSmsForm = async () => {
       // throw new Error({ name: "dsadsa", message: resp });
       throw new Error(
         // "Looks like there was a problem with the SMS Register API(s)"
-            "We are sorry, there was an error. Please try again later."
+        "We are sorry, there was an error. Please try again later."
       );
     }
 
@@ -165,8 +160,6 @@ const validateSmsForm = async () => {
     showPrivateModal.value = true; // show private form in modal
 
     // Sms code form
-
-    console.log(loadData_FXORO_SMS_API);
 
     // aici tre sa pri
   } catch (err) {

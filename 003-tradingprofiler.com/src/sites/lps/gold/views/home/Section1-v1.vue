@@ -123,17 +123,34 @@ export default {
         <transition appear @before-enter="onBeforeEnterH1" @enter="onEnterH1">
           <h1 v-html="title[lang]"></h1>
         </transition>
-        <transition appear @before-enter="onBeforeEnterPara" @enter="onEnterPara">
+        <transition
+          appear
+          @before-enter="onBeforeEnterPara"
+          @enter="onEnterPara"
+        >
           <div v-html="content[lang]"></div>
         </transition>
         <transition appear @before-enter="onBeforeEnterBtn" @enter="onEnterBtn">
-          <button class="scssecoBtn" @click="showModalForm = !showModalForm">{{ formBtn[lang] }}</button>
+          <button class="scssecoBtn" @click="showModalForm = !showModalForm">
+            {{ formBtn[lang] }}
+          </button>
         </transition>
       </div>
     </div>
   </section>
-  <Modal :lang="lang" :modalDetails="modalDetailsForm" v-model="showModalForm" @closeModal="showModalForm = false">
-    <Form :agreementType="'wBrandName'" :buttonText="formBtn[lang]" :lang="lang" :layout="1" :test="false" />
+  <Modal
+    :lang="lang"
+    :modalDetails="modalDetailsForm"
+    v-model="showModalForm"
+    @closeModal="showModalForm = false"
+  >
+    <Form
+      :agreementType="'wBrandName'"
+      :buttonText="formBtn[lang]"
+      :lang="lang"
+      :registerType="lang === 'en' ? 'sms' : 'clasic'"
+      :test="false"
+    />
   </Modal>
 </template>
 
@@ -233,5 +250,4 @@ section#section1-v1.subHeader {
     }
   }
 }
-
 </style>

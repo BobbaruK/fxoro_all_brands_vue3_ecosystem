@@ -44,11 +44,10 @@ export default {
         </div>
         <div class="col-12 col-md-6 col-xl-5">
           <Form
-            class="section3Form-V2"
             :agreementType="'wBrandName'"
             :buttonText="formBtn[lang]"
             :lang="lang"
-            :layout="1"
+            :registerType="lang === 'en' ? 'sms' : 'clasic'"
             :test="false"
           />
           <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-block d-md-none" /> -->

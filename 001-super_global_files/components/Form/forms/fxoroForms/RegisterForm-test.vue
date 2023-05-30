@@ -644,59 +644,60 @@ const sendSmsCodeModalAction = () => {
 };
 </script>
 
-<template>
-  <button class="scssecoBtn" @click="processingsameleadAction">
+<template>as
+  <!-- <button class="scssecoBtn" @click="processingsameleadAction">
     processingsamelead
   </button>
   <button class="scssecoBtn" @click="sendSmsCodeModalAction">
     sendSmsCodeModal
-  </button>
+  </button> -->
 
-  <Modal
-    ref="errorModal"
-    :lang="lang"
-    :modalID="'errorModal'"
-    v-model="showErrorModal"
-    @closeModal="showErrorModal = false"
-  >
-    <div v-html="smsError" />
-  </Modal>
-  <Modal
-    ref="sendSmsCodeModal"
-    :lang="lang"
-    :modalID="'sendSmsCodeModal'"
-    v-model="showSendSmsCodeModal"
-    @closeModal="showSendSmsCodeModal = false"
-  >
-    <SendSMSCodeForm
-      :lang="lang"
-      :userDetails="userDetails"
-      @submitSMSForm="showSendSmsCodeModal = false"
-    />
-  </Modal>
-  <div v-if="test" class="devOpts">
-    <p>
-      agreementType: <strong>{{ agreementType }}</strong>
-    </p>
-    <p>
-      buttonText: <strong>{{ buttonText }}</strong>
-    </p>
-    <p>
-      lang: <strong>{{ lang }}</strong>
-    </p>
-    <p>
-      registerType: <strong>{{ registerType }}</strong>
-    </p>
-    <p>
-      test: <strong>{{ test }}</strong>
-    </p>
-  </div>
   <form
     ref="registerForm"
     @submit.prevent="validateForm"
     novalidate
     :class="formClass"
   >
+    <Modal
+      ref="errorModal"
+      :lang="lang"
+      :modalID="'errorModal'"
+      v-model="showErrorModal"
+      @closeModal="showErrorModal = false"
+    >
+      <div v-html="smsError" />
+    </Modal>
+    <Modal
+      ref="sendSmsCodeModal"
+      :lang="lang"
+      :modalID="'sendSmsCodeModal'"
+      v-model="showSendSmsCodeModal"
+      @closeModal="showSendSmsCodeModal = false"
+    >
+      <SendSMSCodeForm
+        :lang="lang"
+        :userDetails="userDetails"
+        @submitSMSForm="showSendSmsCodeModal = false"
+      />
+    </Modal>
+    <div v-if="test" class="devOpts">
+      <p>
+        agreementType: <strong>{{ agreementType }}</strong>
+      </p>
+      <p>
+        buttonText: <strong>{{ buttonText }}</strong>
+      </p>
+      <p>
+        lang: <strong>{{ lang }}</strong>
+      </p>
+      <p>
+        registerType: <strong>{{ registerType }}</strong>
+      </p>
+      <p>
+        test: <strong>{{ test }}</strong>
+      </p>
+    </div>
+
     <div class="registerFormInner">
       <div class="form-control firstNameWrapper">
         <div class="field">

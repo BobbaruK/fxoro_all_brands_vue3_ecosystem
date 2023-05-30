@@ -51,6 +51,7 @@ export default {
               :agreementType="'wBrandName'"
               :buttonText="formBtn[lang]"
               :lang="lang"
+              :registerType="lang === 'en' ? 'sms' : 'clasic'"
               :test="false"
             />
           </div>
@@ -104,8 +105,15 @@ section#section1.subHeader {
     }
 
     &::before {
-      background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
-        linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center, $dot-color;
+      background: linear-gradient(
+            90deg,
+            $bg-color ($dot-space - $dot-size),
+            transparent 1%
+          )
+          center,
+        linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%)
+          center,
+        $dot-color;
       background-size: $dot-space $dot-space;
 
       content: "";
@@ -132,8 +140,15 @@ section#section1.subHeader {
     }
 
     &::before {
-      background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
-        linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center, $dot-color;
+      background: linear-gradient(
+            90deg,
+            $bg-color ($dot-space - $dot-size),
+            transparent 1%
+          )
+          center,
+        linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%)
+          center,
+        $dot-color;
       background-size: $dot-space $dot-space;
 
       content: "";

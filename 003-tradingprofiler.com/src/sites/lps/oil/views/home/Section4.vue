@@ -63,7 +63,11 @@ export default {
         return;
       }
 
-      gsap.to(window, { duration: 1, ease: "power4.inOut", scrollTo: ".registerForm" });
+      gsap.to(window, {
+        duration: 1,
+        ease: "power4.inOut",
+        scrollTo: ".registerForm",
+      });
     };
 
     return {
@@ -84,8 +88,14 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col-12 btnSectionInner">
-          <transition appear @before-enter="onBeforeEnterBtn" @enter="onEnterBtn">
-            <button class="scssecoBtn" @click="btnAction">{{ button[lang] }}</button>
+          <transition
+            appear
+            @before-enter="onBeforeEnterBtn"
+            @enter="onEnterBtn"
+          >
+            <button class="scssecoBtn" @click="btnAction">
+              {{ button[lang] }}
+            </button>
           </transition>
         </div>
       </div>
@@ -98,7 +108,13 @@ export default {
     v-model="showModalForm"
     @closeModal="showModalForm = false"
   >
-    <Form :agreementType="'wBrandName'" :buttonText="button[lang]" :lang="lang" :layout="1" :test="false" />
+    <Form
+      :agreementType="'wBrandName'"
+      :buttonText="button[lang]"
+      :lang="lang"
+      :registerType="lang === 'en' ? 'sms' : 'clasic'"
+      :test="false"
+    />
   </Modal>
 </template>
 

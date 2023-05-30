@@ -53,7 +53,13 @@ export default {
         <div class="col-12 col-lg-6 form">
           <div class="formWrapper">
             <h2 v-html="formTitle[lang]"></h2>
-            <Form :agreementType="'wBrandName'" :buttonText="formButton[lang]" :lang="lang" :layout="1" :test="false" />
+            <Form
+              :agreementType="'wBrandName'"
+              :buttonText="formButton[lang]"
+              :lang="lang"
+              :registerType="lang === 'en' ? 'sms' : 'clasic'"
+              :test="false"
+            />
           </div>
         </div>
       </div>
@@ -247,7 +253,8 @@ section#section1.subHeader {
           z-index: 3;
           .lds-ring {
             div {
-              border-color: var(--clr-brandSecondaryColor) transparent transparent transparent;
+              border-color: var(--clr-brandSecondaryColor) transparent
+                transparent transparent;
             }
           }
         }

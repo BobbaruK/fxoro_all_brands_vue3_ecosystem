@@ -110,13 +110,23 @@ export default {
         <transition appear @before-enter="onBeforeEnterH1" @enter="onEnterH1">
           <h1 v-html="title[lang]" />
         </transition>
-        <transition appear @before-enter="onBeforeEnterPara" @enter="onEnterPara">
+        <transition
+          appear
+          @before-enter="onBeforeEnterPara"
+          @enter="onEnterPara"
+        >
           <div v-html="content[lang]"></div>
         </transition>
       </div>
       <div class="col-12 col-lg-6">
         <transition appear @before-enter="onBeforeEnterBtn" @enter="onEnterBtn">
-          <Form :agreementType="'wBrandName'" :buttonText="formBtn[lang]" :lang="lang" :layout="1" :test="false" />
+          <Form
+            :agreementType="'wBrandName'"
+            :buttonText="formBtn[lang]"
+            :lang="lang"
+            :registerType="lang === 'en' ? 'sms' : 'clasic'"
+            :test="false"
+          />
         </transition>
       </div>
     </div>
@@ -336,7 +346,8 @@ section#section1-v2.subHeader {
       z-index: 3;
       .lds-ring {
         div {
-          border-color: var(--clr-brandSecondaryColor) transparent transparent transparent;
+          border-color: var(--clr-brandSecondaryColor) transparent transparent
+            transparent;
         }
       }
     }

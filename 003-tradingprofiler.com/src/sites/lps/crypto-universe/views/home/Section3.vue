@@ -133,10 +133,18 @@ export default {
           <transition appear @before-enter="onBeforeEnterH2" @enter="onEnterH2">
             <h2 v-html="title[lang]"></h2>
           </transition>
-          <transition appear @before-enter="onBeforeEnterPara" @enter="onEnterPara">
+          <transition
+            appear
+            @before-enter="onBeforeEnterPara"
+            @enter="onEnterPara"
+          >
             <div v-html="content[lang]"></div>
           </transition>
-          <button v-if="route.name === 'CryptoUniverseV1Home'" class="scssecoBtn crypto-V1" @click="showModalFormFunct">
+          <button
+            v-if="route.name === 'CryptoUniverseV1Home'"
+            class="scssecoBtn crypto-V1"
+            @click="showModalFormFunct"
+          >
             {{ formBtn[lang] }}
           </button>
 
@@ -151,7 +159,7 @@ export default {
               :agreementType="'wBrandName'"
               :buttonText="formBtn[lang]"
               :lang="lang"
-              :layout="1"
+              :registerType="lang === 'en' ? 'sms' : 'clasic'"
               :test="false"
             />
           </transition>
@@ -170,7 +178,7 @@ export default {
         :agreementType="'wBrandName'"
         :buttonText="translationsGlossary.j.join[lang]"
         :lang="lang"
-        :layout="1"
+        :registerType="lang === 'en' ? 'sms' : 'clasic'"
         :test="false"
       />
     </Modal>
@@ -375,7 +383,8 @@ form.section3Form-V2 {
       z-index: 3;
       .lds-ring {
         div {
-          border-color: var(--clr-brandSecondaryColor) transparent transparent transparent;
+          border-color: var(--clr-brandSecondaryColor) transparent transparent
+            transparent;
         }
       }
     }

@@ -42,7 +42,13 @@ export default {
         <div class="col-12 col-lg-6 order-lg-2 col-12">
           <div class="formWrapper">
             <h3 v-html="formTitle[lang]" />
-            <Form :agreementType="'wBrandName'" :buttonText="formBtn[lang]" :lang="lang" :layout="1" :test="false" />
+            <Form
+              :agreementType="'wBrandName'"
+              :buttonText="formBtn[lang]"
+              :lang="lang"
+              :registerType="lang === 'en' ? 'sms' : 'clasic'"
+              :test="false"
+            />
           </div>
         </div>
         <div class="col-12 col-lg-6 order-lg-1 textWrapper">
@@ -114,7 +120,8 @@ section#section2.bullform {
         font-weight: 500;
         color: var(--clr-white);
         text-shadow: 1px 1px 1px var(--clr-black);
-        box-shadow: inset 4px 4px 15px 0px rgba(0, 0, 0, 0.54), 0px 0px 7px 0px var(--clr-black);
+        box-shadow: inset 4px 4px 15px 0px rgba(0, 0, 0, 0.54),
+          0px 0px 7px 0px var(--clr-black);
       }
     }
   }
@@ -148,7 +155,13 @@ section#section2.bullform {
 
   h3 {
     background: #fcfcfc;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fcfcfc), to(#d4d4d4));
+    background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #fcfcfc),
+      to(#d4d4d4)
+    );
     background: linear-gradient(to bottom, #fcfcfc 0, #d4d4d4 100%);
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;

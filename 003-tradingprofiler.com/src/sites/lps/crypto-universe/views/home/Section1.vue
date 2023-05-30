@@ -99,7 +99,11 @@ export default {
         return;
       }
 
-      gsap.to(window, { duration: 1, ease: "power4.inOut", scrollTo: ".section3Form-V2" });
+      gsap.to(window, {
+        duration: 1,
+        ease: "power4.inOut",
+        scrollTo: ".section3Form-V2",
+      });
     };
 
     const route = useRoute();
@@ -134,7 +138,11 @@ export default {
         <transition appear @before-enter="onBeforeEnterH1" @enter="onEnterH1">
           <h1 v-html="title[lang]"></h1>
         </transition>
-        <transition appear @before-enter="onBeforeEnterPara" @enter="onEnterPara">
+        <transition
+          appear
+          @before-enter="onBeforeEnterPara"
+          @enter="onEnterPara"
+        >
           <div v-html="content[lang]"></div>
         </transition>
         <transition appear @before-enter="onBeforeEnterBtn" @enter="onEnterBtn">
@@ -156,7 +164,7 @@ export default {
         :agreementType="'wBrandName'"
         :buttonText="translationsGlossary.j.join[lang]"
         :lang="lang"
-        :layout="1"
+        :registerType="lang === 'en' ? 'sms' : 'clasic'"
         :test="false"
       />
     </Modal>

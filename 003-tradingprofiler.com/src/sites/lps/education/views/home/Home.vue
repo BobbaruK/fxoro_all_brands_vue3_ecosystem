@@ -48,9 +48,19 @@ export default {
       ms: "",
     };
 
-    checkLangAndMeta(props.lang, documentTitleTransl, metaDescritopn, "#317689");
+    checkLangAndMeta(
+      props.lang,
+      documentTitleTransl,
+      metaDescritopn,
+      "#317689"
+    );
     onUpdated(() => {
-      checkLangAndMeta(props.lang, documentTitleTransl, metaDescritopn, "#317689");
+      checkLangAndMeta(
+        props.lang,
+        documentTitleTransl,
+        metaDescritopn,
+        "#317689"
+      );
     });
 
     return {};
@@ -100,13 +110,26 @@ form.registerForm {
     left: auto;
     right: -1000px;
   }
+
   .error {
     color: var(--clr-danger);
     font-size: 80%;
     padding-bottom: 3px;
     padding-top: 1px;
   }
+
   .form-control {
+    &.agreementWrapper {
+      @include mxns.mediamin(lg) {
+        order: 7;
+      }
+    }
+    &.submitButtonWrapper {
+      @include mxns.mediamin(lg) {
+        order: 6;
+      }
+    }
+
     label {
       cursor: pointer;
       &:not(.agreement) {
@@ -178,7 +201,8 @@ form.registerForm {
     z-index: 3;
     .lds-ring {
       div {
-        border-color: var(--clr-brandSecondaryColor) transparent transparent transparent;
+        border-color: var(--clr-brandSecondaryColor) transparent transparent
+          transparent;
       }
     }
   }

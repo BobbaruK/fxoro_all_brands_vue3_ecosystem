@@ -47,7 +47,7 @@ export default {
             :agreementType="'wBrandName'"
             :buttonText="formBtn[lang]"
             :lang="lang"
-            :registerType="lang === 'en' ? 'sms' : 'clasic'"
+            
             :test="false"
           />
           <!-- <img src="../../assets/imgs/hand.png" alt="Hand" width="325" height="539" class="d-block d-md-none" /> -->

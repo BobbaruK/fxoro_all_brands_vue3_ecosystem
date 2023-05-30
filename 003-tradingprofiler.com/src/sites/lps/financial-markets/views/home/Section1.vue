@@ -69,7 +69,7 @@ export default {
             :agreementType="'wBrandName'"
             :buttonText="formBtn[lang]"
             :lang="lang"
-            :registerType="lang === 'en' ? 'sms' : 'clasic'"
+            
             :test="false"
           />
         </div>

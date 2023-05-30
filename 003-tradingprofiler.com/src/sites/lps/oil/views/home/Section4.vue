@@ -112,7 +112,7 @@ export default {
       :agreementType="'wBrandName'"
       :buttonText="button[lang]"
       :lang="lang"
-      :registerType="lang === 'en' ? 'sms' : 'clasic'"
+      
       :test="false"
     />
   </Modal>

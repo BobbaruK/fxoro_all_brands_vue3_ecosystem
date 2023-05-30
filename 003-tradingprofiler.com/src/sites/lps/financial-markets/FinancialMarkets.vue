@@ -24,7 +24,10 @@ export default {
 
     onMounted(() => {
       if (lpLangs.indexOf(route.params.lang) == -1) {
-        router.replace({ name: "FinancialMarketsHome", params: { lang: defaultLang } });
+        router.replace({
+          name: "FinancialMarketsHome",
+          params: { lang: defaultLang },
+        });
       }
     });
 
@@ -59,10 +62,10 @@ export default {
 
 .topBG {
   // background-image: url(./assets/imgs/topBG-mobile.jpg);
+  // background-image: url(./assets/imgs/topBG-mobile.jpg);
   background-image: image-set(
-    url(./assets/imgs/topBG-mobile.avif),
-    url(./assets/imgs/topBG-mobile.webp),
-    url(./assets/imgs/topBG-mobile.jpg)
+    url("./assets/imgs/topBG-mobile.webp"),
+    url("./assets/imgs/topBG-mobile.jpg")
   );
   background-position: top center;
   background-repeat: no-repeat;
@@ -71,9 +74,8 @@ export default {
     // background-position: center;
     // background-image: url(./assets/imgs/topBG-desktop.jpg);
     background-image: image-set(
-      url(./assets/imgs/topBG-desktop.avif),
-      url(./assets/imgs/topBG-desktop.webp),
-      url(./assets/imgs/topBG-desktop.jpg)
+      url("./assets/imgs/topBG-desktop.webp"),
+      url("./assets/imgs/topBG-desktop.jpg")
     );
   }
 }

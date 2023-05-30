@@ -19,7 +19,7 @@ const forexsignalsSection2Transl = () => {
   const contentSections = [
     {
       title: {
-        en: "Are you using Forex signals to maximise your gains?",
+        en: "<strong>Are you using Forex signals to maximise your gains?</strong>",
       },
       paras: {
         en: `<p>If you’ve spent any time around our site, you’ll know that we at ${process.env.VUE_APP_BRAND_TITLE} love teaching our traders how to use Forex trading signals and maximise their financial gains.</p>
@@ -28,7 +28,7 @@ const forexsignalsSection2Transl = () => {
     },
     {
       title: {
-        en: "What on Earth are Forex Signals?",
+        en: "<strong>What on Earth are Forex Signals?</strong>",
       },
       paras: {
         en: `<p>‘Forex trading signal’ may sound incredibly fancy (and pricey) but the reality is quite different. They’re simply a trading tool that provides you with the data you need to make the right decisions at the right time. Companies that offer signals tools (we at ${process.env.VUE_APP_BRAND_TITLE} have our Forex signal tool here) may communicate by SMS, email, IM pop ups etc. although the method varies, the service provided is actually the same. These signals will give you critical information on the current Forex market, letting you know about fluctuations and other conditions that may influence pricing, and provide you with data alongside insights to help you make sensible, critical investment decisions. Depending on the quality of the service provider you choose, they may even offer analysis alongside the data to help simplify the Forex market further for you. Most are subscription services that provide an immediate alert.</p>`,

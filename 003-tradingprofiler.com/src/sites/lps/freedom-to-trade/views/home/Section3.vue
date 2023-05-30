@@ -52,7 +52,6 @@ export default {
 
 section#section3.trade {
   background-image: image-set(
-    url(../../assets/imgs/s3BG-mobile.avif),
     url(../../assets/imgs/s3BG-mobile.webp),
     url(../../assets/imgs/s3BG-mobile.jpg)
   );
@@ -63,7 +62,6 @@ section#section3.trade {
   text-align: center;
   @include mxns.mediamin(md) {
     background-image: image-set(
-      url(../../assets/imgs/s3BG.avif),
       url(../../assets/imgs/s3BG.webp),
       url(../../assets/imgs/s3BG.jpg)
     );

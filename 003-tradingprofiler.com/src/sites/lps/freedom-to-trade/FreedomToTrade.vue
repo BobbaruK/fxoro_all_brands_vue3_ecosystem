@@ -63,7 +63,6 @@ export default {
 .topBG {
   background-color: var(--clr-brandPrimaryColor);
   background-image: image-set(
-    url(./assets/imgs/topBgPattern.avif),
     url(./assets/imgs/topBgPattern.webp),
     url(./assets/imgs/topBgPattern.png)
   );

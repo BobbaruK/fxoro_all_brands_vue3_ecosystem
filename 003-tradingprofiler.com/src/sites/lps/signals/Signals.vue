@@ -64,7 +64,6 @@ export default {
 
 .topBG {
   background-image: image-set(
-    url(./assets/imgs/signals-main-picture.avif),
     url(./assets/imgs/signals-main-picture.webp),
     url(./assets/imgs/signals-main-picture.jpg)
   );

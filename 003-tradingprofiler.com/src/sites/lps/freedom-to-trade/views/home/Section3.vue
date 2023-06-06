@@ -26,7 +26,9 @@ export default {
       </div>
       <div class="row">
         <div class="col-12 col-md-7" v-html="content[lang]" />
-        <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+        <div
+          class="col-12 col-md-5 d-flex justify-content-center align-items-center"
+        >
           <!-- <img src="../../assets/imgs/devices.png" alt="Devices" /> -->
 
           <picture>
@@ -51,9 +53,11 @@ export default {
 @use "../../assets/scss/abstracts/mixins" as mxns;
 
 section#section3.trade {
+  background-image: url(../../assets/imgs/s3BG-mobile.jpg);
   background-image: image-set(
-    url(../../assets/imgs/s3BG-mobile.webp),
-    url(../../assets/imgs/s3BG-mobile.jpg)
+    url(../../assets/imgs/s3BG-mobile.avif) type("image/avif"),
+    url(../../assets/imgs/s3BG-mobile.webp) type("image/webp"),
+    url(../../assets/imgs/s3BG-mobile.jpg) type("image/jpg")
   );
   background-position: center;
   background-repeat: no-repeat;
@@ -61,9 +65,11 @@ section#section3.trade {
   color: var(--clr-white);
   text-align: center;
   @include mxns.mediamin(md) {
+  background-image: url(../../assets/imgs/s3BG.jpg);
     background-image: image-set(
-      url(../../assets/imgs/s3BG.webp),
-      url(../../assets/imgs/s3BG.jpg)
+      url(../../assets/imgs/s3BG.avif) type("image/avif"),
+      url(../../assets/imgs/s3BG.webp) type("image/webp"),
+      url(../../assets/imgs/s3BG.jpg) type("image/jpg")
     );
     text-align: start;
   }

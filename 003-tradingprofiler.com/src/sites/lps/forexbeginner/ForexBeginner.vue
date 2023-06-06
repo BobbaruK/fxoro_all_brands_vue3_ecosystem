@@ -11,7 +11,7 @@ import BackToTop from "../../../../../001-super_global_files/components/BackToTo
 import "./assets/scss/scsseco_lp.scss";
 
 export default {
-  name: "LP~FreedomToTrade",
+  name: "LP~ForexBeginner",
   components: { Header, Footer, BackToTop },
   props: {
     lang: String,
@@ -24,10 +24,7 @@ export default {
 
     onMounted(() => {
       if (lpLangs.indexOf(route.params.lang) == -1) {
-        router.replace({
-          name: "FreedomToTradeHome",
-          params: { lang: defaultLang },
-        });
+        router.replace({ name: "ForexBeginnerHome", params: { lang: defaultLang } });
       }
     });
 
@@ -37,10 +34,7 @@ export default {
 </script>
 
 <template>
-  <div class="topBG">
-    <Header :lang="lang" />
-    <div id="teleportS1"></div>
-  </div>
+  <Header :lang="lang" />
   <main>
     <router-view />
   </main>
@@ -56,37 +50,6 @@ export default {
     @each $color, $value in $colors {
       --clr-#{$color}: #{$value};
     }
-  }
-}
-
-.container-fluid {
-  max-width: 1140px;
-}
-
-.topBG {
-  background-color: var(--clr-brandPrimaryColor);
-  background-image: url(./assets/imgs/topBgPattern.png);
-  background-image: image-set(
-    url(./assets/imgs/topBgPattern.avif) type("image/avif"),
-    url(./assets/imgs/topBgPattern.webp) type("image/webp"),
-    url(./assets/imgs/topBgPattern.png) type("image/png")
-  );
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: var(--clr-white);
-}
-
-.btnWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  p {
-    max-width: 30ch;
-    font-size: 80%;
-    text-align: center;
-    margin: 0.5rem 0 0 0;
   }
 }
 </style>

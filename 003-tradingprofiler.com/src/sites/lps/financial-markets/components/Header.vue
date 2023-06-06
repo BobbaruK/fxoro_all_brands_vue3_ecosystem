@@ -1,7 +1,7 @@
 <script>
 export default {
   components: {},
-  name: "LP~Demo2~Header",
+  name: "LP~FinancialMarkets~Header",
   props: {
     lang: String,
   },

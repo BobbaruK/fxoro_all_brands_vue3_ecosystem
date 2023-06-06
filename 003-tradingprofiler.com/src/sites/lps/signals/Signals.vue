@@ -40,7 +40,12 @@ export default {
     <picture class="laptop">
       <source srcset="./assets/imgs/laptop.avif" type="image/avif" />
       <source srcset="./assets/imgs/laptop.webp" type="image/webp" />
-      <img src="./assets/imgs/laptop.png" alt="Laptop" loading="lazy" decoding="async" />
+      <img
+        src="./assets/imgs/laptop.png"
+        alt="Laptop"
+        loading="lazy"
+        decoding="async"
+      />
     </picture>
   </div>
   <main>
@@ -63,9 +68,11 @@ export default {
 }
 
 .topBG {
+  background-image: url(./assets/imgs/signals-main-picture.jpg);
   background-image: image-set(
-    url(./assets/imgs/signals-main-picture.webp),
-    url(./assets/imgs/signals-main-picture.jpg)
+    url(./assets/imgs/signals-main-picture.avif) type("image/avif"),
+    url(./assets/imgs/signals-main-picture.webp) type("image/webp"),
+    url(./assets/imgs/signals-main-picture.jpg) type("image/jpg")
   );
   background-position: center;
   background-size: cover;

@@ -1011,6 +1011,12 @@ const sendSmsCodeModalAction = () => {
         color: var(--clr-brandPrimaryColor-dark);
       }
     }
+
+    &.agreementWrapper {
+      label {
+        font-size: 85%;
+      }
+    }
   }
 
   .form-loader {

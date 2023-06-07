@@ -138,7 +138,7 @@ const educationalKitStocksV2Section2Transl = () => {
       },
     },
     {
-      svg: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 48 48'%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' d='M11.735 20.11a9.475 9.475 0 0 1 18.445-1.46m.001-.001a6.497 6.497 0 0 1 6.057-.381a6.378 6.378 0 0 1 3.688 5.356'/%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' d='M39.926 23.624a5.452 5.452 0 0 1-1.128 10.503m0 0H10.864m.871-14.017a7.024 7.024 0 0 0-.87 14.016m19.282-6.796l7.454-8.204m-16.787 2.717l6.5 5.7M6.08 31.606l11.716-9.83'/%3E%3Ccircle cx='19.334' cy='20.5' r='2' fill='none' stroke='currentColor' stroke-miterlimit='10'/%3E%3Ccircle cx='28.836' cy='28.836' r='2' fill='none' stroke='currentColor' stroke-miterlimit='10'/%3E%3C/svg%3E")`,
+      svg: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 14 14'%3E%3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' d='M4.75 7.5H.5v6h4.25m4.5-9h-4.5v9h4.5m0-13h4.25v13H9.25z'/%3E%3C/svg%3E")`,
       title: {
         en: "Forex Signals",
         it: "",

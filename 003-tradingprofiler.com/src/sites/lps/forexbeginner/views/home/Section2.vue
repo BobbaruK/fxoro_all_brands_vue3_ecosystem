@@ -183,6 +183,13 @@ section#section2.brands {
     flex-wrap: wrap;
     gap: 0.8rem;
     justify-content: center;
+
+    img {
+      @include mxns.mediamax(xl) {
+        max-height: 30px;
+        width: auto;
+      }
+    }
   }
 }
 </style>

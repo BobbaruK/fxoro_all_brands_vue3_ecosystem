@@ -34,10 +34,6 @@ export default {
               />
             </div>
             <div class="pictureWrapper">
-              <p>
-                <span>360</span>
-                <span>Trading</span>
-              </p>
               <picture>
                 <source
                   srcset="../../assets/imgs/book.avif"
@@ -140,25 +136,6 @@ section#section1.subHeader {
       margin: 0 auto 2rem;
       @include mxns.mediamin(sm) {
         display: none;
-      }
-    }
-    p {
-      inset: 17% 0 0 58%;
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      rotate: -2deg;
-      transform-origin: center;
-      transform: translateX(-50%);
-      font-size: 151%;
-      line-height: 1.1;
-      @include mxns.mediamin(md) {
-        font-size: 180%;
-      }
-      span {
-        display: block;
-        text-align: center;
-        color: var(--clr-white);
       }
     }
   }

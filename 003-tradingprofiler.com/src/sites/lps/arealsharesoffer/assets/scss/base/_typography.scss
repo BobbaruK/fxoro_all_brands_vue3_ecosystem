@@ -1,0 +1,110 @@
+@use "../abstracts/variables" as vars;
+@use "../abstracts/mixins" as mxns;
+
+// -----------------------------------------------------------------------------
+/* Basic typography style for copy text */
+// -----------------------------------------------------------------------------
+
+// Headings
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  color: inherit;
+}
+
+h1,
+.h1 {
+  font-size: clamp(18px, 2vw, 40px);
+  font-size: 18px;
+  line-height: clamp(21px, 3vw, 44px);
+  margin: 0;
+  font-weight: 900;
+
+  @include mxns.mediamin(sm) {
+    font-size: 22px;
+  }
+  @include mxns.mediamin(md) {
+    font-size: 28px;
+  }
+  @include mxns.mediamin(lg) {
+    font-size: 34px;
+  }
+  @include mxns.mediamin(xl) {
+    font-size: 40px;
+  }
+}
+h2,
+.h2 {
+  font-size: clamp(18px, 2vw, 35px);
+  line-height: clamp(22px, 3vw, 43px);
+  margin-bottom: clamp(30px, 3vw, 50px);
+  font-weight: 900;
+  @include mxns.mediamin(xl) {
+    font-size: 35px;
+  }
+}
+h3,
+.h3 {
+  font-size: 20px;
+  font-weight: 900;
+}
+h4,
+.h4 {
+  font-size: vars.$fontSize-h4;
+}
+h5,
+.h5 {
+  font-size: vars.$fontSize-h5;
+}
+h6,
+.h6 {
+  font-size: vars.$fontSize-h6;
+}
+
+// Paragraph
+p {
+  margin: 0 0 vars.$typoSpacer 0;
+}
+
+// Lists
+ol,
+ul {
+  margin: 0 0 vars.$typoSpacer 0;
+  padding-left: 30px;
+  li {
+  }
+}
+
+ol {
+  li {
+  }
+}
+ul {
+  li {
+  }
+}
+
+// Links
+a {
+  color: var(--clr-brand_secondary_color--complement);
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    color: var(--clr-brandPrimaryColor-900);
+    text-decoration: underline;
+  }
+}
+
+// Imgs
+img {
+  max-width: 100%;
+}

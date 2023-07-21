@@ -18,6 +18,7 @@ import lpFinancialMarketsRoutes from "../financial-markets/routes/lp-FinancialMa
 import lpFreedomToTradeRoutes from "../freedom-to-trade/routes/lp-FreedomToTrade-Routes";
 import lpForexBeginnerRoutes from "../forexbeginner/routes/lp-ForexBeginner-Routes";
 import lpEducationalKitStocksV2Routes from "../educationalkitstocks_v2/routes/lp-EducationalKitStocksV2-Routes";
+import lpARealSharesOfferRoutes from "../arealsharesoffer/routes/lp-ARealSharesOffer-Routes";
 
 const lpsRoutes = [
   {
@@ -45,6 +46,7 @@ const lpsRoutes = [
       ...lpFreedomToTradeRoutes,
       ...lpForexBeginnerRoutes,
       ...lpEducationalKitStocksV2Routes,
+      ...lpARealSharesOfferRoutes,
     ],
   },
 ];

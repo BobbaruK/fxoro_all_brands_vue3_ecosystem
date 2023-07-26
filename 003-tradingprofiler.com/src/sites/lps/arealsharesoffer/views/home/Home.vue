@@ -51,9 +51,9 @@ export default {
       ms: "ARealSharesOffer - Home(ms) - Apabila menulis perihalan meta, simpan antara 140 dan 160 aksara supaya Google boleh memaparkan keseluruhan mesej anda. Jangan lupa sertakan kata kunci anda!",
     };
 
-    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1E1E24");
+    checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1b2955");
     onUpdated(() => {
-      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1E1E24");
+      checkLangAndMeta(props.lang, documentTitleTransl, metaDescription, "#1b2955");
     });
 
     return {};

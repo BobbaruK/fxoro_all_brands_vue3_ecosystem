@@ -2,7 +2,11 @@ const demoSection2Transl = () => {
   const bullets = [
     {
       img: {
-        src: require("../../../../assets/imgs/icon1.png"),
+        src: {
+          png: require("../../../../assets/imgs/icon1.png"),
+          avif: require("../../../../assets/imgs/icon1.avif"),
+          webp: require("../../../../assets/imgs/icon1.webp"),
+        },
         width: 81,
         height: 70,
       },
@@ -25,7 +29,11 @@ const demoSection2Transl = () => {
     },
     {
       img: {
-        src: require("../../../../assets/imgs/icon2.png"),
+        src: {
+          png: require("../../../../assets/imgs/icon2.png"),
+          avif: require("../../../../assets/imgs/icon2.avif"),
+          webp: require("../../../../assets/imgs/icon2.webp"),
+        },
         width: 63,
         height: 70,
       },
@@ -48,7 +56,11 @@ const demoSection2Transl = () => {
     },
     {
       img: {
-        src: require("../../../../assets/imgs/icon3.png"),
+        src: {
+          png: require("../../../../assets/imgs/icon3.png"),
+          avif: require("../../../../assets/imgs/icon3.avif"),
+          webp: require("../../../../assets/imgs/icon3.webp"),
+        },
         width: 85,
         height: 70,
       },

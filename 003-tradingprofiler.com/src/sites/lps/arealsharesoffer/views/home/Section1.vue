@@ -31,7 +31,11 @@ export default {
       <div class="container">
         <div class="row">
           <div class="col-12 col-lg-6 bottomImageWrapper">
-            <img src="../../assets/imgs/m-desktop.png" alt="Mobile Brands" class="d-none d-lg-block" width="630" height="275" />
+            <picture>
+              <source srcset="../../assets/imgs/m-desktop.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/m-desktop.webp" type="image/webp" />
+              <img src="../../assets/imgs/m-desktop.png" class="d-none d-lg-block" alt="Phone" width="630" height="275" loading="lazy" decoding="async" />
+            </picture>
           </div>
           <div class="col-12 col-lg-6 bottomTextWrapper">
             <div class="works">
@@ -42,7 +46,11 @@ export default {
                 </li>
               </ul>
             </div>
-            <img src="../../assets/imgs/m-mobile.png" alt="Mobile Brands" class="d-lg-none" width="270" height="298" />
+            <picture>
+              <source srcset="../../assets/imgs/m-mobile.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/m-mobile.webp" type="image/webp" />
+              <img src="../../assets/imgs/m-mobile.png" class="d-lg-none" alt="Phone" width="270" height="298" loading="lazy" decoding="async" />
+            </picture>
           </div>
         </div>
       </div>

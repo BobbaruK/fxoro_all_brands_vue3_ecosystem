@@ -22,7 +22,13 @@ export default {
     <div class="container">
       <div class="row">
         <div v-for="(bullet, index) in bullets" :key="index" class="col-12 col-sm-6 col-md-4 bullet">
-          <img :src="bullet.img.src" alt="TRUST" class="img trust" :width="bullet.img.width" :height="bullet.img.height" />
+          <picture>
+            <source :srcset="bullet.img.src.avif" type="image/avif" />
+            <source :srcset="bullet.img.src.webp" type="image/webp" />
+            <img :src="bullet.img.src.png" alt="Phone" :width="bullet.img.width" :height="bullet.img.height" loading="lazy" decoding="async" />
+          </picture>
+
+          <!-- <img :src="bullet.img.src" alt="TRUST" class="img" :width="bullet.img.width" :height="bullet.img.height" /> -->
           <p v-html="bullet.para[lang]" />
         </div>
       </div>
@@ -34,12 +40,14 @@ export default {
 @use "../../assets/scss/abstracts/mixins" as mxns;
 
 section#section2.bullets {
-  background-image: url(../../assets/imgs/s3-mobile.png);
+  background-image: url(../../assets/imgs/s3-mobile.jpg);
+  background-image: image-set(url("../../assets/imgs/s3-mobile.avif") type("image/avif"), url("../../assets/imgs/s3-mobile.webp") type("image/webp"), url("../../assets/imgs/s3-mobile.jpg") type("image/jpg"));
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   @include mxns.mediamin(sm) {
     background-image: url(../../assets/imgs/s3-desktop.jpg);
+    background-image: image-set(url("../../assets/imgs/s3-desktop.avif") type("image/avif"), url("../../assets/imgs/s3-desktop.webp") type("image/webp"), url("../../assets/imgs/s3-desktop.jpg") type("image/jpg"));
   }
   .bullet {
     color: var(--clr-white);

@@ -704,7 +704,7 @@ export default {
               carouselArrows: 'arrows',
               carouselReset: true,
               carouselTransition: 3,
-              carouselResponsive: false,
+              carouselResponsive: true,
               carouselDirection: 'ltr',
               carouselDev: false,
             }"

@@ -59,12 +59,14 @@ html {
     padding: 0;
 
     background-image: url(../assets/imgs/topbg-mobile.jpg);
+    background-image: image-set(url("../assets/imgs/topbg-mobile.avif") type("image/avif"), url("../assets/imgs/topbg-mobile.webp") type("image/webp"), url("../assets/imgs/topbg-mobile.jpg") type("image/jpg"));
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
 
     @include mxns.mediamin(lg) {
       background-image: url(../assets/imgs/topbg-desktop.jpg);
+      background-image: image-set(url("../assets/imgs/topbg-desktop.avif") type("image/avif"), url("../assets/imgs/topbg-desktop.webp") type("image/webp"), url("../assets/imgs/topbg-desktop.jpg") type("image/jpg"));
     }
 
     .top {
@@ -158,7 +160,7 @@ html {
           &:focus {
           }
           &::placeholder {
-          color: #4d4d4d;
+            color: #4d4d4d;
           }
         }
         select option {

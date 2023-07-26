@@ -41,13 +41,41 @@ export default {
       <div class="container">
         <div class="row">
           <div class="col-12 imgsWrapper">
-            <img src="../../assets/imgs/brand1.png" alt="brand1" />
-            <img src="../../assets/imgs/brand2.png" alt="brand2" />
-            <img src="../../assets/imgs/brand3.png" alt="brand3" />
-            <img src="../../assets/imgs/brand4.png" alt="brand4" />
-            <img src="../../assets/imgs/brand5.png" alt="brand5" />
-            <img src="../../assets/imgs/brand6.png" alt="brand6" />
-            <img src="../../assets/imgs/brand7.png" alt="brand7" />
+            <picture>
+              <source srcset="../../assets/imgs/brand1.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand1.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand1.png" alt="brand1" width="48" height="30" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source srcset="../../assets/imgs/brand2.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand2.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand2.png" alt="brand2" width="175" height="30" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source srcset="../../assets/imgs/brand3.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand3.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand3.png" alt="brand3" width="140" height="30" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source srcset="../../assets/imgs/brand4.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand4.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand4.png" alt="brand4" width="115" height="30" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source srcset="../../assets/imgs/brand5.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand5.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand5.png" alt="brand5" width="90" height="30" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source srcset="../../assets/imgs/brand6.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand6.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand6.png" alt="brand6" width="97" height="30" loading="lazy" decoding="async" />
+            </picture>
+            <picture>
+              <source srcset="../../assets/imgs/brand7.avif" type="image/avif" />
+              <source srcset="../../assets/imgs/brand7.webp" type="image/webp" />
+              <img src="../../assets/imgs/brand7.png" alt="brand7" width="103" height="30" loading="lazy" decoding="async" />
+            </picture>
           </div>
         </div>
       </div>

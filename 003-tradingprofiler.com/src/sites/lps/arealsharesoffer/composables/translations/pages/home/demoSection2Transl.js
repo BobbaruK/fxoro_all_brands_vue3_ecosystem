@@ -11,7 +11,7 @@ const demoSection2Transl = () => {
         height: 70,
       },
       para: {
-        en: "<strong>TRUST</strong> - FXORO is overseen by various regulators in the European Union.",
+        en: `<strong>TRUST</strong> - ${process.env.VUE_APP_BRAND_TITLE} is overseen by various regulators in the European Union.`,
         it: "",
         tr: "",
         ro: "",

@@ -1,6 +1,6 @@
 const demoHomeTransl = () => {
   const title = {
-    en: "Whether you want to invest in the stock market or just learn, FX<span>ORO</span> is a great place to start!",
+    en: `Whether you want to invest in the stock market or just learn, ${process.env.VUE_APP_BRAND_TITLE} is a great place to start!`,
     it: "",
     tr: "",
     ro: "",
@@ -17,7 +17,7 @@ const demoHomeTransl = () => {
   };
 
   const para = {
-    en: "FXORO brings you a variety of the biggest US brands at your fingertips, so you can choose between the most popular shares and invest on them.",
+    en: `${process.env.VUE_APP_BRAND_TITLE} brings you a variety of the biggest US brands at your fingertips, so you can choose between the most popular shares and invest on them.`,
     it: "",
     tr: "",
     ro: "",

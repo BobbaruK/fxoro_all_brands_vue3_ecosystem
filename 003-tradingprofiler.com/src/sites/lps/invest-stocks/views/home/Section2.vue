@@ -16,7 +16,11 @@ const props = defineProps({
       <div class="row">
         <div class="col-12 col-md-6 content" v-html="demoSection2Transl().paras[lang]" />
         <div class="col-12 col-md-6 image">
-          <img src="https://fxoro.com/wp-content/themes/CSSecoStarterThemeV2-master/imgs/invest-stocks/section1/phone4.png" alt="Phone" class="logos" width="239" height="487" />
+          <picture>
+            <source srcset="../../assets/imgs/phone.avif" type="image/avif" />
+            <source srcset="../../assets/imgs/phone.webp" type="image/webp" />
+            <img src="../../assets/imgs/phone.png" class="logos" alt="Phone" width="239" height="487" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
     </div>
